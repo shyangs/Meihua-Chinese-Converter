@@ -6,7 +6,7 @@
 // @include     *
 // @version     0.1
 // @grant       none
-// @require     https://raw.githubusercontent.com/shyangs/Meihua-Chinese-Converter/master/cn2tw.js
+// @require     https://raw.githubusercontent.com/shyangs/Meihua-Chinese-Converter/master/cn2tw_1.js
 // @run-at      document-start
 // @icon        http://www.gravatar.com/avatar/b4067537364e89cce0d6f91e193420d0
 // @license     GPLv3; http://opensource.org/licenses/gpl-3.0.html
