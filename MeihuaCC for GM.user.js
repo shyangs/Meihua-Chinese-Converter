@@ -4,7 +4,7 @@
 // @description 梅花繁簡轉換器
 // @namespace   https://github.com/shyangs/Meihua-Chinese-Converter
 // @include     *
-// @version     0.1
+// @version     0.2
 // @grant       none
 // @require     https://raw.githubusercontent.com/shyangs/Meihua-Chinese-Converter/master/cn2tw_1.js
 // @run-at      document-start
@@ -66,9 +66,10 @@ let MeihuaCC = (function(){
 			childList: true,
 			subtree:true
 		};
-	let observer = new MutationObserver(function(mutations){
+	let fnObserverCallback = function(mutations, self){
+		if( 'undefined' === typeof self.target ) self.target = doc;
 		mutations.forEach(function(mutation){
-			observer.disconnect();
+			self.disconnect();
 			for( let node of mutation.addedNodes ){
 				switch(node.nodeType){
 					case 1: // ELEMENT_NODE
@@ -79,9 +80,9 @@ let MeihuaCC = (function(){
 					break;
 				}
 			}
-			observer.observe(doc, observeOpt);
+			self.observe(self.target, observeOpt);
 		});
-	});
+	};
 	let convert = function(str){
 		let leng = Math.min(1, str.length);
 		let cn2twMap = MeihuaCC.cn2twMap;
@@ -106,19 +107,19 @@ let MeihuaCC = (function(){
 		if (txt !== '') str = txt;
 		return str;
 	},
-	treeWalker = function(root, whatToShow, hasAttr){
+	treeWalker = function(root, whatToShow, attr){
 		let walker, node;
 		walker = document.createTreeWalker(root, whatToShow, {
 			acceptNode: function(node){
-				return ( node.hasAttribute(hasAttr) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
+				return ( node.hasAttribute(attr) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
 			}
 		});
 		while(node = walker.nextNode()){
-			node[hasAttr] = convert(node.getAttribute(hasAttr));
+			node[attr] = convert(node.getAttribute(attr));
 		}
 	},
 	transPage = function( elmt = doc, blnObs = true ){
-		if(blnObs) observer.observe(doc, observeOpt);
+		if(blnObs) new MutationObserver(fnObserverCallback).observe(doc, observeOpt);
 		
 		let walker, node;
 		walker = document.createTreeWalker(elmt, NodeFilter.SHOW_TEXT, null);
