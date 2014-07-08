@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <Description about="urn:mozilla:install-manifest">
+
+        <em:id>MeihuaCC@shyangs</em:id>
+        <em:version>2.0a1</em:version>
+        <em:type>2</em:type>
+        <em:name>Meihua Chinese Converter</em:name>
+
+        <!-- Firefox -->
+        <em:targetApplication>
+            <Description>
+                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+                <em:minVersion>24.0</em:minVersion>
+                <em:maxVersion>33.*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+
+        <em:bootstrap>true</em:bootstrap>
+        
+        <em:localized>
+            <Description>
+                <em:locale>zh-TW</em:locale>
+                <em:name>Meihua Chinese Converter</em:name>
+                <em:description>梅花繁簡轉換器</em:description>
+                <em:creator>shyangs</em:creator>
+                <em:homepageURL>https://github.com/shyangs/Meihua-Chinese-Converter</em:homepageURL>
+                <em:developer>shyangs</em:developer>
+                <em:translator>shyangs</em:translator>
+            </Description>
+        </em:localized>
+
+        <em:localized>
+            <Description>
+                <em:locale>en-US</em:locale>
+                <em:name>Meihua Chinese Converter</em:name>
+                <em:description>Convert Simplified Chinese text to Traditional.</em:description>
+                <em:creator>shyangs</em:creator>
+                <em:homepageURL>https://github.com/shyangs/Meihua-Chinese-Converter</em:homepageURL>
+                <em:developer>shyangs</em:developer>
+                <em:translator>shyangs</em:translator>
+            </Description>
+        </em:localized>
+
+    </Description>
+</RDF>

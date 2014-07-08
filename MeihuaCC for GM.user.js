@@ -12,6 +12,8 @@
 // @license     GPLv3; http://opensource.org/licenses/gpl-3.0.html
 // ==/UserScript==
 'use strict';
+(function(window){
+
 let MeihuaCC = (function(){
 	let doc = document,
 		cn2twMap = {},
@@ -28,28 +30,29 @@ let MeihuaCC = (function(){
 				['[-_=./]cn(?:[./]|$)'],
 				['[-_=./]gbk?(?:[./]|$)'],
 				['123yq\\.com'],
-				['163\\.com'],
-				['17k\\.com'],
+				['\\.163\\.com'],
+				['\\.17k\\.com'],
 				['360doc\\.com'],
 				['alipay\\.com'],
-				['b5m\\.com'],
+				['\\.b5m\\.com'],
 				['baidu\\.com'],
 				['china\\.com'],
 				['douban\\.com'],
-				['dm5\\.com'],
+				['\\.dm5\\.com'],
 				['hao123\\.com'],
 				['hongxiu\\.com'],
 				['ifeng\\.net'],
 				['jjwxc\\.net'],
 				['qdmm\\.com'],
 				['qidian\\.com'],
-				['qq\\.com'],
+				['\\.qq\\.com'],
 				['readnovel\\.com'],
 				['sfacg\\.com'],
 				['sina\\.com'],
-				['so\\.com'],
+				['\\.so\\.com'],
 				['sogou\\.com'],
 				['sohu\\.com'],
+				['soso\\.com'],
 				['taobao\\.com'],
 				['thethirdmedia\\.com'],
 				['tudou\\.com'],
@@ -82,22 +85,22 @@ let MeihuaCC = (function(){
 	let convert = function(str){
 		let leng = Math.min(1, str.length);
 		let cn2twMap = MeihuaCC.cn2twMap;
-		let txt = '', s = '', bol = true;
-		for (let i = 0, c = str.length; i < c;) {
-			bol = true;
-			for (let j = leng; j > 0; j--) {
-				s = str.substr(i, j);
-				if (s in cn2twMap) {
-					txt += cn2twMap[s];
-					i += j;
-					bol = false;
+		let txt = '';
+		for(let idx = 0, strLen = str.length; idx < strLen;){
+			let bHit = false;
+			for(let j = leng; j > 0; j--){
+				let ss = str.substr(idx, j);
+				if( 'undefined' !== typeof cn2twMap[ss] ){
+					txt += cn2twMap[ss];
+					idx += j;
+					bHit = true;
 					break;
 				}
 			}
 
-			if (bol) {
-				txt += str.substr(i, 1);
-				i++;
+			if(!bHit){
+				txt += str.substr(idx, 1);
+				idx++;
 			}
 		}
 		if (txt !== '') str = txt;
@@ -117,7 +120,6 @@ let MeihuaCC = (function(){
 	transPage = function( elmt = doc, blnObs = true ){
 		if(blnObs) observer.observe(doc, observeOpt);
 		
-		//doc.title = convert(doc.title);
 		let walker, node;
 		walker = document.createTreeWalker(elmt, NodeFilter.SHOW_TEXT, null);
 		while(node = walker.nextNode()){
@@ -145,7 +147,7 @@ let MeihuaCC = (function(){
 		return false;
 	},
 	onPageLoad = function(aEvent){
-		doc = aEvent.originalTarget; // doc is document that triggered "onload" event		
+		doc = aEvent.originalTarget; // doc is document that triggered "onload" event
 		// do something with the loaded page.
 		if(!applyURL(doc.location.href)) return;
 		let startTime = Date.now();
@@ -163,11 +165,11 @@ let MeihuaCC = (function(){
 
 MeihuaCC.cn2twMap = cn2tw_1;
 
-(function(){
-	let listenElmt = document;
-	if(listenElmt){
-		listenElmt.addEventListener('DOMContentLoaded', MeihuaCC.onPageLoad);
-	}else{
-		throw new Error('MeihuaCC Err: document is undefined.');
-	}
-})();
+
+let listenElmt = document;
+if(listenElmt){
+	listenElmt.addEventListener('DOMContentLoaded', MeihuaCC.onPageLoad);
+}
+window.MeihuaCC = MeihuaCC;
+
+})(window);
