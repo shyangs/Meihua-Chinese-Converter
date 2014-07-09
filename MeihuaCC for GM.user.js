@@ -4,7 +4,7 @@
 // @description 梅花繁簡轉換器
 // @namespace   https://github.com/shyangs/Meihua-Chinese-Converter
 // @include     *
-// @version     0.3
+// @version     0.4
 // @grant       none
 // @require     https://raw.githubusercontent.com/shyangs/Meihua-Chinese-Converter/master/cn2tw_1.js
 // @run-at      document-start
@@ -18,8 +18,8 @@ let MeihuaCC = (function(){
 	let doc = document,
 		cn2twMap = {},
 		userOpt = {
-			blnAlt: true,
-			blnTitle: true,
+			bAlt: true,
+			bTitle: true,
 			aURLs: [
 				['\\.tw', 'exclude'],
 				['https?://tw\\.', 'exclude'],
@@ -66,10 +66,9 @@ let MeihuaCC = (function(){
 			childList: true,
 			subtree:true
 		};
-	let fnObserverCallback = function(mutations, self){
+	let observerCallback = function(mutations, self){
 		if( 'undefined' === typeof self.target ) self.target = doc;
 		mutations.forEach(function(mutation){
-			self.disconnect();
 			for( let node of mutation.addedNodes ){
 				switch(node.nodeType){
 					case 1: // ELEMENT_NODE
@@ -80,7 +79,6 @@ let MeihuaCC = (function(){
 					break;
 				}
 			}
-			self.observe(self.target, observeOpt);
 		});
 	};
 	let convert = function(str){
@@ -119,20 +117,23 @@ let MeihuaCC = (function(){
 		}
 	},
 	treeWalker = function(root, whatToShow, attr){
-		let walker = document.createTreeWalker(root, whatToShow, {
+		let filter = 'nodeValue' === attr ? null : {
 			acceptNode: function(node){
 				return ( node.hasAttribute(attr) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
 			}
-		});
+		},
+		walker = document.createTreeWalker(root, whatToShow, filter);
 		walkStep(walker, attr, Date.now());
 	},
-	transPage = function( elmt = doc, blnObs = true ){
-		let walker = document.createTreeWalker(elmt, NodeFilter.SHOW_TEXT, null);
-		walkStep(walker, 'nodeValue', Date.now());
+	transPage = function( elmt = doc, bObs = true ){
+		if(bObs){
+			let observer = new MutationObserver(observerCallback);
+			observer.observe(doc, observeOpt);
+		}
 		
-		if(userOpt.blnTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title');
-		if(userOpt.blnAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt');
-		if(blnObs) new MutationObserver(fnObserverCallback).observe(doc, observeOpt);
+		treeWalker(elmt, NodeFilter.SHOW_TEXT, 'nodeValue');
+		if(userOpt.bTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title');
+		if(userOpt.bAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt');
 	},
 	applyURL = function(href){
 		let aURLs = userOpt.aURLs;
