@@ -45,7 +45,7 @@ var MeihuaCC = {
                                             win,
                                             "UTF-8"
                                            );
-        win.MeihuaCC.init();
+
     },
     unloadSubScript: function (win) {
     }
