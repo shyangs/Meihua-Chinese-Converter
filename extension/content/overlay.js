@@ -54,7 +54,6 @@ let MeihuaCC = (function(){
 			subtree:true
 		};
 	let observerCallback = function(mutations, self){
-		if( 'undefined' === typeof self.target ) self.target = doc;
 		mutations.forEach(function(mutation){
 			for( let node of mutation.addedNodes ){
 				switch(node.nodeType){
@@ -104,7 +103,16 @@ let MeihuaCC = (function(){
 		}
 	},
 	treeWalker = function(root, whatToShow, attr){
-		let filter = 'nodeValue' === attr ? null : {
+		let filter = 'nodeValue' === attr ? {
+			acceptNode: function(node){
+				switch(node.parentNode.nodeName.toUpperCase()){
+					case 'SCRIPT':
+					case 'STYLE':
+						return NodeFilter.FILTER_REJECT;
+				}
+				return NodeFilter.FILTER_ACCEPT;
+			}
+		} : {
 			acceptNode: function(node){
 				return ( node.hasAttribute(attr) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
 			}
@@ -113,10 +121,7 @@ let MeihuaCC = (function(){
 		walkStep(walker, attr, Date.now());
 	},
 	transPage = function( elmt = doc, bObs = true ){
-		if(bObs){
-			let observer = new MutationObserver(observerCallback);
-			observer.observe(doc, observeOpt);
-		}
+		if(bObs) new MutationObserver(observerCallback).observe(doc, observeOpt);
 		
 		treeWalker(elmt, NodeFilter.SHOW_TEXT, 'nodeValue');
 		if(userOpt.bTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title');
