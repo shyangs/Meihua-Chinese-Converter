@@ -34,8 +34,7 @@ var MeihuaCC = {
         var cw = this.ww.getWindowEnumerator();
         while (cw.hasMoreElements()) {
             var win = cw.getNext().QueryInterface(Ci.nsIDOMWindow);
-            //this.unloadSubScript(win);
-            delete win.MeihuaCC;
+            this.unloadSubScript(win);
         }
     },
 
@@ -48,6 +47,8 @@ var MeihuaCC = {
 
     },
     unloadSubScript: function (win) {
+		win.document.getElementById('appcontent').removeEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
+        delete win.MeihuaCC;
     }
 }
 
