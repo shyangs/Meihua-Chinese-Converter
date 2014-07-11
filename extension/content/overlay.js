@@ -64,7 +64,7 @@ let MeihuaCC = (function(){
 	setTable = function(oURL){
 		let table = {mappings:{}, maxLen:0},
 			aTables = oURL.aTables;
-		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length < 0 ){
+		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length === 0 ){
 			aTables = ['梅花通用單字', '梅花通用詞彙'];
 		}
 		aTables.forEach(function(item){
