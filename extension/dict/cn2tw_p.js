@@ -3,6 +3,7 @@
 let cn2tw_p={
 name:'梅花通用詞彙',
 maxLen:2,
+version:140712,
 mappings:{
 "卷著":"捲著",
 "卷着":"捲著",

@@ -4,7 +4,7 @@
 // @description 梅花繁簡轉換器
 // @namespace   https://github.com/shyangs/Meihua-Chinese-Converter
 // @include     *
-// @version     0.6
+// @version     0.7
 // @grant       none
 // @require     https://greasyfork.org/scripts/2666-object-assign-shim/code/Objectassign%20shim.js?version=7344
 // @require     https://raw.githubusercontent.com/shyangs/Meihua-Chinese-Converter/master/extension/dict/cn2tw_c.js
@@ -19,6 +19,7 @@
 let MeihuaCC = (function(){
 	let doc = document,
 		oTables = {},
+		oCacheTable = {},
 		userOpt = {
 			bAlt: true,
 			bTitle: true,
@@ -29,7 +30,7 @@ let MeihuaCC = (function(){
 				{pattern: '\\.jp/', rule: 'exclude'},
 				{pattern: 'https?://jp\\.', rule: 'exclude'},
 				{pattern: 'wikipedia\\.org/', rule: 'exclude'},
-				{pattern: '[-_=./]cn(?:[./]|$)'},
+				{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include',aTables: ['梅花通用單字', '梅花通用詞彙']},
 				{pattern: '[-_=./]gbk?(?:[./]|$)'},
 				{pattern: '123yq\\.com/'},
 				{pattern: '\\.163\\.com/'},
@@ -72,16 +73,25 @@ let MeihuaCC = (function(){
 		oTables[table.name] = table;
 	},
 	setTable = function(oURL){
-		let table = {mappings:{}, maxLen:0},
+		let table = {mappings:{}, maxLen:0, id:''},
 			aTables = oURL.aTables;
 		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length === 0 ){
 			aTables = ['梅花通用單字', '梅花通用詞彙'];
 		}
-		aTables.forEach(function(item){
-			let item = oTables[item];
+
+		table.id = aTables.length.toString();
+		aTables.forEach(function(tableName){
+			let version = oTables[tableName].version || Date.now();
+			table.id += ',' + tableName + version;
+		});
+		if( 'undefined' !== typeof oCacheTable[table.id] ) return oCacheTable[table.id];
+
+		aTables.forEach(function(tableName){
+			let item = oTables[tableName];
 			Object.assign(table.mappings, item.mappings);
 			table.maxLen = Math.max(table.maxLen, item.maxLen);
 		});
+		oCacheTable[table.id] = table;
 		return table;
 	},
 	observerCallback = function(mutations, self){

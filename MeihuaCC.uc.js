@@ -4,7 +4,7 @@
 // @description 梅花繁簡轉換器
 // @namespace   https://github.com/shyangs/Meihua-Chinese-Converter
 // @include     chrome://browser/content/browser.xul
-// @version     1.0a6
+// @version     1.0a7
 // @grant       none
 // @charset		UTF-8
 // @icon        http://www.gravatar.com/avatar/b4067537364e89cce0d6f91e193420d0
@@ -39,6 +39,7 @@
 let MeihuaCC = (function(){
 	let doc = document,
 		oTables = {},
+		oCacheTable = {},
 		userOpt = {
 			bAlt: true,
 			bTitle: true,
@@ -49,7 +50,7 @@ let MeihuaCC = (function(){
 				{pattern: '\\.jp/', rule: 'exclude'},
 				{pattern: 'https?://jp\\.', rule: 'exclude'},
 				{pattern: 'wikipedia\\.org/', rule: 'exclude'},
-				{pattern: '[-_=./]cn(?:[./]|$)'},
+				{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include',aTables: ['梅花通用單字', '梅花通用詞彙']},
 				{pattern: '[-_=./]gbk?(?:[./]|$)'},
 				{pattern: '123yq\\.com/'},
 				{pattern: '\\.163\\.com/'},
@@ -92,16 +93,25 @@ let MeihuaCC = (function(){
 		oTables[table.name] = table;
 	},
 	setTable = function(oURL){
-		let table = {mappings:{}, maxLen:0},
+		let table = {mappings:{}, maxLen:0, id:''},
 			aTables = oURL.aTables;
 		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length === 0 ){
 			aTables = ['梅花通用單字', '梅花通用詞彙'];
 		}
-		aTables.forEach(function(item){
-			let item = oTables[item];
+
+		table.id = aTables.length.toString();
+		aTables.forEach(function(tableName){
+			let version = oTables[tableName].version || Date.now();
+			table.id += ',' + tableName + version;
+		});
+		if( 'undefined' !== typeof oCacheTable[table.id] ) return oCacheTable[table.id];
+
+		aTables.forEach(function(tableName){
+			let item = oTables[tableName];
 			Object.assign(table.mappings, item.mappings);
 			table.maxLen = Math.max(table.maxLen, item.maxLen);
 		});
+		oCacheTable[table.id] = table;
 		return table;
 	},
 	observerCallback = function(mutations, self){
@@ -222,6 +232,7 @@ let MeihuaCC = (function(){
 MeihuaCC.addTable({
 name:'梅花通用單字',
 maxLen:1,
+version:140712,
 mappings:{
 "捂":"摀",
 "胄":"冑",
@@ -2907,6 +2918,7 @@ mappings:{
 MeihuaCC.addTable({
 name:'梅花通用詞彙',
 maxLen:2,
+version:140712,
 mappings:{
 "卷著":"捲著",
 "卷着":"捲著",
