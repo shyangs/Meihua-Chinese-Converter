@@ -1,0 +1,14 @@
+Meihua Chinese Converter (MeihuaCC) is a Firefox extension.
+Copyright (C) 2014 Yu-Hsiang LIN (shyangs)
+
+MeihuaCC is Open Source, released under the terms of the GPLv3;
+see the LICENSE.GPL file.
+This applies to all source code files.
+
+Individual files may have different licenses.
+
+MeihuaCC contains code derived from 
+User Agent Overrider ( https://github.com/muzuiget/user_agent_overrider ), reused under the terms of the MPL license; see LICENSE.MPL.
+
+MeihuaCC contains code derived from 
+ES6 Shim ( https://github.com/es-shims/es6-shim ), reused under the terms of the MIT license; see LICENSE.MIT.

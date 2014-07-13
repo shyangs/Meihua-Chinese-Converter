@@ -1,5 +1,8 @@
 'use strict';
-
+/*
+ This file is modified from ES6 Shim.
+ You may find the license in the LICENSE file.
+ */
 (function(){	
 	var isObject = function (obj) {
 		return obj && typeof obj === 'object';

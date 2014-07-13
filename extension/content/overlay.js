@@ -1,4 +1,5 @@
 'use strict';
+/* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
 (function(window){
 
 let {utils: Cu} = Components;
