@@ -6,7 +6,7 @@
 const BrowserManager = (function() {
 	const log = function() { dump(Array.slice(arguments).join(' ') + '\n'); };
 	const trace = function(error) { log(error); log(error.stack); };
-	const {classes: Cc} = Components;
+	const {classes: Cc, interfaces: Ci} = Components;
     const windowWatcher = Cc['@mozilla.org/embedcomp/window-watcher;1']
                              .getService(Ci.nsIWindowWatcher);
 
