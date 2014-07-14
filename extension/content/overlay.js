@@ -12,6 +12,7 @@ let MeihuaCC = (function(){
 		oTables = {},
 		oCacheTable = {},
 		userOpt = {
+			bFrame: true,
 			bAlt: true,
 			bTitle: true,
 			aURLs: [
@@ -123,37 +124,67 @@ let MeihuaCC = (function(){
 		if (txt !== '') str = txt;
 		return str;
 	},
-	walkStep = function(walker, attr, startTime, table){
+	walkStep = function(walker, type, startTime, table){
 		let node = walker.nextNode();
 		if(!node) return;
 		if(Date.now() - startTime < 50){
-			node[attr] = convert('nodeValue'===attr?node.nodeValue:node.getAttribute(attr), table);
-			walkStep(walker, attr, startTime, table);
+			switch(type){
+				case 'frame':
+					let doc = node.contentDocument;
+					if('undefined' !== typeof doc) MeihuaCC.transPage(doc, true, table);
+				break;
+				case 'nodeValue':
+					node[type] = convert(node.nodeValue, table);
+				break;
+				case 'alt':
+				case 'title':
+					node[type] = convert(node.getAttribute(type), table);
+				break;
+			}
+			walkStep(walker, type, startTime, table);
 		}else{
 			setTimeout(function(){
-				walkStep(walker, attr, Date.now(), table);
+				walkStep(walker, type, Date.now(), table);
 			}, 1);
 		}
 	},
-	treeWalker = function(root, whatToShow, attr, table){
-		let filter = 'nodeValue' === attr ? {
-			acceptNode: function(node){
-				switch(node.parentNode.nodeName.toUpperCase()){
-					case 'SCRIPT':
-					case 'STYLE':
-						return NodeFilter.FILTER_REJECT;
-				}
-				return NodeFilter.FILTER_ACCEPT;
-			}
-		} : {
-			acceptNode: function(node){
-				return ( node.hasAttribute(attr) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
-			}
-		},
-		walker = document.createTreeWalker(root, whatToShow, filter);
-		walkStep(walker, attr, Date.now(), table);
+	treeWalker = function(root, whatToShow, type, table){
+		let filter;
+		switch(type){
+			case 'nodeValue':
+				filter = {
+					acceptNode: function(node){
+						switch(node.parentNode.nodeName.toUpperCase()){
+							case 'SCRIPT':
+							case 'STYLE':
+								return NodeFilter.FILTER_REJECT;
+						}
+						return NodeFilter.FILTER_ACCEPT;
+					}
+				};
+			break;
+			case 'frame':
+				filter = {
+					acceptNode: function(node){
+						let tag = node.nodeName.toUpperCase();
+						return ( (tag === 'FRAME' || tag === 'IFRAME') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
+					}
+				};
+			break;
+			case 'alt':
+			case 'title':
+				filter = {
+					acceptNode: function(node){
+						return ( node.hasAttribute(type) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP );
+					}
+				};
+			break;
+		}
+		
+		let walker = document.createTreeWalker(root, whatToShow, filter);
+		walkStep(walker, type, Date.now(), table);
 	},
-	transPage = function( elmt = doc, bObs = true , table = setTable({}) ){
+	transPage = function( elmt = doc, bObs = true , table = setTable({}), bFrame = true ){
 		if(bObs){
 			let observer = new MutationObserver(observerCallback);
 			observer.table = table;
@@ -161,6 +192,7 @@ let MeihuaCC = (function(){
 		}
 		
 		treeWalker(elmt, NodeFilter.SHOW_TEXT, 'nodeValue', table);
+		if(bFrame&&userOpt.bFrame) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'frame', table);
 		if(userOpt.bTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title', table);
 		if(userOpt.bAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt', table);
 	},
@@ -188,7 +220,7 @@ let MeihuaCC = (function(){
 		if(!(oURL=applyURL(doc.location.href))) return;
 		let table = setTable(oURL);
 		let startTime = Date.now();
-		MeihuaCC.transPage(doc, true, table);
+		MeihuaCC.transPage(doc, true, table, false);
 		console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
 	};
 
@@ -200,10 +232,8 @@ let MeihuaCC = (function(){
 	};
 })();
 
-Services.scriptloader.loadSubScript(
-	"resource://meihuacc/dict/cn2tw_c.js", MeihuaCC, "UTF-8");
-Services.scriptloader.loadSubScript(
-	"resource://meihuacc/dict/cn2tw_p.js", MeihuaCC, "UTF-8");
+Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', MeihuaCC, "UTF-8");
+Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', MeihuaCC, "UTF-8");
 MeihuaCC.addTable(MeihuaCC.cn2tw_c);
 MeihuaCC.addTable(MeihuaCC.cn2tw_p);
 
