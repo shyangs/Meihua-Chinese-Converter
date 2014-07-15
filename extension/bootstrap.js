@@ -6,61 +6,10 @@ const {interfaces: Ci, utils: Cu} = Components;
 Cu.import('resource://gre/modules/Services.jsm');
 
 let MeihuaCC = (function(){
-	const NS_XUL = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul';
 	const log = function() { dump(Array.slice(arguments).join(' ') + '\n'); };
-	const trace = function(error) { log(error); log(error.stack); };
-	const EXTENSION_NAME = 'MeihuaCC';
-	const BUTTON_ID = 'meihuacc-tbb';
-	const STYLE_URI = 'chrome://meihuacc/skin/browser.css';
 
-	let toolbarButtons = {
-		createInstance: function(window) {
-			let document = window.document;
-			let button = (function() {
-				let attrs = {
-					id: BUTTON_ID,
-					class: 'toolbarbutton-1 chromeclass-toolbar-additional',
-					label: EXTENSION_NAME,
-					tooltiptext: EXTENSION_NAME,
-					removable: true
-					//image: image
-				};
 
-				let button = document.createElementNS(NS_XUL, 'toolbarbutton');
-				MeihuaCC.Utils.setAttrs(button, attrs);
-				button.addEventListener('click', function(event){
-					switch(event.button){
-						case 0://left_click
-							window.MeihuaCC.transPage(window.content.document, true);
-						break/*
-						case 2://right_click
-							//設定介面，施工中
-						break*/
-					}
-				});
-				return button;
-			})();
-
-			return button;
-		}
-	},
-	insertToolbarButton = function(window) {
-		let button = toolbarButtons.createInstance(window);
-		try {
-			MeihuaCC.ToolbarManager.addWidget(window, button, false);
-		} catch(error) {
-			trace(error);
-		}
-	},
-	removeToolbarButton = function(window) {
-        try {
-            MeihuaCC.ToolbarManager.removeWidget(window, BUTTON_ID);
-        } catch(error) {
-            trace(error);
-        }
-    },
-
-	loadSubScript = function(win){
+	let loadSubScript = function(win){
 		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', win, 'UTF-8');
 	},
 	unloadSubScript = function(win){
@@ -69,18 +18,35 @@ let MeihuaCC = (function(){
 	},
 	
 	startup = function(){
+		MeihuaCC.EXTENSION_NAME = 'MeihuaCC';
+		MeihuaCC.PREF_BRANCH = 'extensions.MeihuaCC.';
+		MeihuaCC.BUTTON_ID = 'meihuacc-tbb';	
+		MeihuaCC.STYLE_URI = 'chrome://meihuacc/skin/browser.css';
+
+		MeihuaCC.trace = function(error) { log(error); log(error.stack); };
+
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Pref.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/BrowserManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', MeihuaCC, 'UTF-8');
+
+		MeihuaCC.pref = MeihuaCC.Pref(MeihuaCC.PREF_BRANCH);
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/config.js', MeihuaCC, 'UTF-8');
+		MeihuaCC.prefObserver.initConfig();
+
 		MeihuaCC.BrowserManager.addListener(loadSubScript);
 		MeihuaCC.BrowserManager.run(loadSubScript);
-		MeihuaCC.BrowserManager.run(insertToolbarButton);
-		MeihuaCC.BrowserManager.addListener(insertToolbarButton);
-		MeihuaCC.StyleManager.load(STYLE_URI);
+
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/ui.js', MeihuaCC, 'UTF-8');
+		MeihuaCC.BrowserManager.run(MeihuaCC.insertToolbarButton);
+		MeihuaCC.BrowserManager.addListener(MeihuaCC.insertToolbarButton);
+
+		MeihuaCC.StyleManager.load(MeihuaCC.STYLE_URI);
 	},
 	shutdown = function(){
-		MeihuaCC.BrowserManager.run(removeToolbarButton);
+		MeihuaCC.prefObserver.saveConfig();
+		MeihuaCC.BrowserManager.run(MeihuaCC.removeToolbarButton);
 		MeihuaCC.BrowserManager.run(unloadSubScript);
 		MeihuaCC.BrowserManager.destory();
 		MeihuaCC.StyleManager.destory();

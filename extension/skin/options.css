@@ -1,0 +1,10 @@
+#meihuaccOptions {
+  height: auto !important;
+  width: auto !important;
+  max-width: 1024px;
+  min-width: 500px;
+}
+
+#listTree {
+  min-height: 400px;
+}
