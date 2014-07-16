@@ -10,8 +10,8 @@
 
 <prefpane id="main" flex="1">
   <preferences>
-    <preference id="entries" type="string"
-          name="extensions.meihuacc.entries"/>
+    <preference id="bConvTitle" type="bool" name="extensions.MeihuaCC.bConvTitle"/>
+    <preference id="bConvAlt" type="bool" name="extensions.MeihuaCC.bConvAlt"/>
   </preferences>
   <tabbox id="prefsTab">
 		<tabs>
@@ -38,8 +38,8 @@
 			</hbox>
 			</tabpanel>
 			<tabpanel orient="vertical">
-				<checkbox id="convTitleCheckbox" label="&convTitle.label;" preference="convTitle"/>
-				<checkbox id="convAltCheckbox" label="&convAlt.label;" preference="convAlt"/>
+				<checkbox id="convTitleCheckbox" label="&convTitle.label;" preference="bConvTitle"/>
+				<checkbox id="convAltCheckbox" label="&convAlt.label;" preference="bConvAlt"/>
 			</tabpanel>
 		</tabpanels>
 	</tabbox>

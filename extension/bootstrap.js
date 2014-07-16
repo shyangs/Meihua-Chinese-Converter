@@ -10,7 +10,16 @@ let MeihuaCC = (function(){
 
 
 	let loadSubScript = function(win){
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', win, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', MeihuaCC, 'UTF-8');
+		win.MeihuaCC = MeihuaCC.Core(win);
+		
+		win.MeihuaCC.addTable(MeihuaCC.cn2tw_c);
+		win.MeihuaCC.addTable(MeihuaCC.cn2tw_p);
+		
+		let listenElmt = win.document.getElementById('appcontent');
+		if(listenElmt){
+			listenElmt.addEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
+		}
 	},
 	unloadSubScript = function(win){
 		win.document.getElementById('appcontent').removeEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
@@ -30,10 +39,14 @@ let MeihuaCC = (function(){
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', MeihuaCC, 'UTF-8');
+		
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', MeihuaCC, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', MeihuaCC, "UTF-8");
 
 		MeihuaCC.pref = MeihuaCC.Pref(MeihuaCC.PREF_BRANCH);
 		Services.scriptloader.loadSubScript('resource://meihuacc/content/config.js', MeihuaCC, 'UTF-8');
 		MeihuaCC.prefObserver.initConfig();
+		MeihuaCC.prefObserver.start();
 
 		MeihuaCC.BrowserManager.addListener(loadSubScript);
 		MeihuaCC.BrowserManager.run(loadSubScript);

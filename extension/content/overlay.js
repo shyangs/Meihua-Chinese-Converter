@@ -1,20 +1,14 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
-(function(window){
-
-let {utils: Cu} = Components;
-Cu.import("resource://gre/modules/Services.jsm");
-Services.scriptloader.loadSubScript(
-	"resource://meihuacc/lib/Object.assign_shim.js", window, "UTF-8");
-
-let MeihuaCC = (function(){
-	let doc = document,
+let Core = function(win){
+	Components.utils.import('resource://gre/modules/Services.jsm');
+	Services.scriptloader.loadSubScript('resource://meihuacc/lib/Object.assign_shim.js');
+	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
+		doc = document,
 		oTables = {},
 		oCacheTable = {},
+		config = MeihuaCC.config,
 		userOpt = {
-			bFrame: true,
-			bAlt: true,
-			bTitle: true,
 			aURLs: [
 				{pattern: '\\.tw/', rule: 'exclude'},
 				{pattern: 'https?://tw\\.', rule: 'exclude'},
@@ -131,7 +125,7 @@ let MeihuaCC = (function(){
 			switch(type){
 				case 'frame':
 					let doc = node.contentDocument;
-					if('undefined' !== typeof doc) MeihuaCC.transPage(doc, true, table);
+					if('undefined' !== typeof doc) win.MeihuaCC.transPage(doc, true, table);
 				break;
 				case 'nodeValue':
 					node[type] = convert(node.nodeValue, table);
@@ -181,20 +175,21 @@ let MeihuaCC = (function(){
 			break;
 		}
 		
-		let walker = document.createTreeWalker(root, whatToShow, filter);
+		let doc = (root.nodeType === 9 ? root : root.ownerDocument),
+		walker = doc.createTreeWalker(root, whatToShow, filter);
 		walkStep(walker, type, Date.now(), table);
 	},
 	transPage = function( elmt = doc, bObs = true , table = setTable({}), bFrame = true ){
 		if(bObs){
 			let observer = new MutationObserver(observerCallback);
 			observer.table = table;
-			observer.observe(doc, observeOpt);
+			observer.observe(elmt, observeOpt);
 		}
-		
+
 		treeWalker(elmt, NodeFilter.SHOW_TEXT, 'nodeValue', table);
-		if(bFrame&&userOpt.bFrame) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'frame', table);
-		if(userOpt.bTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title', table);
-		if(userOpt.bAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt', table);
+		if(bFrame&&config.bConvFrame) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'frame', table);
+		if(config.bConvTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title', table);
+		if(config.bConvAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt', table);
 	},
 	applyURL = function(href){
 		let aURLs = userOpt.aURLs;
@@ -220,7 +215,7 @@ let MeihuaCC = (function(){
 		if(!(oURL=applyURL(doc.location.href))) return;
 		let table = setTable(oURL);
 		let startTime = Date.now();
-		MeihuaCC.transPage(doc, true, table, false);
+		win.MeihuaCC.transPage(doc, true, table, false);
 		console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
 	};
 
@@ -230,18 +225,4 @@ let MeihuaCC = (function(){
 		transPage: transPage,
 		userOpt: userOpt
 	};
-})();
-
-Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', MeihuaCC, "UTF-8");
-Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', MeihuaCC, "UTF-8");
-MeihuaCC.addTable(MeihuaCC.cn2tw_c);
-MeihuaCC.addTable(MeihuaCC.cn2tw_p);
-
-
-let listenElmt = document.getElementById('appcontent');
-if(listenElmt){
-	listenElmt.addEventListener('DOMContentLoaded', MeihuaCC.onPageLoad);
-}
-window.MeihuaCC = MeihuaCC;
-
-})(window);
+};

@@ -5,5 +5,5 @@
 <!ENTITY treeColumn.convOrNotTitle "繁簡轉換">
 <!ENTITY addButton.label "新增">
 <!ENTITY deleteButton.label "刪除">
-<!ENTITY convTitle.label "轉換網頁標題與工具提示文字(title attribute)">
+<!ENTITY convTitle.label "轉換工具提示文字(title attribute)">
 <!ENTITY convAlt.label "轉換替代文字(alt attribute)">
