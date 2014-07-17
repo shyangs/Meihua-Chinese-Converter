@@ -12,3 +12,6 @@ User Agent Overrider ( https://github.com/muzuiget/user_agent_overrider ), reuse
 
 MeihuaCC contains code derived from 
 ES6 Shim ( https://github.com/es-shims/es6-shim ), reused under the terms of the MIT license; see LICENSE.MIT.
+
+MeihuaCC contains code derived from 
+New Tong Wen Tang for Firefox ( https://www.openfoundry.org/of/projects/333 ), reused under the terms of MIT license; see LICENSE.MIT.

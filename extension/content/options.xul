@@ -12,11 +12,13 @@
   <preferences>
     <preference id="bConvTitle" type="bool" name="extensions.MeihuaCC.bConvTitle"/>
     <preference id="bConvAlt" type="bool" name="extensions.MeihuaCC.bConvAlt"/>
+    <preference id="sConvHotkey" type="unichar" name="extensions.MeihuaCC.sConvHotkey"/>
   </preferences>
   <tabbox id="prefsTab">
 		<tabs>
 			<tab label="&tab.groupsTitle;"/>
 			<tab label="&tab.generalTitle;"/>
+			<tab label="&tab.hotkeyTitle;"/>
 		</tabs>
 		<tabpanels>
 			<tabpanel orient="vertical">
@@ -41,8 +43,15 @@
 				<checkbox id="convTitleCheckbox" label="&convTitle.label;" preference="bConvTitle"/>
 				<checkbox id="convAltCheckbox" label="&convAlt.label;" preference="bConvAlt"/>
 			</tabpanel>
+			<tabpanel orient="vertical">
+			<hbox>
+				<label value="&convPage.label;" control="sConvHotkeyTextbox" style="padding: 8px 0px 0px 0px; width: 100px;"/>
+				<textbox id="sConvHotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;" preference="sConvHotkey"/>
+				<button id="resetButton" label="&resetButton.label;"/>
+			</hbox>
+			</tabpanel>
 		</tabpanels>
 	</tabbox>
 </prefpane>
-
+<script src="chrome://meihuacc/content/options.js"/>
 </prefwindow>

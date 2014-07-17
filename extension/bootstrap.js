@@ -15,6 +15,8 @@ let MeihuaCC = (function(){
 		
 		win.MeihuaCC.addTable(MeihuaCC.cn2tw_c);
 		win.MeihuaCC.addTable(MeihuaCC.cn2tw_p);
+
+		win.addEventListener('keydown', MeihuaCC.onkeyDown.bind(win));
 		
 		let listenElmt = win.document.getElementById('appcontent');
 		if(listenElmt){
@@ -39,7 +41,8 @@ let MeihuaCC = (function(){
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', MeihuaCC, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', MeihuaCC, 'UTF-8');
-		
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', MeihuaCC, "UTF-8");
+
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', MeihuaCC, "UTF-8");
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', MeihuaCC, "UTF-8");
 
@@ -48,6 +51,7 @@ let MeihuaCC = (function(){
 		MeihuaCC.prefObserver.initConfig();
 		MeihuaCC.prefObserver.start();
 
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/onkeyDown.js', MeihuaCC, 'UTF-8');
 		MeihuaCC.BrowserManager.addListener(loadSubScript);
 		MeihuaCC.BrowserManager.run(loadSubScript);
 

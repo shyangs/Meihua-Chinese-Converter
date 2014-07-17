@@ -4,7 +4,8 @@ let config = {
 	firstRun: true,
 	bConvAlt: true,
 	bConvTitle: true,
-	bConvFrame:true
+	bConvFrame: true,
+	sConvHotkey: null
 };
 let prefObserver = (function(){
 	let {config: config, pref: pref} = MeihuaCC;
@@ -71,6 +72,7 @@ let prefObserver = (function(){
 			initBool('bConvAlt');
 			initBool('bConvTitle');
 			initBool('bConvFrame');
+			initString('sConvHotkey');
 		},
 		reloadConfig: function() {
 			let {loadBool, loadString, loadComplex} = this;
@@ -78,6 +80,7 @@ let prefObserver = (function(){
 			loadBool('bConvAlt');
 			loadBool('bConvTitle');
 			loadBool('bConvFrame');
+			loadString('sConvHotkey');
 		},
 		saveConfig: function() {
 			this.stop(); // avoid recursion

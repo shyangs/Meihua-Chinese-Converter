@@ -1,9 +1,13 @@
 <!ENTITY tab.groupsTitle "模板">
 <!ENTITY tab.generalTitle "一般">
+<!ENTITY tab.hotkeyTitle "熱鍵">
 <!ENTITY treeColumn.nameTitle "名稱">
 <!ENTITY treeColumn.patternTitle "網址樣式">
-<!ENTITY treeColumn.convOrNotTitle "繁簡轉換">
+<!ENTITY treeColumn.convOrNotTitle "行為">
 <!ENTITY addButton.label "新增">
 <!ENTITY deleteButton.label "刪除">
 <!ENTITY convTitle.label "轉換工具提示文字(title attribute)">
 <!ENTITY convAlt.label "轉換替代文字(alt attribute)">
+<!ENTITY convPage.label "轉換網頁文字">
+<!ENTITY hotkey.nulltext "無">
+<!ENTITY resetButton.label "重設">
