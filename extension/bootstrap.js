@@ -1,72 +1,67 @@
 'use strict';
 
 const {interfaces: Ci, utils: Cu} = Components;
-
-
 Cu.import('resource://gre/modules/Services.jsm');
 
-let MeihuaCC = (function(){
+let meihuacc = (function(){
 	const log = function() { dump(Array.slice(arguments).join(' ') + '\n'); };
 
-
 	let loadSubScript = function(win){
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', MeihuaCC, 'UTF-8');
-		win.MeihuaCC = MeihuaCC.Core(win);
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', meihuacc, 'UTF-8');
+		win.MeihuaCC = meihuacc.Core(win);
 		
-		win.MeihuaCC.addTable(MeihuaCC.cn2tw_c);
-		win.MeihuaCC.addTable(MeihuaCC.cn2tw_p);
-
-		win.addEventListener('keydown', MeihuaCC.onkeyDown.bind(win));
+		win.MeihuaCC.addTable(meihuacc.cn2tw_c);
+		win.MeihuaCC.addTable(meihuacc.cn2tw_p);
 		
 		let listenElmt = win.document.getElementById('appcontent');
 		if(listenElmt){
 			listenElmt.addEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
 		}
+
+		meihuacc.insertToolbarButton(win);
+		win.addEventListener('keydown', meihuacc.onkeyDown.bind(win));
 	},
 	unloadSubScript = function(win){
+		meihuacc.removeToolbarButton(win);
 		win.document.getElementById('appcontent').removeEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
 		delete win.MeihuaCC;
 	},
 	
 	startup = function(){
-		MeihuaCC.EXTENSION_NAME = 'MeihuaCC';
-		MeihuaCC.PREF_BRANCH = 'extensions.MeihuaCC.';
-		MeihuaCC.BUTTON_ID = 'meihuacc-tbb';	
-		MeihuaCC.STYLE_URI = 'chrome://meihuacc/skin/browser.css';
+		meihuacc.EXTENSION_NAME = 'MeihuaCC';
+		meihuacc.PREF_BRANCH = 'extensions.MeihuaCC.';
+		meihuacc.BUTTON_ID = 'meihuacc-tbb';	
+		meihuacc.STYLE_URI = 'chrome://meihuacc/skin/browser.css';
 
-		MeihuaCC.trace = function(error) { log(error); log(error.stack); };
+		meihuacc.trace = function(error) { log(error); log(error.stack); };
 
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Pref.js', MeihuaCC, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/BrowserManager.js', MeihuaCC, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', MeihuaCC, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', MeihuaCC, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', MeihuaCC, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', MeihuaCC, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Pref.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/BrowserManager.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', meihuacc, "UTF-8");
 
-		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', MeihuaCC, "UTF-8");
-		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', MeihuaCC, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', meihuacc, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', meihuacc, "UTF-8");
 
-		MeihuaCC.pref = MeihuaCC.Pref(MeihuaCC.PREF_BRANCH);
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/config.js', MeihuaCC, 'UTF-8');
-		MeihuaCC.prefObserver.initConfig();
-		MeihuaCC.prefObserver.start();
+		meihuacc.pref = meihuacc.Pref(meihuacc.PREF_BRANCH);
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/config.js', meihuacc, 'UTF-8');
+		meihuacc.prefObserver.initConfig();
+		meihuacc.prefObserver.start();
 
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/onkeyDown.js', MeihuaCC, 'UTF-8');
-		MeihuaCC.BrowserManager.addListener(loadSubScript);
-		MeihuaCC.BrowserManager.run(loadSubScript);
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/onkeyDown.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/ui.js', meihuacc, 'UTF-8');
+		meihuacc.BrowserManager.addListener(loadSubScript);
+		meihuacc.BrowserManager.run(loadSubScript);
 
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/ui.js', MeihuaCC, 'UTF-8');
-		MeihuaCC.BrowserManager.run(MeihuaCC.insertToolbarButton);
-		MeihuaCC.BrowserManager.addListener(MeihuaCC.insertToolbarButton);
-
-		MeihuaCC.StyleManager.load(MeihuaCC.STYLE_URI);
+		meihuacc.StyleManager.load(meihuacc.STYLE_URI);
 	},
 	shutdown = function(){
-		MeihuaCC.prefObserver.saveConfig();
-		MeihuaCC.BrowserManager.run(MeihuaCC.removeToolbarButton);
-		MeihuaCC.BrowserManager.run(unloadSubScript);
-		MeihuaCC.BrowserManager.destory();
-		MeihuaCC.StyleManager.destory();
+		meihuacc.prefObserver.saveConfig();
+		meihuacc.BrowserManager.run(unloadSubScript);
+		meihuacc.BrowserManager.destory();
+		meihuacc.StyleManager.destory();
 	};
 
 	return {
@@ -98,12 +93,12 @@ function startup(data, reason) {
 		resProtocolHandler.setSubstitution('meihuacc', resURI);
 	}
 
-	MeihuaCC.startup();
+	meihuacc.startup();
 }
 
 // 停用套件或關閉Fx
 function shutdown(data, reason) {
-	MeihuaCC.shutdown();
+	meihuacc.shutdown();
 	var ios = Services.io;
 	var resProtocolHandler = ios.getProtocolHandler('resource')
 		.QueryInterface(Ci.nsIResProtocolHandler);

@@ -8,7 +8,7 @@ let config = {
 	sConvHotkey: null
 };
 let prefObserver = (function(){
-	let {config: config, pref: pref} = MeihuaCC;
+	let {config: config, pref: pref} = meihuacc;
 	return {
 		observe: function(subject, topic, data) {
 			this.reloadConfig();

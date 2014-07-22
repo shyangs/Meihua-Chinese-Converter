@@ -7,7 +7,7 @@ let Core = function(win){
 		doc = document,
 		oTables = {},
 		oCacheTable = {},
-		config = MeihuaCC.config,
+		config = meihuacc.config,
 		userOpt = {
 			aURLs: [
 				{pattern: '\\.tw/', rule: 'exclude'},

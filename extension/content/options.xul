@@ -47,7 +47,7 @@
 			<hbox>
 				<label value="&convPage.label;" control="sConvHotkeyTextbox" style="padding: 8px 0px 0px 0px; width: 100px;"/>
 				<textbox id="sConvHotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;" preference="sConvHotkey"/>
-				<button id="resetButton" label="&resetButton.label;"/>
+				<button id="resetButton" label="&resetButton.label;" oncommand="pref.reset('sConvHotkey')"/>
 			</hbox>
 			</tabpanel>
 		</tabpanels>

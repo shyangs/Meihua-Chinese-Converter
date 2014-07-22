@@ -1,13 +1,13 @@
 'use strict';
 
 let onkeyDown = function(event){
-	if ( !MeihuaCC.config.sConvHotkey ) return;
+	if ( !meihuacc.config.sConvHotkey ) return;
 
 	var keytext = "";
 	var akeycode = event.keyCode;
 
-	if (akeycode in MeihuaCC.keyCodeMapper){
-		keytext = MeihuaCC.keyCodeMapper[akeycode];
+	if (akeycode in meihuacc.keyCodeMapper){
+		keytext = meihuacc.keyCodeMapper[akeycode];
 	}	
 
 	var modifiers = [];
@@ -19,7 +19,7 @@ let onkeyDown = function(event){
 
 	if (modifiers.length > 0){
 		if (keytext != ""){
-			keytext = modifiers.join("+") +  "+" + MeihuaCC.keyCodeMapper[akeycode];
+			keytext = modifiers.join("+") +  "+" + meihuacc.keyCodeMapper[akeycode];
 		} else {
 			keytext = modifiers.join("+");
 		}
@@ -28,7 +28,7 @@ let onkeyDown = function(event){
 	//quit function if keytext is empty
 	if(keytext === "") {
 		return;
-	}else if(keytext === MeihuaCC.config.sConvHotkey){
+	}else if(keytext === meihuacc.config.sConvHotkey){
 		this.MeihuaCC.transPage(this.content.document, true);		
 	}
 };

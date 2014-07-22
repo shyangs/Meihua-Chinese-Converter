@@ -5,15 +5,15 @@ let toolbarButtons = {
 		let document = window.document;
 		let button = (function() {
 			let attrs = {
-				id: MeihuaCC.BUTTON_ID,
+				id: meihuacc.BUTTON_ID,
 				class: 'toolbarbutton-1 chromeclass-toolbar-additional',
-				label: MeihuaCC.EXTENSION_NAME,
-				tooltiptext: MeihuaCC.EXTENSION_NAME,
+				label: meihuacc.EXTENSION_NAME,
+				tooltiptext: meihuacc.EXTENSION_NAME,
 				removable: true
 			};
 
 			let button = document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'toolbarbutton');
-			MeihuaCC.Utils.setAttrs(button, attrs);
+			meihuacc.Utils.setAttrs(button, attrs);
 			button.addEventListener('click', function(event){
 				switch(event.button){
 					case 0://left_click
@@ -33,15 +33,15 @@ let toolbarButtons = {
 insertToolbarButton = function(window) {
 	let button = toolbarButtons.createInstance(window);
 	try {
-		MeihuaCC.ToolbarManager.addWidget(window, button, MeihuaCC.config.firstRun);
+		meihuacc.ToolbarManager.addWidget(window, button, meihuacc.config.firstRun);
 	} catch(error) {
-		MeihuaCC.trace(error);
+		meihuacc.trace(error);
 	}
 },
 removeToolbarButton = function(window) {
 	try {
-		MeihuaCC.ToolbarManager.removeWidget(window, MeihuaCC.BUTTON_ID);
+		meihuacc.ToolbarManager.removeWidget(window, meihuacc.BUTTON_ID);
 	} catch(error) {
-		MeihuaCC.trace(error);
+		meihuacc.trace(error);
 	}
 };
