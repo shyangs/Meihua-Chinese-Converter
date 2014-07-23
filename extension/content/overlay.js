@@ -121,20 +121,21 @@ let Core = function(win){
 	walkStep = function(walker, type, startTime, table){
 		let node = walker.nextNode();
 		if(!node) return;
+		switch(type){
+			case 'frame':
+				let doc = node.contentDocument;
+				if('undefined' !== typeof doc) win.MeihuaCC.transPage(doc, true, table);
+			break;
+			case 'nodeValue':
+				node[type] = convert(node.nodeValue, table);
+			break;
+			case 'alt':
+			case 'title':
+				node[type] = convert(node.getAttribute(type), table);
+			break;
+		}
+
 		if(Date.now() - startTime < 50){
-			switch(type){
-				case 'frame':
-					let doc = node.contentDocument;
-					if('undefined' !== typeof doc) win.MeihuaCC.transPage(doc, true, table);
-				break;
-				case 'nodeValue':
-					node[type] = convert(node.nodeValue, table);
-				break;
-				case 'alt':
-				case 'title':
-					node[type] = convert(node.getAttribute(type), table);
-				break;
-			}
 			walkStep(walker, type, startTime, table);
 		}else{
 			setTimeout(function(){
