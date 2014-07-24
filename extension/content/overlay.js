@@ -8,49 +8,6 @@ let Core = function(win){
 		oTables = {},
 		oCacheTable = {},
 		config = meihuacc.config,
-		userOpt = {
-			aURLs: [
-				{pattern: '\\.tw/', rule: 'exclude'},
-				{pattern: 'https?://tw\\.', rule: 'exclude'},
-				{pattern: '[/.]big5[/.]', rule: 'exclude'},
-				{pattern: '\\.jp/', rule: 'exclude'},
-				{pattern: 'https?://jp\\.', rule: 'exclude'},
-				{pattern: 'wikipedia\\.org/', rule: 'exclude'},
-				{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include',aTables: ['梅花通用單字', '梅花通用詞彙']},
-				{pattern: '[-_=./]gbk?(?:[./]|$)'},
-				{pattern: '123yq\\.com/'},
-				{pattern: '\\.163\\.com/'},
-				{pattern: '\\.17k\\.com/'},
-				{pattern: '360doc\\.com/'},
-				{pattern: 'alipay\\.com/'},
-				{pattern: '\\.b5m\\.com/'},
-				{pattern: 'baidu\\.com/'},
-				{pattern: 'china\\.com/'},
-				{pattern: 'douban\\.com/'},
-				{pattern: '\\.dm5\\.com/'},
-				{pattern: 'hao123\\.com/'},
-				{pattern: 'hongxiu\\.com/'},
-				{pattern: 'ifeng\\.net/'},
-				{pattern: 'jjwxc\\.net/'},
-				{pattern: 'qdmm\\.com/'},
-				{pattern: 'qidian\\.com/'},
-				{pattern: '\\.qq\\.com/'},
-				{pattern: 'readnovel\\.com/'},
-				{pattern: 'sfacg\\.com/'},
-				{pattern: 'sina\\.com/'},
-				{pattern: '\\.so\\.com/'},
-				{pattern: 'sogou\\.com/'},
-				{pattern: 'sohu\\.com/'},
-				{pattern: 'soso\\.com/'},
-				{pattern: 'taobao\\.com/'},
-				{pattern: 'thethirdmedia\\.com/'},
-				{pattern: 'tudou\\.com/'},
-				{pattern: 'weibo\\.com/'},
-				{pattern: 'xinhuanet\\.com/'},
-				{pattern: 'youku\\.com/'},
-				{pattern: 'zongheng\\.com/'}
-			]
-		},
 		observeOpt = {
 			childList: true,
 			subtree:true
@@ -193,7 +150,7 @@ let Core = function(win){
 		if(config.bConvAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt', table);
 	},
 	applyURL = function(href){
-		let aURLs = userOpt.aURLs;
+		let aURLs = config.aURLs;
 		for(let i=0, len=aURLs.length; i<len; i++){
 			let oURL = aURLs[i], pattern = oURL.pattern, rule = oURL.rule, 
 				regexp = new RegExp(pattern, 'i');
@@ -223,7 +180,6 @@ let Core = function(win){
 	return {
 		addTable: addTable,
 		onPageLoad: onPageLoad,
-		transPage: transPage,
-		userOpt: userOpt
+		transPage: transPage
 	};
 };

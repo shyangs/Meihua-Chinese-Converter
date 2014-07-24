@@ -3,7 +3,7 @@
 const {utils: Cu} = Components;
 Cu.import('resource://gre/modules/Services.jsm');
 Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', this, 'UTF-8');
-Services.scriptloader.loadSubScript('resource://meihuacc/lib/Pref.js', this, 'UTF-8');
+Cu.import('resource://meihuacc/lib/Pref.js');
 let pref = Pref('extensions.MeihuaCC.');
 
 let setHotkey = function(event){

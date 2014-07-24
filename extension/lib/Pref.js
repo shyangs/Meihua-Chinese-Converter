@@ -3,6 +3,8 @@
  This file is modified from User Agent Overrider.
  You may find the license in the LICENSE file.
  */
+let EXPORTED_SYMBOLS = ['Pref'];
+
 const Pref = function(branchRoot) {
     const {classes: Cc, interfaces: Ci} = Components;
     const supportsStringClass = Cc['@mozilla.org/supports-string;1'];

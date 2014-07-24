@@ -36,7 +36,6 @@ let meihuacc = (function(){
 		meihuacc.trace = function(error) { log(error); log(error.stack); };
 
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', meihuacc, 'UTF-8');
-		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Pref.js', meihuacc, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/BrowserManager.js', meihuacc, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', meihuacc, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/StyleManager.js', meihuacc, 'UTF-8');
@@ -45,8 +44,7 @@ let meihuacc = (function(){
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', meihuacc, "UTF-8");
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', meihuacc, "UTF-8");
 
-		meihuacc.pref = meihuacc.Pref(meihuacc.PREF_BRANCH);
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/config.js', meihuacc, 'UTF-8');
+		Cu.import('resource://meihuacc/content/config.js', meihuacc);
 		meihuacc.prefObserver.initConfig();
 		meihuacc.prefObserver.start();
 

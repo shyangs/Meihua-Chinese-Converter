@@ -6,7 +6,7 @@ let toolbarButtons = {
 		let button = (function() {
 			let attrs = {
 				id: meihuacc.BUTTON_ID,
-				class: 'toolbarbutton-1 chromeclass-toolbar-additional',
+				"class": 'toolbarbutton-1 chromeclass-toolbar-additional',
 				label: meihuacc.EXTENSION_NAME,
 				tooltiptext: meihuacc.EXTENSION_NAME,
 				removable: true
