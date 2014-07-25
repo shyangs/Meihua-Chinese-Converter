@@ -5,7 +5,9 @@
 <!ENTITY treeColumn.patternTitle "網址樣式">
 <!ENTITY treeColumn.convOrNotTitle "行為">
 <!ENTITY addButton.label "新增">
+<!ENTITY editButton.label "編輯">
 <!ENTITY deleteButton.label "刪除">
+<!ENTITY clearButton.label "全部刪除">
 <!ENTITY convTitle.label "轉換工具提示文字(title attribute)">
 <!ENTITY convAlt.label "轉換替代文字(alt attribute)">
 <!ENTITY convPage.label "轉換網頁文字">

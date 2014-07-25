@@ -6,53 +6,56 @@ Components.utils.import('resource://meihuacc/lib/Pref.js');
 
 let pref = Pref('extensions.MeihuaCC.');
 
+const DEFAULT_ENTRIES_STRING = JSON.stringify([
+	{pattern: '\\.tw/', rule: 'exclude'},
+	{pattern: 'https?://tw\\.', rule: 'exclude'},
+	{pattern: '[/.]big5[/.]', rule: 'exclude'},
+	{pattern: '\\.jp/', rule: 'exclude'},
+	{pattern: 'https?://jp\\.', rule: 'exclude'},
+	{pattern: 'moztw\\.org/', rule: 'exclude'},
+	{pattern: 'wikipedia\\.org/', rule: 'exclude'},
+	{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include'},
+	{pattern: '[-_=./]gbk?(?:[./]|$)'},
+	{pattern: '123yq\\.com/'},
+	{pattern: '\\.163\\.com/'},
+	{pattern: '\\.17k\\.com/'},
+	{pattern: '360doc\\.com/'},
+	{pattern: 'alipay\\.com/'},
+	{pattern: '\\.b5m\\.com/'},
+	{pattern: 'baidu\\.com/'},
+	{pattern: 'china\\.com/'},
+	{pattern: 'douban\\.com/'},
+	{pattern: '\\.dm5\\.com/'},
+	{pattern: 'hao123\\.com/'},
+	{pattern: 'hongxiu\\.com/'},
+	{pattern: 'ifeng\\.net/'},
+	{pattern: 'jjwxc\\.net/'},
+	{pattern: 'mozest\\.com/'},
+	{pattern: 'qdmm\\.com/'},
+	{pattern: 'qidian\\.com/'},
+	{pattern: '\\.qq\\.com/'},
+	{pattern: 'readnovel\\.com/'},
+	{pattern: 'sfacg\\.com/'},
+	{pattern: 'sina\\.com/'},
+	{pattern: '\\.so\\.com/'},
+	{pattern: 'sogou\\.com/'},
+	{pattern: 'sohu\\.com/'},
+	{pattern: 'soso\\.com/'},
+	{pattern: 'taobao\\.com/'},
+	{pattern: 'thethirdmedia\\.com/'},
+	{pattern: 'tudou\\.com/'},
+	{pattern: 'weibo\\.com/'},
+	{pattern: 'xinhuanet\\.com/'},
+	{pattern: 'youku\\.com/'},
+	{pattern: 'zongheng\\.com/'}
+]);
 let config = {
 	firstRun: true,
 	bConvAlt: true,
 	bConvTitle: true,
 	bConvFrame: true,
 	sConvHotkey: null,
-	aURLs: [
-		{pattern: '\\.tw/', rule: 'exclude'},
-		{pattern: 'https?://tw\\.', rule: 'exclude'},
-		{pattern: '[/.]big5[/.]', rule: 'exclude'},
-		{pattern: '\\.jp/', rule: 'exclude'},
-		{pattern: 'https?://jp\\.', rule: 'exclude'},
-		{pattern: 'wikipedia\\.org/', rule: 'exclude'},
-		{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include'},
-		{pattern: '[-_=./]gbk?(?:[./]|$)'},
-		{pattern: '123yq\\.com/'},
-		{pattern: '\\.163\\.com/'},
-		{pattern: '\\.17k\\.com/'},
-		{pattern: '360doc\\.com/'},
-		{pattern: 'alipay\\.com/'},
-		{pattern: '\\.b5m\\.com/'},
-		{pattern: 'baidu\\.com/'},
-		{pattern: 'china\\.com/'},
-		{pattern: 'douban\\.com/'},
-		{pattern: '\\.dm5\\.com/'},
-		{pattern: 'hao123\\.com/'},
-		{pattern: 'hongxiu\\.com/'},
-		{pattern: 'ifeng\\.net/'},
-		{pattern: 'jjwxc\\.net/'},
-		{pattern: 'qdmm\\.com/'},
-		{pattern: 'qidian\\.com/'},
-		{pattern: '\\.qq\\.com/'},
-		{pattern: 'readnovel\\.com/'},
-		{pattern: 'sfacg\\.com/'},
-		{pattern: 'sina\\.com/'},
-		{pattern: '\\.so\\.com/'},
-		{pattern: 'sogou\\.com/'},
-		{pattern: 'sohu\\.com/'},
-		{pattern: 'soso\\.com/'},
-		{pattern: 'taobao\\.com/'},
-		{pattern: 'thethirdmedia\\.com/'},
-		{pattern: 'tudou\\.com/'},
-		{pattern: 'weibo\\.com/'},
-		{pattern: 'xinhuanet\\.com/'},
-		{pattern: 'youku\\.com/'},
-		{pattern: 'zongheng\\.com/'}
-	]
+	aURLs: []
 };
 let prefObserver = {
 	observe: function(subject, topic, data) {
@@ -118,6 +121,7 @@ let prefObserver = {
 		initBool('bConvTitle');
 		initBool('bConvFrame');
 		initString('sConvHotkey');
+		initComplex('aURLs', JSON.parse, DEFAULT_ENTRIES_STRING);
 	},
 	reloadConfig: function() {
 		let {loadBool, loadString, loadComplex} = this;
@@ -126,6 +130,7 @@ let prefObserver = {
 		loadBool('bConvTitle');
 		loadBool('bConvFrame');
 		loadString('sConvHotkey');
+		loadComplex('aURLs', JSON.parse);
 	},
 	saveConfig: function() {
 		this.stop(); // avoid recursion
@@ -133,5 +138,5 @@ let prefObserver = {
 		pref.setBool('firstRun', false);
 
 		this.start();
-		}
+	}
 };

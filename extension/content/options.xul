@@ -23,7 +23,7 @@
 		<tabpanels>
 			<tabpanel orient="vertical">
 			<hbox>
-				<tree id="listTree" seltype="single" editable="true" flex="1">
+				<tree id="listTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
 				<treecols>
                   <treecol id="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
                   <splitter class="tree-splitter"/>
@@ -35,7 +35,9 @@
 				</tree>
 				<vbox>
 				  <button id="addButton" label="&addButton.label;"/>
-				  <button id="deleteButton" label="&deleteButton.label;"/>
+				  <button id="editButton" disabled="true" label="&editButton.label;" oncommand="editGroup();"/>
+				  <button id="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteGroup();"/>
+				  <button id="clearButton" label="&clearButton.label;" oncommand="clearGroup();"/>
 				</vbox>
 			</hbox>
 			</tabpanel>
