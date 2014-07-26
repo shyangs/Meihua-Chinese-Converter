@@ -26,7 +26,6 @@ const DEFAULT_ENTRIES_STRING = JSON.stringify([
 	{pattern: 'china\\.com/'},
 	{pattern: 'douban\\.com/'},
 	{pattern: '\\.dm5\\.com/'},
-	{pattern: 'hao123\\.com/'},
 	{pattern: 'hongxiu\\.com/'},
 	{pattern: 'ifeng\\.net/'},
 	{pattern: 'jjwxc\\.net/'},

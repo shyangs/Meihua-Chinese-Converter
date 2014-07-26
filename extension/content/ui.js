@@ -21,6 +21,7 @@ let toolbarButtons = {
 						window.MeihuaCC.transPage(window.content.document, true);
 					break;
 					case 2://right_click
+						event.preventDefault();//not popup context menu
 						window.openDialog('chrome://meihuacc/content/options.xul', '', 'chrome,titlebar,centerscreen,modal');
 					break;
 				}

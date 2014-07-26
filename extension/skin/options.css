@@ -2,11 +2,14 @@
   height: auto !important;
   width: auto !important;
   max-width: 1024px;
-  min-width: 500px;
+  min-width: 600px;
+  max-height: 768px;
+  min-height: 500px;
 }
 
-#listTree {
-  min-height: 400px;
+tree {
+  min-height: 300px;
+  min-width: 200px;
 }
 
 .label {

@@ -4,6 +4,7 @@
 <!DOCTYPE dialog SYSTEM "chrome://meihuacc/locale/options.dtd">
 
 <dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="onDialogAccept();">
+<hbox>
 <vbox>
 	<hbox>
 		<label value="&treeColumn.nameTitle;" control="nameTextbox" class="label"/>
@@ -22,6 +23,34 @@
 		  </menupopup>
 		</menulist>
 	</hbox>
+	<separator/>
+	<groupbox>
+		<caption label="&mappingTables.inUse.label;"/>
+		<tree id="inUseListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectGroup();">
+		<treecols>
+			 <treecol id="inUseNameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren id="inUseListTreeChildren"/>
+		</tree>
+	</groupbox>
 </vbox>
+<vbox>
+	<spacer flex="1"/>
+	<button id="addButton" label="&addTable.button.label;" disabled="true" oncommand=""/>
+	<button id="removeButton" label="&removeTable.button.label;" disabled="true" oncommand=""/>
+	<spacer flex="1"/>
+</vbox>
+<vbox flex="1">
+	<groupbox flex="1">
+		<caption label="&mappingTables.available.label;"/>
+		<tree id="availableListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectGroup();">
+		<treecols>
+			 <treecol id="availableNameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren id="availableListTreeChildren"/>
+		</tree>
+	</groupbox>
+</vbox>
+</hbox>
 <script src="chrome://meihuacc/content/groupEditor.js"/>
 </dialog>

@@ -2,6 +2,7 @@
 <!ENTITY tab.groupsTitle "模板">
 <!ENTITY tab.generalTitle "一般">
 <!ENTITY tab.hotkeyTitle "熱鍵">
+<!ENTITY treeColumn.indexTitle "編號">
 <!ENTITY treeColumn.nameTitle "名稱">
 <!ENTITY treeColumn.patternTitle "網址樣式">
 <!ENTITY treeColumn.convOrNotTitle "行為">
@@ -11,8 +12,16 @@
 <!ENTITY editButton.label "編輯">
 <!ENTITY deleteButton.label "刪除">
 <!ENTITY clearButton.label "全部刪除">
+<!ENTITY moveUpButton.label "向上移">
+<!ENTITY moveDownButton.label "向下移">
+<!ENTITY moveToButton.label "移動到">
 <!ENTITY convTitle.label "轉換工具提示文字(title attribute)">
 <!ENTITY convAlt.label "轉換替代文字(alt attribute)">
 <!ENTITY convPage.label "轉換網頁文字">
 <!ENTITY hotkey.nulltext "無">
 <!ENTITY resetButton.label "重設">
+
+<!ENTITY mappingTables.inUse.label "映射表">
+<!ENTITY mappingTables.available.label "可用的映射表">
+<!ENTITY addTable.button.label "＜＜ 新增">
+<!ENTITY removeTable.button.label "移除 ＞＞">
