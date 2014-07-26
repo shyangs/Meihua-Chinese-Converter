@@ -8,3 +8,7 @@
 #listTree {
   min-height: 400px;
 }
+
+.label {
+  padding: 8px 0px 0px 0px; width: 80px;
+}

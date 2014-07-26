@@ -2,13 +2,14 @@
 /* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
 let toolbarButtons = {
 	createInstance: function(window) {
+		let stringBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 		let document = window.document;
 		let button = (function() {
 			let attrs = {
 				id: meihuacc.BUTTON_ID,
 				"class": 'toolbarbutton-1 chromeclass-toolbar-additional',
 				label: meihuacc.EXTENSION_NAME,
-				tooltiptext: meihuacc.EXTENSION_NAME,
+				tooltiptext: meihuacc.EXTENSION_NAME + '\n' + stringBundle.GetStringFromName('tooltip.toolbarButton'),
 				removable: true
 			};
 
@@ -18,10 +19,10 @@ let toolbarButtons = {
 				switch(event.button){
 					case 0://left_click
 						window.MeihuaCC.transPage(window.content.document, true);
-					break/*
+					break;
 					case 2://right_click
-						//設定介面，施工中
-					break*/
+						window.openDialog('chrome://meihuacc/content/options.xul', '', 'chrome,titlebar,centerscreen,modal');
+					break;
 				}
 			});
 			return button;

@@ -52,6 +52,42 @@ deleteGroup = function(){
 
     if(index < aURLs.length) selection.select(index);
     else if(index > 0) selection.select(index - 1);
+},
+editGroup = function(index){
+	if (typeof index === 'undefined'){
+		let selection = tree.view.selection;
+		if(selection.count === 0) return;
+		index = selection.currentIndex;
+	}
+
+	let group = aURLs[index];
+	let params = { "in": { group: group } };
+
+    window.openDialog("chrome://meihuacc/content/groupEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
+
+	if(params.out){
+		aURLs.splice(index, 1, params.out.group);
+		savePref();
+		tree.boxObject.rowCountChanged(index, 0);
+	}
+},
+addGroup = function(index){
+	if (typeof index === 'undefined'){
+		let selection = tree.view.selection;
+		if(selection.count === 0) index = aURLs.length;
+		else index = selection.currentIndex;
+	}
+	let params = {};
+
+    window.openDialog("chrome://meihuacc/content/groupEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
+
+	if(params.out){
+		aURLs.splice(index, 0, params.out.group);
+		savePref();
+		tree.boxObject.rowCountChanged(index, 1);
+		tree.boxObject.ensureRowIsVisible(index);
+		tree.view.selection.select(index);
+	}
 };
 
 let setHotkey = function(event){

@@ -6,7 +6,8 @@
 <prefwindow
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   id="meihuaccOptions"
-  windowtype="MeihuaCC:Preferences">
+  windowtype="MeihuaCC:Preferences"
+  title="&options.title;">
 
 <prefpane id="main" flex="1">
   <preferences>
@@ -34,7 +35,7 @@
 				<treechildren id="listTreeChildren"/>
 				</tree>
 				<vbox>
-				  <button id="addButton" label="&addButton.label;"/>
+				  <button id="addButton" label="&addButton.label;" oncommand="addGroup();"/>
 				  <button id="editButton" disabled="true" label="&editButton.label;" oncommand="editGroup();"/>
 				  <button id="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteGroup();"/>
 				  <button id="clearButton" label="&clearButton.label;" oncommand="clearGroup();"/>
@@ -47,7 +48,7 @@
 			</tabpanel>
 			<tabpanel orient="vertical">
 			<hbox>
-				<label value="&convPage.label;" control="sConvHotkeyTextbox" style="padding: 8px 0px 0px 0px; width: 100px;"/>
+				<label value="&convPage.label;" control="sConvHotkeyTextbox" class="label"/>
 				<textbox id="sConvHotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;" preference="sConvHotkey"/>
 				<button id="resetButton" label="&resetButton.label;" oncommand="pref.reset('sConvHotkey')"/>
 			</hbox>
