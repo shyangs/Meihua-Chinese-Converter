@@ -8,9 +8,6 @@ This applies to all source code files.
 Individual files may have different licenses.
 
 MeihuaCC contains code derived from 
-ES6 Shim ( https://github.com/es-shims/es6-shim ), reused under the terms of the MIT license; see LICENSE.MIT.
-
-MeihuaCC contains code derived from 
 FoxReplace ( http://code.google.com/p/foxreplace/ ), reused under the terms of the GPLv2; see LICENSE.GPL.
 
 MeihuaCC contains code derived from 

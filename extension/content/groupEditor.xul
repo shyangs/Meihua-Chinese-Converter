@@ -7,15 +7,15 @@
 <hbox>
 <vbox>
 	<hbox>
-		<label value="&treeColumn.nameTitle;" control="nameTextbox" class="label"/>
+		<label value="&name.label;" control="nameTextbox" class="label"/>
 		<textbox id="nameTextbox" flex="1"/>
 	</hbox>
 	<hbox>
-		<label value="&treeColumn.patternTitle;" control="patternTextbox" class="label"/>
+		<label value="&pattern.label;" control="patternTextbox" class="label"/>
 		<textbox id="patternTextbox" flex="1"/>
 	</hbox>
 	<hbox>
-		<label value="&treeColumn.convOrNotTitle;" class="label"/>
+		<label value="&convOrNot.label;" class="label"/>
 		<menulist id="convOrNotMenulist" flex="1">
 		  <menupopup>
 			<menuitem label="&conv.include;" value="include"/>

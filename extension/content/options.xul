@@ -18,6 +18,7 @@
   <tabbox id="prefsTab" flex="1">
 		<tabs>
 			<tab label="&tab.groupsTitle;"/>
+			<tab label="&tab.userTableTitle;"/>
 			<tab label="&tab.generalTitle;"/>
 			<tab label="&tab.hotkeyTitle;"/>
 		</tabs>
@@ -26,12 +27,13 @@
 			<hbox flex="1">
 				<tree id="listTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
 				<treecols>
-				  <treecol id="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
-                  <treecol id="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+				  <treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+				  <splitter class="tree-splitter"/>
+                  <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
                   <splitter class="tree-splitter"/>
-                  <treecol id="patternColumn" label="&treeColumn.patternTitle;" flex="1" persist="width hidden"/>
+                  <treecol name="patternColumn" label="&treeColumn.patternTitle;" flex="1" persist="width hidden"/>
                   <splitter class="tree-splitter"/>
-                  <treecol id="convOrNotColumn" label="&treeColumn.convOrNotTitle;" flex="1" persist="width hidden"/>
+                  <treecol name="convOrNotColumn" label="&treeColumn.convOrNotTitle;" flex="1" persist="width hidden"/>
 				</treecols>
 				<treechildren id="listTreeChildren"/>
 				</tree>
@@ -44,6 +46,22 @@
 				  <button id="moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="moveUpGroup();"/>
 				  <button id="moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="moveDownGroup();"/>
 				  <button id="moveToButton" disabled="true" label="&moveToButton.label;" oncommand="moveToGroup();"/>
+				</vbox>
+			</hbox>
+			</tabpanel>
+			<tabpanel orient="vertical" flex="1">
+			<hbox flex="1">
+				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
+				<treecols>
+                  <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+				</treecols>
+				<treechildren id="userTableTreeChildren"/>
+				</tree>
+				<vbox>
+				  <button id="addButton" label="&addButton.label;" oncommand="addTable();"/>
+				  <button id="editButton" disabled="true" label="&editButton.label;" oncommand="editGroup();"/>
+				  <button id="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteGroup();"/>
+				  <button id="clearButton" label="&clearButton.label;" oncommand="clearGroup();"/>
 				</vbox>
 			</hbox>
 			</tabpanel>

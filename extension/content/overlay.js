@@ -1,12 +1,10 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
 let Core = function(win){
-	Components.utils.import('resource://gre/modules/Services.jsm');
-	Services.scriptloader.loadSubScript('resource://meihuacc/lib/Object.assign_shim.js');
 	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
 		doc = document,
 		oTables = {},
-		oCacheTable = {},
+		oCacheMaps = {},
 		config = meihuacc.config,
 		observeOpt = {
 			childList: true,
@@ -16,10 +14,10 @@ let Core = function(win){
 		oTables[table.name] = table;
 	},
 	setTable = function(oURL){
-		let table = {mappings:{}, maxLen:0, id:''},
+		let table = {aMappings:[], maxPhLen:0, id:''},
 			aTables = oURL.aTables;
 		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length === 0 ){
-			aTables = ['梅花通用單字', '梅花通用詞彙'];
+			aTables = ['梅花通用單字(繁)', '梅花通用詞彙(繁)'];
 		}
 
 		table.id = aTables.length.toString();
@@ -27,15 +25,19 @@ let Core = function(win){
 			let version = oTables[tableName].version || Date.now();
 			table.id += ',' + tableName + version;
 		});
-		if( 'undefined' !== typeof oCacheTable[table.id] ) return oCacheTable[table.id];
+		if( 'undefined' !== typeof oCacheMaps[table.id] ) return oCacheMaps[table.id];
 
 		aTables.forEach(function(tableName){
 			let item = oTables[tableName];
-			Object.assign(table.mappings, item.mappings);
-			table.maxLen = Math.max(table.maxLen, item.maxLen);
+			table.aMappings = table.aMappings.concat(item.aMappings);
+			table.maxPhLen = Math.max(table.maxPhLen, item.maxPhLen);
 		});
-		oCacheTable[table.id] = table;
-		return table;
+		oCacheMaps[table.id] = {
+			mPhrases: new Map(table.aMappings),
+			maxPhLen: table.maxPhLen,
+			id: table.id
+		};
+		return oCacheMaps[table.id];
 	},
 	observerCallback = function(mutations, self){
 		mutations.forEach(function(mutation){
@@ -52,15 +54,15 @@ let Core = function(win){
 		});
 	},
 	convert = function(str, table){
-		let leng = Math.min(table.maxLen, str.length);
-		let mappings = table.mappings;
+		let leng = Math.min(table.maxPhLen, str.length);
+		let mPhrases = table.mPhrases;
 		let txt = '';
 		for(let idx = 0, strLen = str.length; idx < strLen;){
 			let bHit = false;
 			for(let j = leng; j > 0; j--){
 				let ss = str.substr(idx, j);
-				if( 'undefined' !== typeof mappings[ss] ){
-					txt += mappings[ss];
+				if(mPhrases.has(ss)){
+					txt += mPhrases.get(ss);//aMappings[ss];
 					idx += j;
 					bHit = true;
 					break;
