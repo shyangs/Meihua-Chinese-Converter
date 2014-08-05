@@ -3,12 +3,12 @@
 <?xml-stylesheet href="chrome://meihuacc/skin/options.css" type="text/css"?>
 <!DOCTYPE dialog SYSTEM "chrome://meihuacc/locale/options.dtd">
 
-<dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="onDialogAccept();">
+<dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="return onDialogAccept();">
 <hbox>
 <vbox>
   <hbox>
-    <label value="&name.label;" control="tableNameTextbox" class="label"/>
-    <textbox id="tableNameTextbox" flex="1"/>
+    <label value="&name.label;" control="nameTextbox" class="label"/>
+    <textbox id="nameTextbox" flex="1"/>
   </hbox>
   <hbox>
   <vbox>
@@ -20,23 +20,23 @@
 	<textbox id="outputStringTextbox" flex="1"/>
   </vbox>
   </hbox>
-  <tree id="convPhraseTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
+  <tree id="phraseTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup(this);">
   <treecols>
     <treecol name="inputColumn" label="&inputColumn.title;" flex="1" persist="width hidden"/>
     <splitter class="tree-splitter"/>
     <treecol name="outputColumn" label="&outputColumn.title;" flex="1" persist="width hidden"/>
   </treecols>
-  <treechildren id="convPhraseTreeChildren"/>
+  <treechildren id="phraseTreeChildren"/>
   </tree>
 </vbox>
 <vbox>
   <spacer style="height: 56px;"/>
   <button id="addPhraseButton" label="&addButton.label;" oncommand="addPhrase();"/>
   <separator/>
-  <button id="editPhraseButton" disabled="true" label="&editButton.label;" oncommand="editPhrase();"/>
-  <button id="deletePhraseButton" disabled="true" label="&deleteButton.label;" oncommand="deletePhrase();"/>
+  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editPhrase();"/>
+  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deletePhrase();"/>
   <button id="clearPhraseButton" label="&clearButton.label;" oncommand="clearPhrase();"/>
 </vbox>
 </hbox>
-<script src=""/>
+<script src="chrome://meihuacc/content/tableEditor.js"/>
 </dialog>

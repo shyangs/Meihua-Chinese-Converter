@@ -3,7 +3,8 @@
 let cn2tw_c={
 name:'梅花通用單字(繁)',
 maxPhLen:1,
-version:140727,
+count:2679,
+version:140805,
 aMappings:[
 ["捂","摀"],
 ["胄","冑"],

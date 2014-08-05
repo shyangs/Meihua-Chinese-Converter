@@ -4,13 +4,17 @@ const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 Cu.import('resource://gre/modules/Services.jsm');
 Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', this, 'UTF-8');
 Cu.import('resource://meihuacc/lib/Pref.js');
+Cu.import('resource://meihuacc/lib/File.js');
+
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
 let pref = Pref('extensions.MeihuaCC.'),
 	aURLs = JSON.parse(pref.getString('aURLs')),
 	groupTree = document.getElementById('listTree'),
 	tableTree = document.getElementById('userTableTree');
-	
+
+let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'));
+
 let savePref = function(){
 	pref.setString('aURLs', JSON.stringify(aURLs));
 };
@@ -27,14 +31,28 @@ let groupTreeView = {
 		}
 	},
 	setTree: function(treebox){ this.treebox = treebox; }
+},
+tableTreeView = {
+	rowCount: aUserDefinedTable.length,
+	getCellText: function(row, column){
+		let group = aUserDefinedTable[row];
+		switch(column.element.getAttribute('name')){
+			case 'nameColumn': return group[0];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
 };
 
+groupTree.view = groupTreeView;
+tableTree.view = tableTreeView;
+
+
 let onSelectGroup = function(){
-	let editButton =  document.getElementById('editButton'),
-		deleteButton =  document.getElementById('deleteButton'),
-		moveUpButton =  document.getElementById('moveUpButton'),
-		moveDownButton =  document.getElementById('moveDownButton'),
-		moveToButton =  document.getElementById('moveToButton');
+	let editButton = document.getElementById('editButton'),
+		deleteButton = document.getElementById('deleteButton'),
+		moveUpButton = document.getElementById('moveUpButton'),
+		moveDownButton = document.getElementById('moveDownButton'),
+		moveToButton = document.getElementById('moveToButton');
 	if(groupTree.currentIndex >= 0) {
 		editButton.disabled = false;
 		deleteButton.disabled = false;
@@ -49,11 +67,28 @@ let onSelectGroup = function(){
 		moveToButton.disabled = true;
 	}
 },
+onSelectTable = function(el){
+	el = el.parentNode;
+	let editButton = el.getElementsByClassName('editButton')[0],
+		deleteButton = el.getElementsByClassName('deleteButton')[0];
+	if(tableTree.currentIndex >= 0) {
+		editButton.disabled = false;
+		deleteButton.disabled = false;
+	}else{
+		editButton.disabled = true;
+		deleteButton.disabled = true;
+	}
+},
 
 clearGroup = function(){
 	aURLs = [];
 	savePref();
 },
+clearTable = function(){
+	aUserDefinedTable = [];
+	File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+},
+
 deleteGroup = function(){
 	let selection = groupTree.view.selection;
 	if(selection.count === 0) return;
@@ -66,9 +101,21 @@ deleteGroup = function(){
     if(index < aURLs.length) selection.select(index);
     else if(index > 0) selection.select(index - 1);
 },
+deleteTable = function(){
+	let selection = tableTree.view.selection;
+	if(selection.count === 0) return;
+
+    let index = selection.currentIndex;
+    aUserDefinedTable.splice(index, 1);
+    File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+    tableTree.boxObject.rowCountChanged(index, -1);
+
+    if(index < aUserDefinedTable.length) selection.select(index);
+    else if(index > 0) selection.select(index - 1);
+},
 
 editGroup = function(index){
-	if (typeof index === 'undefined'){
+	if(typeof index === 'undefined'){
 		let selection = groupTree.view.selection;
 		if(selection.count === 0) return;
 		index = selection.currentIndex;
@@ -86,7 +133,7 @@ editGroup = function(index){
 	}
 },
 addGroup = function(index){
-	if (typeof index === 'undefined'){
+	if(typeof index === 'undefined'){
 		let selection = groupTree.view.selection;
 		if(selection.count === 0) index = aURLs.length;
 		else index = selection.currentIndex;
@@ -96,29 +143,60 @@ addGroup = function(index){
     window.openDialog("chrome://meihuacc/content/groupEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
 
 	if(params.out){
-		aURLs.splice(index, 0, params.out.group);
+		aURLs.splice(index+1, 0, params.out.group);
 		savePref();
-		groupTree.boxObject.rowCountChanged(index, 1);
-		groupTree.boxObject.ensureRowIsVisible(index);
-		groupTree.view.selection.select(index);
+		groupTree.boxObject.rowCountChanged(index+1, 1);
+		groupTree.boxObject.ensureRowIsVisible(index+1);
+		groupTree.view.selection.select(index+1);
+	}
+},
+
+editTable = function(index){
+	if(typeof index === 'undefined'){
+		let selection = tableTree.view.selection;
+		if(selection.count === 0) return;
+		index = selection.currentIndex;
+	}
+
+	let group = aUserDefinedTable[index];
+	let params = { "in": { group: group } };
+
+    window.openDialog("chrome://meihuacc/content/tableEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
+
+	if(params.out){
+		aUserDefinedTable.splice(index, 1, params.out.group);
+
+		File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+		tableTree.boxObject.invalidateRange(index, index);
 	}
 },
 addTable = function(index){
-	if (typeof index === 'undefined'){
+	if(typeof index === 'undefined'){
 		let selection = tableTree.view.selection;
 		if(selection.count === 0) index = aURLs.length;
 		else index = selection.currentIndex;
 	}
-	let params = {};
+	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}];
+	let params = { "in": { group: group } };
 
     window.openDialog("chrome://meihuacc/content/tableEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
+
+	if(params.out){
+		aUserDefinedTable.splice(index+1, 0, params.out.group);
+
+		File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+
+		tableTree.boxObject.rowCountChanged(index+1, 1);
+		tableTree.boxObject.ensureRowIsVisible(index+1);
+		tableTree.view.selection.select(index+1);
+	}
 },
 
 moveUpGroup = function(){
 	let selection = groupTree.view.selection;
-	if (selection.count === 0) return;
+	if(selection.count === 0) return;
 	let index = selection.currentIndex;
-	if (index === 0) return;
+	if(index === 0) return;
 	let group = aURLs[index];
 	aURLs.splice(index, 1);
 	aURLs.splice(index - 1, 0, group);
@@ -130,9 +208,9 @@ moveUpGroup = function(){
 },
 moveDownGroup = function(){
 	let selection = groupTree.view.selection;
-	if (selection.count === 0) return;
+	if(selection.count === 0) return;
 	let index = selection.currentIndex;
-	if (index === aURLs.length - 1) return;
+	if(index === aURLs.length - 1) return;
 	let group = aURLs[index];
 	aURLs.splice(index, 1);
 	aURLs.splice(index + 1, 0, group);
@@ -144,7 +222,7 @@ moveDownGroup = function(){
 },
 moveToGroup = function(){
 	let selection = groupTree.view.selection;
-	if (selection.count === 0) return;
+	if(selection.count === 0) return;
 	let index = selection.currentIndex;
 	let group = aURLs[index];
 	let str = stringBundle.GetStringFromName('prompt.newIndex');
@@ -170,7 +248,7 @@ let setHotkey = function(event){
 	let sHotkey = '', 
 		nKeyCode = event.keyCode;
 
-	if (nKeyCode in keyCodeMapper){
+	if(nKeyCode in keyCodeMapper){
 		sHotkey = keyCodeMapper[nKeyCode];
 	}	
 
@@ -180,8 +258,8 @@ let setHotkey = function(event){
 	if(event.shiftKey) modifiers.push("SHIFT");
 	//if(event.metaKey) modifiers.push("META");
 
-	if (modifiers.length > 0){
-		if (sHotkey !== ''){
+	if(modifiers.length > 0){
+		if(sHotkey !== ''){
 			sHotkey = modifiers.join('+') + '+' + keyCodeMapper[nKeyCode];
 		} else {
 			sHotkey = modifiers.join('+');
@@ -191,5 +269,4 @@ let setHotkey = function(event){
 	pref.setString('sConvHotkey', sHotkey);
 };
 
-groupTree.view = groupTreeView;
 document.getElementById('sConvHotkeyTextbox').onkeydown = setHotkey;

@@ -51,7 +51,7 @@
 			</tabpanel>
 			<tabpanel orient="vertical" flex="1">
 			<hbox flex="1">
-				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
+				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
 				</treecols>
@@ -59,9 +59,9 @@
 				</tree>
 				<vbox>
 				  <button id="addButton" label="&addButton.label;" oncommand="addTable();"/>
-				  <button id="editButton" disabled="true" label="&editButton.label;" oncommand="editGroup();"/>
-				  <button id="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteGroup();"/>
-				  <button id="clearButton" label="&clearButton.label;" oncommand="clearGroup();"/>
+				  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editTable();"/>
+				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteTable();"/>
+				  <button class="clearButton" label="&clearButton.label;" oncommand="clearTable();"/>
 				</vbox>
 			</hbox>
 			</tabpanel>
