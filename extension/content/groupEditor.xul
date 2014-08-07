@@ -16,7 +16,7 @@
 	</hbox>
 	<hbox>
 		<label value="&convOrNot.label;" class="label"/>
-		<menulist id="convOrNotMenulist" flex="1">
+		<menulist id="convOrNotMenulist" flex="1" oncommand="onChange(this.selectedIndex);">
 		  <menupopup>
 			<menuitem label="&conv.include;" value="include"/>
 			<menuitem label="&conv.exclude;" value="exclude"/>
@@ -26,9 +26,11 @@
 	<separator/>
 	<groupbox>
 		<caption label="&mappingTables.inUse.label;"/>
-		<tree id="inUseListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectGroup();">
+		<tree id="inUseListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectInUseList();">
 		<treecols>
-			 <treecol id="inUseNameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+			<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+			<splitter class="tree-splitter"/>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
 		</treecols>
 		<treechildren id="inUseListTreeChildren"/>
 		</tree>
@@ -36,16 +38,20 @@
 </vbox>
 <vbox>
 	<spacer flex="1"/>
-	<button id="addButton" label="&addTable.button.label;" disabled="true" oncommand=""/>
-	<button id="removeButton" label="&removeTable.button.label;" disabled="true" oncommand=""/>
+	<button id="addButton" label="&addTable.button.label;" disabled="true" oncommand="addTable();"/>
+	<button id="removeButton" label="&removeTable.button.label;" disabled="true" oncommand="removeTable();"/>
+	<separator/>
+	<button id="moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="moveUpTable();"/>
+	<button id="moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="moveDownTable();"/>
+	<button id="moveToButton" disabled="true" label="&moveToButton.label;" oncommand="moveToTable();"/>
 	<spacer flex="1"/>
 </vbox>
 <vbox flex="1">
 	<groupbox flex="1">
 		<caption label="&mappingTables.available.label;"/>
-		<tree id="availableListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectGroup();">
+		<tree id="availableListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectAvailableList();">
 		<treecols>
-			 <treecol id="availableNameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
 		</treecols>
 		<treechildren id="availableListTreeChildren"/>
 		</tree>

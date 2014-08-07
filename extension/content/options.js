@@ -13,7 +13,7 @@ let pref = Pref('extensions.MeihuaCC.'),
 	groupTree = document.getElementById('listTree'),
 	tableTree = document.getElementById('userTableTree');
 
-let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'));
+let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
 
 let savePref = function(){
 	pref.setString('aURLs', JSON.stringify(aURLs));
@@ -173,7 +173,7 @@ editTable = function(index){
 addTable = function(index){
 	if(typeof index === 'undefined'){
 		let selection = tableTree.view.selection;
-		if(selection.count === 0) index = aURLs.length;
+		if(selection.count === 0) index = aUserDefinedTable.length;
 		else index = selection.currentIndex;
 	}
 	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}];
