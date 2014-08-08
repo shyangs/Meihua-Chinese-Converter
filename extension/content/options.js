@@ -38,6 +38,7 @@ tableTreeView = {
 		let group = aUserDefinedTable[row];
 		switch(column.element.getAttribute('name')){
 			case 'nameColumn': return group[0];
+			case 'countColumn': return group[1].count;
 		}
 	},
 	setTree: function(treebox){ this.treebox = treebox; }
@@ -158,8 +159,14 @@ editTable = function(index){
 		index = selection.currentIndex;
 	}
 
-	let group = aUserDefinedTable[index];
-	let params = { "in": { group: group } };
+	let group = aUserDefinedTable[index],
+	aNameList = aUserDefinedTable.map(function(aItem){
+        return aItem[0];
+    }),
+	params = { "in": {
+		group: group,
+		aNameList: aNameList
+	} };
 
     window.openDialog("chrome://meihuacc/content/tableEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
 
@@ -176,8 +183,14 @@ addTable = function(index){
 		if(selection.count === 0) index = aUserDefinedTable.length;
 		else index = selection.currentIndex;
 	}
-	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}];
-	let params = { "in": { group: group } };
+	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}],
+	aNameList = aUserDefinedTable.map(function(aItem){
+        return aItem[0];
+    }),
+	params = { "in": { 
+		group: group,
+		aNameList: aNameList
+	} };
 
     window.openDialog("chrome://meihuacc/content/tableEditor.xul", "", "chrome,titlebar,centerscreen,modal", params);
 

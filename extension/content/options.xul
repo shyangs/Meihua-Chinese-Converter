@@ -54,6 +54,8 @@
 				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+				  <splitter class="tree-splitter"/>
+                  <treecol name="countColumn" label="&treeColumn.countTitle;" flex="1" persist="width hidden"/>
 				</treecols>
 				<treechildren id="userTableTreeChildren"/>
 				</tree>

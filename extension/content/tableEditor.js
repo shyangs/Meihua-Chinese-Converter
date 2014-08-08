@@ -8,7 +8,8 @@ let tableTree = document.getElementById('phraseTree')
 if(window.arguments[0]['in']){
 	var group = window.arguments[0]['in'].group,
 		name = group[0],
-		aMappings = group[1].aMappings;
+		aMappings = group[1].aMappings,
+		aNameList = window.arguments[0]['in'].aNameList||[];
 
 	document.getElementById('nameTextbox').value = name||'';
 
@@ -96,6 +97,9 @@ let onDialogAccept = function(){
 	let name = document.getElementById('nameTextbox').value;
 	if(name===''){
 		alert(stringBundle.GetStringFromName('alert.nameTextbox.isEmpty'));
+		return false;
+	}else if(aNameList.indexOf(name)!==-1){
+		alert(stringBundle.GetStringFromName('alert.nameTextbox.isDuplicated'));
 		return false;
 	}
 	
