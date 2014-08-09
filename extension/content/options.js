@@ -8,7 +8,8 @@ Cu.import('resource://meihuacc/lib/File.js');
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let pref = Pref('extensions.MeihuaCC.'),
+let MeihuaCC = Application.windows[0]._window.MeihuaCC,
+	pref = Pref('extensions.MeihuaCC.'),
 	aURLs = JSON.parse(pref.getString('aURLs')),
 	groupTree = document.getElementById('listTree'),
 	tableTree = document.getElementById('userTableTree');
@@ -90,6 +91,10 @@ clearGroup = function(){
 	}
 },
 clearTable = function(){
+	aUserDefinedTable.forEach(function(aItem){
+		MeihuaCC.removeTable(aItem[1]);
+	});
+
 	let ii = aUserDefinedTable.length;
 	aUserDefinedTable = [];
 	File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
@@ -136,6 +141,8 @@ deleteTable = function(){
 		aTables.splice(ii, 1);
 	});
 	savePref();
+
+	MeihuaCC.removeTable(aDel[0][1]);
 },
 
 editGroup = function(index){
@@ -201,6 +208,8 @@ editTable = function(index){
 
 		File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
 		tableTree.boxObject.invalidateRange(index, index);
+		
+		MeihuaCC.addTable(params.out.group[1]);
 
 		let newName = params.out.group[0];
 		if(oldName===newName) return;
@@ -240,6 +249,8 @@ addTable = function(index){
 		tableTree.boxObject.rowCountChanged(index+1, 1);
 		tableTree.boxObject.ensureRowIsVisible(index+1);
 		tableTree.view.selection.select(index+1);
+
+		MeihuaCC.addTable(params.out.group[1]);
 	}
 },
 

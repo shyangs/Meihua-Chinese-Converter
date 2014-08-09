@@ -33,6 +33,7 @@ let meihuacc = (function(){
 		meihuacc.trace = function(error) { log(error); log(error.stack); };
 
 		meihuacc.oTables = {};
+		meihuacc.oCacheMaps = {};
 		meihuacc.addTable = function(table){
 			meihuacc.oTables[table.name] = table;
 		};
@@ -47,6 +48,11 @@ let meihuacc = (function(){
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', meihuacc, "UTF-8");
 		meihuacc.addTable(meihuacc.cn2tw_c);
 		meihuacc.addTable(meihuacc.cn2tw_p);
+		Cu.import('resource://meihuacc/lib/File.js');
+		let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
+		aUserDefinedTable.forEach(function(aItem){
+			meihuacc.addTable(aItem[1]);
+		});
 
 		Cu.import('resource://meihuacc/content/config.js', meihuacc);
 		meihuacc.prefObserver.initConfig();

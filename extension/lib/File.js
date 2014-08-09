@@ -24,7 +24,7 @@ File.write = function(file, json_data){
 	converter.charset = "UTF-8";
 
 	try{
-		let json_str = JSON.stringify(json_data);
+		let json_str = converter.ConvertFromUnicode(JSON.stringify(json_data));
 		fileOutputStream.init(file, parseInt("0x02", 16) | parseInt("0x08", 16) | parseInt("0x20", 16), parseInt("0664", 8), 0);
 		fileOutputStream.write(json_str, json_str.length);
 	}

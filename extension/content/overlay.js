@@ -4,7 +4,7 @@ let Core = function(win){
 	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
 		doc = document,
 		oTables = meihuacc.oTables,
-		oCacheMaps = {},
+		oCacheMaps = meihuacc.oCacheMaps,
 		config = meihuacc.config,
 		observeOpt = {
 			childList: true,
@@ -12,6 +12,9 @@ let Core = function(win){
 		};
 	let addTable = function(table){
 		oTables[table.name] = table;
+	},
+	removeTable = function(table){
+		delete oTables[table.name];
 	},
 	setTable = function(oURL){
 		let table = {aMappings:[], maxPhLen:0, id:''},
@@ -181,6 +184,7 @@ let Core = function(win){
 
 	return {
 		addTable: addTable,
+		removeTable: removeTable,
 		onPageLoad: onPageLoad,
 		transPage: transPage
 	};
