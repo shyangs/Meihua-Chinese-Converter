@@ -130,7 +130,7 @@ deleteTable = function(){
 
 	let delTableName = aDel[0][0];
 	aURLs.forEach(function(oURL){
-		if(!oURL.hasOwnProperty('aTables')) return;
+		if( typeof oURL.aTables === 'undefined' ) return;
 		let aTables = oURL.aTables, ii;
 		if( -1 === (ii=aTables.indexOf(delTableName)) ) return;
 		aTables.splice(ii, 1);
@@ -183,10 +183,11 @@ editTable = function(index){
 	}
 
 	let group = aUserDefinedTable[index],
+	oldName = group[0],
 	aNameList = aUserDefinedTable.map(function(aItem){
         return aItem[0];
     }).filter(function(x){
-        return (x!==group[0]);
+        return (x!==oldName);
     }),
 	params = { "in": {
 		group: group,
@@ -200,6 +201,16 @@ editTable = function(index){
 
 		File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
 		tableTree.boxObject.invalidateRange(index, index);
+
+		let newName = params.out.group[0];
+		if(oldName===newName) return;
+		aURLs.forEach(function(oURL){
+			if( typeof oURL.aTables === 'undefined' ) return;
+			let aTables = oURL.aTables, ii;
+			if( -1 === (ii=aTables.indexOf(oldName)) ) return;
+			aTables.splice(ii, 1, newName);
+		});
+		savePref();
 	}
 },
 addTable = function(index){
