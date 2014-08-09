@@ -3,7 +3,7 @@
 let Core = function(win){
 	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
 		doc = document,
-		oTables = {},
+		oTables = meihuacc.oTables,
 		oCacheMaps = {},
 		config = meihuacc.config,
 		observeOpt = {

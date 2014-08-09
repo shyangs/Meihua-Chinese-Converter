@@ -28,7 +28,12 @@ if(window.arguments[0]['in']){
 }
 
 let clearPhrase = function(){
+	let ii = aMappings.length;
 	aMappings = [];
+
+	while(ii--){
+		tableTree.boxObject.rowCountChanged(ii, -1);
+	}
 },
 deletePhrase = function(){
 	let selection = tableTree.view.selection;

@@ -9,10 +9,7 @@ let meihuacc = (function(){
 	let loadSubScript = function(win){
 		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', meihuacc, 'UTF-8');
 		win.MeihuaCC = meihuacc.Core(win);
-		
-		win.MeihuaCC.addTable(meihuacc.cn2tw_c);
-		win.MeihuaCC.addTable(meihuacc.cn2tw_p);
-		
+
 		let listenElmt = win.document.getElementById('appcontent');
 		if(listenElmt){
 			listenElmt.addEventListener('DOMContentLoaded', win.MeihuaCC.onPageLoad);
@@ -35,6 +32,11 @@ let meihuacc = (function(){
 
 		meihuacc.trace = function(error) { log(error); log(error.stack); };
 
+		meihuacc.oTables = {};
+		meihuacc.addTable = function(table){
+			meihuacc.oTables[table.name] = table;
+		};
+
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js', meihuacc, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/BrowserManager.js', meihuacc, 'UTF-8');
 		Services.scriptloader.loadSubScript('resource://meihuacc/lib/ToolbarManager.js', meihuacc, 'UTF-8');
@@ -43,6 +45,8 @@ let meihuacc = (function(){
 
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', meihuacc, "UTF-8");
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', meihuacc, "UTF-8");
+		meihuacc.addTable(meihuacc.cn2tw_c);
+		meihuacc.addTable(meihuacc.cn2tw_p);
 
 		Cu.import('resource://meihuacc/content/config.js', meihuacc);
 		meihuacc.prefObserver.initConfig();

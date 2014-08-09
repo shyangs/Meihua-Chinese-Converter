@@ -82,12 +82,26 @@ onSelectTable = function(el){
 },
 
 clearGroup = function(){
+	let ii = aURLs.length;
 	aURLs = [];
 	savePref();
+	while(ii--){
+		groupTree.boxObject.rowCountChanged(ii, -1);
+	}
 },
 clearTable = function(){
+	let ii = aUserDefinedTable.length;
 	aUserDefinedTable = [];
 	File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+	while(ii--){
+		tableTree.boxObject.rowCountChanged(ii, -1);
+	}
+
+	aURLs.forEach(function(oURL){
+		if(!oURL.hasOwnProperty('aTables')) return;
+		delete oURL.aTables;
+	});
+	savePref();
 },
 
 deleteGroup = function(){
@@ -107,12 +121,21 @@ deleteTable = function(){
 	if(selection.count === 0) return;
 
     let index = selection.currentIndex;
-    aUserDefinedTable.splice(index, 1);
+    let aDel = aUserDefinedTable.splice(index, 1);
     File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
     tableTree.boxObject.rowCountChanged(index, -1);
 
     if(index < aUserDefinedTable.length) selection.select(index);
     else if(index > 0) selection.select(index - 1);
+
+	let delTableName = aDel[0][0];
+	aURLs.forEach(function(oURL){
+		if(!oURL.hasOwnProperty('aTables')) return;
+		let aTables = oURL.aTables, ii;
+		if( -1 === (ii=aTables.indexOf(delTableName)) ) return;
+		aTables.splice(ii, 1);
+	});
+	savePref();
 },
 
 editGroup = function(index){
@@ -162,6 +185,8 @@ editTable = function(index){
 	let group = aUserDefinedTable[index],
 	aNameList = aUserDefinedTable.map(function(aItem){
         return aItem[0];
+    }).filter(function(x){
+        return (x!==group[0]);
     }),
 	params = { "in": {
 		group: group,
@@ -186,6 +211,8 @@ addTable = function(index){
 	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}],
 	aNameList = aUserDefinedTable.map(function(aItem){
         return aItem[0];
+    }).filter(function(x){
+        return (x!==group[0]);
     }),
 	params = { "in": { 
 		group: group,
