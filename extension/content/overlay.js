@@ -185,6 +185,7 @@ let Core = function(win){
 	return {
 		addTable: addTable,
 		removeTable: removeTable,
+		setTable: setTable,
 		onPageLoad: onPageLoad,
 		transPage: transPage
 	};

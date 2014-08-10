@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://meihuacc/skin/options.css" type="text/css"?>
+<!DOCTYPE dialog SYSTEM "chrome://meihuacc/locale/options.dtd">
+
+<dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="return onDialogAccept();">
+<hbox>
+<vbox>
+	<hbox>
+		<label value="&name.label;" control="nameTextbox" class="label"/>
+		<textbox id="nameTextbox" flex="1"/>
+	</hbox>
+	<hbox>
+		<label value="&hotkey.label;" control="hotkeyTextbox" class="label"/>
+		<textbox id="hotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;"/>
+	</hbox>
+	<separator/>
+	<groupbox>
+		<caption label="&mappingTables.inUse.label;"/>
+		<tree id="inUseListTree" seltype="single" editable="true" flex="1" onselect="onSelectInUseList();">
+		<treecols>
+			<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+			<splitter class="tree-splitter"/>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren id="inUseListTreeChildren"/>
+		</tree>
+	</groupbox>
+</vbox>
+<vbox>
+	<spacer flex="1"/>
+	<button id="addButton" label="&addTable.button.label;" disabled="true" oncommand="addTable();"/>
+	<button id="removeButton" label="&removeTable.button.label;" disabled="true" oncommand="removeTable();"/>
+	<separator/>
+	<button id="moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="moveUpTable();"/>
+	<button id="moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="moveDownTable();"/>
+	<button id="moveToButton" disabled="true" label="&moveToButton.label;" oncommand="moveToTable();"/>
+	<spacer flex="1"/>
+</vbox>
+<vbox flex="1">
+	<groupbox flex="1">
+		<caption label="&mappingTables.available.label;"/>
+		<tree id="availableListTree" seltype="single" editable="true" flex="1" onselect="onSelectAvailableList();">
+		<treecols>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren id="availableListTreeChildren"/>
+		</tree>
+	</groupbox>
+</vbox>
+</hbox>
+<script src="chrome://meihuacc/content/hotkeyEditor.js"/>
+</dialog>

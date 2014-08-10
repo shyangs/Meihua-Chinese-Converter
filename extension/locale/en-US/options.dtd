@@ -11,6 +11,7 @@
 <!ENTITY name.label "名稱：">
 <!ENTITY pattern.label "網址樣式：">
 <!ENTITY convOrNot.label "行為：">
+<!ENTITY hotkey.label "熱鍵：">
 <!ENTITY conv.exclude "不轉換">
 <!ENTITY conv.include "轉換">
 <!ENTITY addButton.label "新增">

@@ -13,14 +13,13 @@
   <preferences>
     <preference id="bConvTitle" type="bool" name="extensions.MeihuaCC.bConvTitle"/>
     <preference id="bConvAlt" type="bool" name="extensions.MeihuaCC.bConvAlt"/>
-    <preference id="sConvHotkey" type="unichar" name="extensions.MeihuaCC.sConvHotkey"/>
   </preferences>
   <tabbox id="prefsTab" flex="1">
 		<tabs>
 			<tab label="&tab.groupsTitle;"/>
+			<tab label="&tab.hotkeyTitle;"/>
 			<tab label="&tab.userTableTitle;"/>
 			<tab label="&tab.generalTitle;"/>
-			<tab label="&tab.hotkeyTitle;"/>
 		</tabs>
 		<tabpanels flex="1">
 			<tabpanel orient="vertical" flex="1">
@@ -51,6 +50,24 @@
 			</tabpanel>
 			<tabpanel orient="vertical" flex="1">
 			<hbox flex="1">
+				<tree id="hotkeyTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
+				<treecols>
+                  <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+				  <splitter class="tree-splitter"/>
+                  <treecol name="hotkeyColumn" label="&tab.hotkeyTitle;" flex="1" persist="width hidden"/>
+				</treecols>
+				<treechildren id="hotkeyTreeChildren"/>
+				</tree>
+				<vbox>
+				  <button class="addButton" label="&addButton.label;" oncommand="addHotkey();"/>
+				  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editHotkey();"/>
+				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteHotkey();"/>
+				  <button class="clearButton" label="&clearButton.label;" oncommand="clearHotkey();"/>
+				</vbox>
+			</hbox>
+			</tabpanel>
+			<tabpanel orient="vertical" flex="1">
+			<hbox flex="1">
 				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
@@ -60,7 +77,7 @@
 				<treechildren id="userTableTreeChildren"/>
 				</tree>
 				<vbox>
-				  <button id="addButton" label="&addButton.label;" oncommand="addTable();"/>
+				  <button class="addButton" label="&addButton.label;" oncommand="addTable();"/>
 				  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editTable();"/>
 				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteTable();"/>
 				  <button class="clearButton" label="&clearButton.label;" oncommand="clearTable();"/>
@@ -70,13 +87,6 @@
 			<tabpanel orient="vertical">
 				<checkbox id="convTitleCheckbox" label="&convTitle.label;" preference="bConvTitle"/>
 				<checkbox id="convAltCheckbox" label="&convAlt.label;" preference="bConvAlt"/>
-			</tabpanel>
-			<tabpanel orient="vertical">
-			<hbox>
-				<label value="&convPage.label;" control="sConvHotkeyTextbox" class="label"/>
-				<textbox id="sConvHotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;" preference="sConvHotkey"/>
-				<button id="resetButton" label="&resetButton.label;" oncommand="pref.reset('sConvHotkey')"/>
-			</hbox>
 			</tabpanel>
 		</tabpanels>
 	</tabbox>

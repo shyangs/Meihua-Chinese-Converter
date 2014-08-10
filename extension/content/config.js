@@ -53,8 +53,8 @@ let config = {
 	bConvAlt: true,
 	bConvTitle: true,
 	bConvFrame: true,
-	sConvHotkey: null,
-	aURLs: []
+	aURLs: [],
+	aHotkeys: []
 };
 let prefObserver = {
 	observe: function(subject, topic, data) {
@@ -119,8 +119,8 @@ let prefObserver = {
 		initBool('bConvAlt');
 		initBool('bConvTitle');
 		initBool('bConvFrame');
-		initString('sConvHotkey');
 		initComplex('aURLs', JSON.parse, DEFAULT_ENTRIES_STRING);
+		initComplex('aHotkeys', JSON.parse, JSON.stringify([]));
 	},
 	reloadConfig: function() {
 		let {loadBool, loadString, loadComplex} = this;
@@ -128,8 +128,8 @@ let prefObserver = {
 		loadBool('bConvAlt');
 		loadBool('bConvTitle');
 		loadBool('bConvFrame');
-		loadString('sConvHotkey');
 		loadComplex('aURLs', JSON.parse);
+		loadComplex('aHotkeys', JSON.parse);
 	},
 	saveConfig: function() {
 		this.stop(); // avoid recursion

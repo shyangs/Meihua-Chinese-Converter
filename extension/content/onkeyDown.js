@@ -1,8 +1,9 @@
 'use strict';
 
 let onkeyDown = function(event){
-	if ( !meihuacc.config.sConvHotkey ) return;
+	if (meihuacc.config.aHotkeys.length === 0) return;
 
+	let win = this;
 	var keytext = "";
 	var akeycode = event.keyCode;
 
@@ -28,7 +29,10 @@ let onkeyDown = function(event){
 	//quit function if keytext is empty
 	if(keytext === "") {
 		return;
-	}else if(keytext === meihuacc.config.sConvHotkey){
-		this.MeihuaCC.transPage(this.content.document, true);		
+	}else{
+		meihuacc.config.aHotkeys.forEach(function(item){
+			if(keytext !== item.hotkey) return;
+			win.MeihuaCC.transPage(win.content.document, true, win.MeihuaCC.setTable(item));
+		});
 	}
 };
