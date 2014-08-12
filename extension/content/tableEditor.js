@@ -7,14 +7,14 @@ let tableTree = document.getElementById('phraseTree')
 
 if(window.arguments[0]['in']){
 	var group = window.arguments[0]['in'].group,
-		name = group[0],
-		aMappings = group[1].aMappings,
+		name = group.name,
+		aMappings = group.aMappings,
 		aNameList = window.arguments[0]['in'].aNameList||[];
 
 	document.getElementById('nameTextbox').value = name||'';
 
 	let tableTreeView = {
-		rowCount: group[1].aMappings.length,
+		rowCount: group.aMappings.length,
 		getCellText: function(row, column){
 			switch(column.element.getAttribute('name')){
 				case 'inputColumn': return aMappings[row][0];
@@ -114,7 +114,7 @@ let onDialogAccept = function(){
 		return false;
 	}
 	
-	let group = [name, {
+	let group = {
 		name: name,
 		maxPhLen: (function(aMappings, len, maxPhLen){
 			aMappings.forEach(function(item){
@@ -125,7 +125,7 @@ let onDialogAccept = function(){
 		count: count,
 		version: Date.now(),
 		aMappings: aMappings
-	}];
+	};
 	window.arguments[0].out = { group: group };
 	return true;
 };

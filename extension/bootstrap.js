@@ -7,7 +7,7 @@ let meihuacc = (function(){
 	const log = function() { dump(Array.slice(arguments).join(' ') + '\n'); };
 
 	let loadSubScript = function(win){
-		Services.scriptloader.loadSubScript('resource://meihuacc/content/overlay.js', meihuacc, 'UTF-8');
+		Services.scriptloader.loadSubScript('resource://meihuacc/content/core.js', meihuacc, 'UTF-8');
 		win.MeihuaCC = meihuacc.Core(win);
 
 		let listenElmt = win.document.getElementById('appcontent');
@@ -51,7 +51,7 @@ let meihuacc = (function(){
 		Cu.import('resource://meihuacc/lib/File.js');
 		let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
 		aUserDefinedTable.forEach(function(aItem){
-			meihuacc.addTable(aItem[1]);
+			meihuacc.addTable(aItem);
 		});
 
 		Cu.import('resource://meihuacc/content/config.js', meihuacc);

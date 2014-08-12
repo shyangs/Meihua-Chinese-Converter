@@ -49,8 +49,8 @@ tableTreeView = {
 	getCellText: function(row, column){
 		let group = aUserDefinedTable[row];
 		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return group[0];
-			case 'countColumn': return group[1].count;
+			case 'nameColumn': return group.name;
+			case 'countColumn': return group.count;
 		}
 	},
 	setTree: function(treebox){ this.treebox = treebox; }
@@ -112,7 +112,7 @@ clearHotkey = function(){
 },
 clearTable = function(){
 	aUserDefinedTable.forEach(function(aItem){
-		MeihuaCC.removeTable(aItem[1]);
+		MeihuaCC.removeTable(aItem);
 	});
 
 	let ii = aUserDefinedTable.length;
@@ -165,7 +165,7 @@ deleteTable = function(){
     if(index < aUserDefinedTable.length) selection.select(index);
     else if(index > 0) selection.select(index - 1);
 
-	let delTableName = aDel[0][0];
+	let delTableName = aDel[0].name;
 	aURLs.forEach(function(oURL){
 		if( typeof oURL.aTables === 'undefined' ) return;
 		let aTables = oURL.aTables, ii;
@@ -174,7 +174,7 @@ deleteTable = function(){
 	});
 	savePref('aURLs', aURLs);
 
-	MeihuaCC.removeTable(aDel[0][1]);
+	MeihuaCC.removeTable(aDel[0]);
 },
 
 addGroup = function(index){
@@ -230,11 +230,12 @@ addTable = function(index){
 		if(selection.count === 0) index = aUserDefinedTable.length;
 		else index = selection.currentIndex;
 	}
-	let group = ['',{"name":'',"maxPhLen":0,"version":1,"aMappings":[]}],
+
+	let group = {"name":'',"maxPhLen":0,"version":1,"aMappings":[]},
 	aNameList = aUserDefinedTable.map(function(aItem){
-        return aItem[0];
+		return aItem.name;
     }).filter(function(x){
-        return (x!==group[0]);
+        return (x!==group.name);
     }),
 	params = { "in": { 
 		group: group,
@@ -252,7 +253,7 @@ addTable = function(index){
 		tableTree.boxObject.ensureRowIsVisible(index+1);
 		tableTree.view.selection.select(index+1);
 
-		MeihuaCC.addTable(params.out.group[1]);
+		MeihuaCC.addTable(params.out.group);
 	}
 },
 
@@ -309,9 +310,9 @@ editTable = function(index){
 	}
 
 	let group = aUserDefinedTable[index],
-	oldName = group[0],
+	oldName = group.name,
 	aNameList = aUserDefinedTable.map(function(aItem){
-        return aItem[0];
+		return aItem.name;
     }).filter(function(x){
         return (x!==oldName);
     }),
@@ -328,9 +329,9 @@ editTable = function(index){
 		File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
 		tableTree.boxObject.invalidateRange(index, index);
 		
-		MeihuaCC.addTable(params.out.group[1]);
+		MeihuaCC.addTable(params.out.group);
 
-		let newName = params.out.group[0];
+		let newName = params.out.group.name;
 		if(oldName===newName) return;
 		aURLs.forEach(function(oURL){
 			if( typeof oURL.aTables === 'undefined' ) return;

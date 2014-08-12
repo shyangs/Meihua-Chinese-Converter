@@ -39,7 +39,7 @@ inUseListTree.view = inUseListTreeView;
 
 let availableList = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
 	.concat(aUserDefinedTable.map(function(aItem){
-        return aItem[0];
+		return aItem.name;
     })).filter(function(x){
 		return (aTables.indexOf(x)===-1);
 	});
@@ -209,7 +209,6 @@ let setHotkey = function(event){
 		}
 	}
 
-	//pref.setString('sConvHotkey', sHotkey);
 	document.getElementById('hotkeyTextbox').value = sHotkey;
 };
 document.getElementById('hotkeyTextbox').onkeydown = setHotkey;
