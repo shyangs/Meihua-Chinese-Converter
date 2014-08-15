@@ -15,7 +15,7 @@ if(window.arguments[0]['in']){
 
 	document.getElementById('nameTextbox').value = group.name||'';
 	document.getElementById('patternTextbox').value = group.pattern;
-	document.getElementById('convOrNotMenulist').selectedIndex = (group.rule==='exclude'?1:0);
+	document.getElementById('convOrNotMenulist').checked = (group.rule==='exclude'?false:true);
 	
 	aTables = group.aTables;
 }
@@ -50,8 +50,8 @@ let availableListTreeView = {
 }
 availableListTree.view = availableListTreeView;
 
-let onChange = function(selectedIndex){
-	if(selectedIndex === 0) {
+let onChange = function(checked){
+	if(checked) {
 		inUseListTree.disabled = false;
 		availableListTree.disabled = false;
 	}else{
@@ -60,7 +60,7 @@ let onChange = function(selectedIndex){
 	}
 };
 
-onChange(document.getElementById('convOrNotMenulist').selectedIndex);
+onChange(document.getElementById('convOrNotMenulist').checked);
 
 let onSelectInUseList = function(){
 	let removeButton = document.getElementById('removeButton'),
@@ -189,7 +189,7 @@ let onDialogAccept = function(){
 	let group = {
 		name: document.getElementById('nameTextbox').value||'',
 		pattern: document.getElementById('patternTextbox').value,
-		rule: document.getElementById('convOrNotMenulist').value,
+		rule: document.getElementById('convOrNotMenulist').checked?'include':'exclude',
 		aTables: aTables
 	};
 	window.arguments[0].out = { group: group };

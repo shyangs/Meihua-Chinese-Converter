@@ -1,5 +1,5 @@
 'use strict';
-/* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
+/* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 let cn2tw_c={
 name:'梅花通用單字(繁)',
 maxPhLen:1,

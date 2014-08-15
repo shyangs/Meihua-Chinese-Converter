@@ -15,3 +15,7 @@ tree {
 .label {
   padding: 8px 0px 0px 0px; width: 80px;
 }
+
+.checkbox {
+  padding: 3px 0px 0px 0px;
+}

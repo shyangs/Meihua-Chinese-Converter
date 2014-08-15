@@ -18,3 +18,6 @@ S3.Menu Wizard ( https://addons.mozilla.org/firefox/addon/s3menu-wizard/ ), reus
 
 MeihuaCC contains code derived from 
 User Agent Overrider ( https://github.com/muzuiget/user_agent_overrider ), reused under the terms of the MPL; see LICENSE.MPL.
+
+MeihuaCC contains code derived from 
+artTemplate ( http://aui.github.com/artTemplate/ ), reused under the terms of MIT / BSD / GPL license; see LICENSE.MIT.

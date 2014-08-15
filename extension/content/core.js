@@ -1,5 +1,5 @@
 'use strict';
-/* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
+/* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 let Core = function(win){
 	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
 		doc = document,
@@ -65,7 +65,7 @@ let Core = function(win){
 			for(let j = leng; j > 0; j--){
 				let ss = str.substr(idx, j);
 				if(mPhrases.has(ss)){
-					txt += mPhrases.get(ss);//aMappings[ss];
+					txt += mPhrases.get(ss);
 					idx += j;
 					bHit = true;
 					break;
