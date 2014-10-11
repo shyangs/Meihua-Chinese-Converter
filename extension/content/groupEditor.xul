@@ -3,7 +3,7 @@
 <?xml-stylesheet href="chrome://meihuacc/skin/options.css" type="text/css"?>
 <!DOCTYPE dialog SYSTEM "chrome://meihuacc/locale/options.dtd">
 
-<dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="onDialogAccept();">
+<dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="return onDialogAccept();">
 <script src="chrome://meihuacc/content/groupEditorTmpl.js"/>
 <script src="chrome://meihuacc/content/groupEditor.js"/>
 </dialog>
