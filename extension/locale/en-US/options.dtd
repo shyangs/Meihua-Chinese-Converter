@@ -1,8 +1,12 @@
 <!ENTITY options.title "Meihua Chinese Converter 設定">
 <!ENTITY tab.groupsTitle "模板">
-<!ENTITY tab.userTableTitle "映射表">
-<!ENTITY tab.generalTitle "一般">
 <!ENTITY tab.hotkeyTitle "熱鍵">
+<!ENTITY tab.userTableTitle "映射表">
+<!ENTITY tab.toolbarIconTitle "工具列圖示">
+<!ENTITY tab.generalTitle "一般">
+<!ENTITY tab.leftClickTitle "左鍵">
+<!ENTITY tab.middleClickTitle "中鍵">
+<!ENTITY tab.rightClickTitle "右鍵">
 <!ENTITY treeColumn.indexTitle "編號">
 <!ENTITY treeColumn.nameTitle "名稱">
 <!ENTITY treeColumn.patternTitle "網址樣式">
@@ -15,6 +19,12 @@
 <!ENTITY conv.checkbox "轉換文字">
 <!ENTITY conv.exclude "不轉換">
 <!ENTITY conv.include "轉換">
+
+<!ENTITY function.label "功能：">
+<!ENTITY do.nothing "無">
+<!ENTITY conv.webText "轉換目前瀏覽的網頁文字">
+<!ENTITY open.settingWindow "開啟設定視窗">
+
 <!ENTITY addButton.label "新增">
 <!ENTITY editButton.label "編輯">
 <!ENTITY deleteButton.label "刪除">

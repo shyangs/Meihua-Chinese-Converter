@@ -53,6 +53,9 @@ let config = {
 	bConvAlt: true,
 	bConvTitle: true,
 	bConvFrame: true,
+	sToolbarBtnLeftClick: "cwt",
+	sToolbarBtnMiddleClick: "dnt",
+	sToolbarBtnRightClick: "osw",
 	aURLs: [],
 	aHotkeys: []
 };
@@ -119,6 +122,9 @@ let prefObserver = {
 		initBool('bConvAlt');
 		initBool('bConvTitle');
 		initBool('bConvFrame');
+		initString('sToolbarBtnLeftClick');
+		initString('sToolbarBtnMiddleClick');
+		initString('sToolbarBtnRightClick');
 		initComplex('aURLs', JSON.parse, DEFAULT_ENTRIES_STRING);
 		initComplex('aHotkeys', JSON.parse, JSON.stringify([]));
 	},
@@ -128,6 +134,9 @@ let prefObserver = {
 		loadBool('bConvAlt');
 		loadBool('bConvTitle');
 		loadBool('bConvFrame');
+		loadString('sToolbarBtnLeftClick');
+		loadString('sToolbarBtnMiddleClick');
+		loadString('sToolbarBtnRightClick');
 		loadComplex('aURLs', JSON.parse);
 		loadComplex('aHotkeys', JSON.parse);
 	},
