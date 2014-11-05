@@ -36,10 +36,10 @@ let toolbarButtons = {
 			let button = document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'toolbarbutton');
 			meihuacc.Utils.setAttrs(button, attrs);
 			button.addEventListener('click', function(event){
-				let task = function(name){
+				let task = function(name, btn){
 					switch(meihuacc.config[name]){
 						case 'cwt':
-							window.MeihuaCC.transPage(window.content.document, true);
+							window.MeihuaCC.transPage(window.content.document, true, window.MeihuaCC.setTable(meihuacc.config.oTBB[btn]));
 						break;
 						case 'osw':
 							window.openDialog('chrome://meihuacc/content/options.xul', '', 'chrome,titlebar,centerscreen,modal');
@@ -50,14 +50,14 @@ let toolbarButtons = {
 				};
 				switch(event.button){
 					case 0://left_click
-						task('sToolbarBtnLeftClick');
+						task('sToolbarBtnLeftClick', 'left');
 					break;
 					case 1://middle _click
-						task('sToolbarBtnMiddleClick');
+						task('sToolbarBtnMiddleClick', 'middle');
 					break;
 					case 2://right_click
 						event.preventDefault();//not popup context menu
-						task('sToolbarBtnRightClick');
+						task('sToolbarBtnRightClick', 'right');
 					break;
 				}
 			});

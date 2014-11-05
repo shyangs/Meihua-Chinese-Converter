@@ -6,12 +6,14 @@ Components.utils.import('resource://meihuacc/lib/Pref.js');
 
 let pref = Pref('extensions.MeihuaCC.');
 
+const DEFAULT_TABLE = ["\u6885\u82B1\u901A\u7528\u55AE\u5B57(\u7E41)", "\u6885\u82B1\u901A\u7528\u8A5E\u5F59(\u7E41)"]; // [梅花通用單字(繁), 梅花通用詞彙(繁)]
 const DEFAULT_ENTRIES_STRING = JSON.stringify([
+	{pattern: '^about:', rule: 'exclude'},
 	{pattern: '\\.tw/', rule: 'exclude'},
-	{pattern: 'https?://tw\\.', rule: 'exclude'},
+	{pattern: '^https?://tw\\.', rule: 'exclude'},
 	{pattern: '[/.]big5[/.]', rule: 'exclude'},
 	{pattern: '\\.jp/', rule: 'exclude'},
-	{pattern: 'https?://jp\\.', rule: 'exclude'},
+	{pattern: '^https?://jp\\.', rule: 'exclude'},
 	{pattern: 'moztw\\.org/', rule: 'exclude'},
 	{pattern: 'wikipedia\\.org/', rule: 'exclude'},
 	{pattern: '[-_=./]cn(?:[./]|$)', rule: 'include'},
@@ -57,7 +59,18 @@ let config = {
 	sToolbarBtnMiddleClick: "dnt",
 	sToolbarBtnRightClick: "osw",
 	aURLs: [],
-	aHotkeys: []
+	aHotkeys: [],
+	oTBB: {
+		left:{
+			aTables: DEFAULT_TABLE
+		},
+		middle:{
+			aTables: DEFAULT_TABLE
+		},
+		right:{
+			aTables: DEFAULT_TABLE
+		}
+	}
 };
 let prefObserver = {
 	observe: function(subject, topic, data) {
@@ -127,6 +140,7 @@ let prefObserver = {
 		initString('sToolbarBtnRightClick');
 		initComplex('aURLs', JSON.parse, DEFAULT_ENTRIES_STRING);
 		initComplex('aHotkeys', JSON.parse, JSON.stringify([]));
+		initComplex('oTBB', JSON.parse, JSON.stringify(config.oTBB));
 	},
 	reloadConfig: function() {
 		let {loadBool, loadString, loadComplex} = this;
@@ -139,6 +153,7 @@ let prefObserver = {
 		loadString('sToolbarBtnRightClick');
 		loadComplex('aURLs', JSON.parse);
 		loadComplex('aHotkeys', JSON.parse);
+		loadComplex('oTBB', JSON.parse);
 	},
 	saveConfig: function() {
 		this.stop(); // avoid recursion

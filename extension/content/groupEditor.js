@@ -53,9 +53,21 @@ availableListTree.view = availableListTreeView;
 
 let onChange = function(checked){
 	if(checked) {
+		let elmts = document.getElementsByClassName('visibility_hidden'),
+			ii = elmts.length;
+		while(ii--){
+			elmts[ii].classList.remove('visibility_hidden');
+		}
+
 		inUseListTree.disabled = false;
 		availableListTree.disabled = false;
 	}else{
+		let elmts = document.getElementsByClassName('mapping_table_form'),
+			ii = elmts.length;
+		while(ii--){
+			elmts[ii].classList.add('visibility_hidden');
+		}
+
 		inUseListTree.disabled = true;
 		availableListTree.disabled = true;
 	}
@@ -64,6 +76,30 @@ let onChange = function(checked){
 onChange(document.getElementById('convOrNotMenulist').checked);
 
 Services.scriptloader.loadSubScript('resource://meihuacc/content/biTreeUtils.js');
+let onSelectInUseList = function(){
+	_onSelectItem(inUseListTree, document.getElementById('removeButton'), document.getElementById('moveUpButton'), document.getElementById('moveDownButton'), document.getElementById('moveToButton'));
+},
+onSelectAvailableList = function(){
+	_onSelectItem(availableListTree, document.getElementById('addButton'));
+},
+
+addTable = function(indexAvailable, indexInUse){
+	_addTable(availableListTree, inUseListTree, availableList, aTables, indexAvailable, indexInUse);
+},
+removeTable = function(indexAvailable, indexInUse){
+	_removeTable(availableListTree, inUseListTree, availableList, aTables, indexAvailable, indexInUse);
+},
+
+moveUpTable = function(){
+	_moveUpTable(inUseListTree, aTables);
+},
+moveDownTable = function(){
+	_moveDownTable(inUseListTree, aTables);
+},
+moveToTable = function(){
+	_moveToTable(inUseListTree, aTables);
+};
+
 
 let onDialogAccept = function(){
 	let pattern = document.getElementById('patternTextbox').value;

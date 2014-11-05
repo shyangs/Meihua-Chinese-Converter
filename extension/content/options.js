@@ -1,6 +1,7 @@
 'use strict';
 
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/Pref.js');
 Cu.import('resource://meihuacc/lib/File.js');
 
@@ -10,9 +11,16 @@ let MeihuaCC = Application.windows[0]._window.MeihuaCC,
 	pref = Pref('extensions.MeihuaCC.'),
 	aURLs = JSON.parse(pref.getString('aURLs')),
 	aHotkeys = JSON.parse(pref.getString('aHotkeys')),
+	oTBB = JSON.parse(pref.getString('oTBB')),
 	groupTree = document.getElementById('listTree'),
 	hotkeyTree = document.getElementById('hotkeyTree'),
-	tableTree = document.getElementById('userTableTree');
+	tableTree = document.getElementById('userTableTree'),
+	tbbLeft_inUse_Tree = document.getElementById('tbbLeft_inUse_Tree'),
+	tbbMiddle_inUse_Tree = document.getElementById('tbbMiddle_inUse_Tree'),
+	tbbRight_inUse_Tree = document.getElementById('tbbRight_inUse_Tree'),
+	tbbLeft_available_Tree = document.getElementById('tbbLeft_available_Tree'),
+	tbbMiddle_available_Tree = document.getElementById('tbbMiddle_available_Tree'),
+	tbbRight_available_Tree = document.getElementById('tbbRight_available_Tree');
 
 let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
 
@@ -56,10 +64,203 @@ tableTreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
+let aTbls_L = oTBB.left.aTables,
+tbbLeft_inUse_TreeView = {
+	rowCount: aTbls_L.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'indexColumn': return row+1;
+			case 'nameColumn': return aTbls_L[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
+let aTbls_M = oTBB.middle.aTables,
+tbbMiddle_inUse_TreeView = {
+	rowCount: aTbls_M.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'indexColumn': return row+1;
+			case 'nameColumn': return aTbls_M[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
+let aTbls_R = oTBB.right.aTables,
+tbbRight_inUse_TreeView = {
+	rowCount: aTbls_R.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'indexColumn': return row+1;
+			case 'nameColumn': return aTbls_R[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
+let availableList_L = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+	.concat(aUserDefinedTable.map(function(aItem){
+		return aItem.name;
+    })).filter(function(x){
+		return (aTbls_L.indexOf(x)===-1);
+	}),
+tbbLeft_available_TreeView = {
+	rowCount: availableList_L.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'nameColumn': return availableList_L[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
+let availableList_M = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+	.concat(aUserDefinedTable.map(function(aItem){
+		return aItem.name;
+    })).filter(function(x){
+		return (aTbls_M.indexOf(x)===-1);
+	}),
+tbbMiddle_available_TreeView = {
+	rowCount: availableList_M.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'nameColumn': return availableList_M[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
+let availableList_R = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+	.concat(aUserDefinedTable.map(function(aItem){
+		return aItem.name;
+    })).filter(function(x){
+		return (aTbls_R.indexOf(x)===-1);
+	}),
+tbbRight_available_TreeView = {
+	rowCount: availableList_R.length,
+	getCellText: function(row, column){
+		switch(column.element.getAttribute('name')){
+			case 'nameColumn': return availableList_R[row];
+		}
+	},
+	setTree: function(treebox){ this.treebox = treebox; }
+};
+
 groupTree.view = groupTreeView;
 hotkeyTree.view = hotkeyTreeView;
 tableTree.view = tableTreeView;
+tbbLeft_inUse_Tree.view = tbbLeft_inUse_TreeView;
+tbbMiddle_inUse_Tree.view = tbbMiddle_inUse_TreeView;
+tbbRight_inUse_Tree.view = tbbRight_inUse_TreeView;
+tbbLeft_available_Tree.view = tbbLeft_available_TreeView;
+tbbMiddle_available_Tree.view = tbbMiddle_available_TreeView;
+tbbRight_available_Tree.view = tbbRight_available_TreeView;
 
+let onChange = function(menulist){
+	let tabpanel = document.getElementsByClassName(menulist.getAttribute('preference'))[0];
+	if(menulist.getAttribute('value')==='cwt') {
+		let elmts = tabpanel.getElementsByClassName('visibility_hidden'),
+			ii = elmts.length;
+		while(ii--){
+			elmts[ii].classList.remove('visibility_hidden');
+		}
+
+		elmts = tabpanel.getElementsByTagName('tree'),
+		ii = elmts.length;
+		while(ii--){
+			elmts[ii].disabled = false;
+		}
+	}else{
+		let elmts = tabpanel.getElementsByClassName('mapping_table_form'),
+			ii = elmts.length;
+		while(ii--){
+			elmts[ii].classList.add('visibility_hidden');
+		}
+
+		elmts = tabpanel.getElementsByTagName('tree'),
+		ii = elmts.length;
+		while(ii--){
+			elmts[ii].disabled = true;
+		}
+	}
+};
+let tbbFn_menulist = document.getElementsByClassName('tbbFn_menulist'),
+	ii = tbbFn_menulist.length;
+while(ii--){
+	onChange(tbbFn_menulist[ii]);
+}
+
+Services.scriptloader.loadSubScript('resource://meihuacc/content/biTreeUtils.js');
+let L_onSelectInUseList = function(){
+	_onSelectItem(tbbLeft_inUse_Tree, document.getElementById('L_removeButton'), document.getElementById('L_moveUpButton'), document.getElementById('L_moveDownButton'), document.getElementById('L_moveToButton'));
+},
+L_onSelectAvailableList = function(){
+	_onSelectItem(tbbLeft_available_Tree, document.getElementById('L_addButton'));
+},
+
+M_onSelectInUseList = function(){
+	_onSelectItem(tbbMiddle_inUse_Tree, document.getElementById('M_removeButton'), document.getElementById('M_moveUpButton'), document.getElementById('M_moveDownButton'), document.getElementById('M_moveToButton'));
+},
+M_onSelectAvailableList = function(){
+	_onSelectItem(tbbMiddle_available_Tree, document.getElementById('M_addButton'));
+},
+
+R_onSelectInUseList = function(){
+	_onSelectItem(tbbRight_inUse_Tree, document.getElementById('R_removeButton'), document.getElementById('R_moveUpButton'), document.getElementById('R_moveDownButton'), document.getElementById('R_moveToButton'));
+},
+R_onSelectAvailableList = function(){
+	_onSelectItem(tbbRight_available_Tree, document.getElementById('R_addButton'));
+};
+
+let L_addTable = function(indexAvailable, indexInUse){
+	_addTable(tbbLeft_available_Tree, tbbLeft_inUse_Tree, availableList_L, aTbls_L);
+},
+L_removeTable = function(indexAvailable, indexInUse){
+	_removeTable(tbbLeft_available_Tree, tbbLeft_inUse_Tree, availableList_L, aTbls_L);
+},
+L_moveUpTable = function(){
+	_moveUpTable(tbbLeft_inUse_Tree, aTbls_L);
+},
+L_moveDownTable = function(){
+	_moveDownTable(tbbLeft_inUse_Tree, aTbls_L);
+},
+L_moveToTable = function(){
+	_moveToTable(tbbLeft_inUse_Tree, aTbls_L);
+};
+
+let M_addTable = function(indexAvailable, indexInUse){
+	_addTable(tbbMiddle_available_Tree, tbbMiddle_inUse_Tree, availableList_M, aTbls_M);
+},
+M_removeTable = function(indexAvailable, indexInUse){
+	_removeTable(tbbMiddle_available_Tree, tbbMiddle_inUse_Tree, availableList_M, aTbls_M);
+},
+M_moveUpTable = function(){
+	_moveUpTable(tbbMiddle_inUse_Tree, aTbls_M);
+},
+M_moveDownTable = function(){
+	_moveDownTable(tbbMiddle_inUse_Tree, aTbls_M);
+},
+M_moveToTable = function(){
+	_moveToTable(tbbMiddle_inUse_Tree, aTbls_M);
+};
+
+let R_addTable = function(indexAvailable, indexInUse){
+	_addTable(tbbRight_available_Tree, tbbRight_inUse_Tree, availableList_R, aTbls_R);
+},
+R_removeTable = function(indexAvailable, indexInUse){
+	_removeTable(tbbRight_available_Tree, tbbRight_inUse_Tree, availableList_R, aTbls_R);
+},
+R_moveUpTable = function(){
+	_moveUpTable(tbbRight_inUse_Tree, aTbls_R);
+},
+R_moveDownTable = function(){
+	_moveDownTable(tbbRight_inUse_Tree, aTbls_R);
+},
+R_moveToTable = function(){
+	_moveToTable(tbbRight_inUse_Tree, aTbls_R);
+};
 
 let onSelectGroup = function(){
 	let editButton = document.getElementById('editButton'),
@@ -110,7 +311,7 @@ clearHotkey = function(){
 		hotkeyTree.boxObject.rowCountChanged(ii, -1);
 	}
 },
-clearTable = function(){
+clearUMT = function(){
 	aUserDefinedTable.forEach(function(aItem){
 		MeihuaCC.removeTable(aItem);
 	});
@@ -153,7 +354,7 @@ deleteHotkey = function(){
     if(index < aHotkeys.length) selection.select(index);
     else if(index > 0) selection.select(index - 1);
 },
-deleteTable = function(){
+deleteUMT = function(){
 	let selection = tableTree.view.selection;
 	if(selection.count === 0) return;
 
@@ -224,7 +425,7 @@ addHotkey = function(index){
 		hotkeyTree.view.selection.select(index+1);
 	}
 },
-addTable = function(index){
+addUMT = function(index){
 	if(typeof index === 'undefined'){
 		let selection = tableTree.view.selection;
 		if(selection.count === 0) index = aUserDefinedTable.length;
@@ -302,7 +503,7 @@ editHotkey = function(index){
 		hotkeyTree.boxObject.invalidateRange(index, index);
 	}
 },
-editTable = function(index){
+editUMT = function(index){
 	if(typeof index === 'undefined'){
 		let selection = tableTree.view.selection;
 		if(selection.count === 0) return;
@@ -393,4 +594,9 @@ moveToGroup = function(){
 	treeBox.invalidateRange(index, newIndex);
 	treeBox.ensureRowIsVisible(newIndex);
 	selection.select(newIndex);
+};
+
+let onDialogAccept = function(){
+	savePref('oTBB', oTBB);
+	return true;
 };

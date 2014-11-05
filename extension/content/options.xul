@@ -7,7 +7,8 @@
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   id="meihuaccOptions"
   windowtype="MeihuaCC:Preferences"
-  title="&options.title;">
+  title="&options.title;"
+  ondialogaccept="return onDialogAccept();">
 
 <prefpane id="main" flex="1">
   <preferences>
@@ -76,10 +77,10 @@
 				<treechildren id="userTableTreeChildren"/>
 				</tree>
 				<vbox>
-				  <button class="addButton" label="&addButton.label;" oncommand="addTable();"/>
-				  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editTable();"/>
-				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteTable();"/>
-				  <button class="clearButton" label="&clearButton.label;" oncommand="clearTable();"/>
+				  <button class="addButton" label="&addButton.label;" oncommand="addUMT();"/>
+				  <button class="editButton" disabled="true" label="&editButton.label;" oncommand="editUMT();"/>
+				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteUMT();"/>
+				  <button class="clearButton" label="&clearButton.label;" oncommand="clearUMT();"/>
 				</vbox>
 			</tabpanel>
 			<tabpanel orient="vertical" flex="1">
@@ -89,7 +90,13 @@
 					<tab label="&tab.middleClickTitle;"/>
 					<tab label="&tab.rightClickTitle;"/>
 				</tabs>
-				<tabpanels id="tabpanelsTI">
+				<tabpanels>
+					<tabpanel class="tabpanelTBB sToolbarBtnLeftClick">
+					</tabpanel>
+					<tabpanel class="tabpanelTBB sToolbarBtnMiddleClick">
+					</tabpanel>
+					<tabpanel class="tabpanelTBB sToolbarBtnRightClick">
+					</tabpanel>
 				</tabpanels>
 			  </tabbox>
 			</tabpanel>

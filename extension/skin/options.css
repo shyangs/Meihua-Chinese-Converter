@@ -19,3 +19,7 @@ tree {
 .checkbox {
   padding: 3px 0px 0px 0px;
 }
+
+.visibility_hidden {
+  visibility:hidden;
+}

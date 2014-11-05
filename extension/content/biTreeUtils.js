@@ -107,28 +107,3 @@ _moveToTable = function(treeU, listU){
 	treeBox.ensureRowIsVisible(newIndex);
 	selection.select(newIndex);
 };
-
-
-let onSelectInUseList = function(){
-	_onSelectItem(inUseListTree, document.getElementById('removeButton'), document.getElementById('moveUpButton'), document.getElementById('moveDownButton'), document.getElementById('moveToButton'));
-},
-onSelectAvailableList = function(){
-	_onSelectItem(availableListTree, document.getElementById('addButton'));
-},
-
-addTable = function(indexAvailable, indexInUse){
-	_addTable(availableListTree, inUseListTree, availableList, aTables, indexAvailable, indexInUse);
-},
-removeTable = function(indexAvailable, indexInUse){
-	_removeTable(availableListTree, inUseListTree, availableList, aTables, indexAvailable, indexInUse);
-},
-
-moveUpTable = function(){
-	_moveUpTable(inUseListTree, aTables);
-},
-moveDownTable = function(){
-	_moveDownTable(inUseListTree, aTables);
-},
-moveToTable = function(){
-	_moveToTable(inUseListTree, aTables);
-};

@@ -142,7 +142,7 @@ let Core = function(win){
 		walker = doc.createTreeWalker(root, whatToShow, filter);
 		walkStep(walker, type, Date.now(), table);
 	},
-	transPage = function( elmt = doc, bObs = true , table = setTable({}), bFrame = true ){
+	transPage = function( elmt = doc, bObs = true, table = setTable({}) ){
 		if(bObs){
 			let observer = new MutationObserver(observerCallback);
 			observer.table = table;
@@ -150,7 +150,7 @@ let Core = function(win){
 		}
 
 		treeWalker(elmt, NodeFilter.SHOW_TEXT, 'nodeValue', table);
-		if(bFrame&&config.bConvFrame) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'frame', table);
+		if(config.bConvFrame) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'frame', table);
 		if(config.bConvTitle) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'title', table);
 		if(config.bConvAlt) treeWalker(elmt, NodeFilter.SHOW_ELEMENT, 'alt', table);
 	},
@@ -178,7 +178,7 @@ let Core = function(win){
 		if(!(oURL=applyURL(doc.location.href))) return;
 		let table = setTable(oURL);
 		let startTime = Date.now();
-		win.MeihuaCC.transPage(doc, true, table, false);
+		win.MeihuaCC.transPage(doc, true, table);
 		console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
 	};
 
