@@ -1,7 +1,7 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 (function(){
-	const {utils: Cu} = Components;
+	Components.utils.import('resource://meihuacc/lib/constants.js');
 	Cu.import('resource://gre/modules/Services.jsm');
 	Services.scriptloader.loadSubScript('resource://meihuacc/lib/template.js');
 	Cu.import('resource://meihuacc/templ/tmplUtils.js');
@@ -11,9 +11,9 @@
 <label value="{{function_label}}" class="label"/>\
 <menulist class="tbbFn_menulist" preference="{{prefID}}" oncommand="onChange(this);">\
 <menupopup>\
-<menuitem label="{{do_nothing}}" value="dnt"/>\
-<menuitem label="{{open_settingWindow}}" value="osw"/>\
-<menuitem label="{{conv_webText}}" value="cwt"/>\
+<menuitem label="{{do_nothing}}" value="'+DO_NOTHING+'"/>\
+<menuitem label="{{open_settingWindow}}" value="'+OPEN_SETTING_WINDOW+'"/>\
+<menuitem label="{{conv_webText}}" value="'+CONV_WEB_TEXT+'"/>\
 </menupopup>\
 </menulist>';
 

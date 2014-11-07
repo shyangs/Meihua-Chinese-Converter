@@ -46,8 +46,12 @@ let meihuacc = (function(){
 
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_c.js', meihuacc, "UTF-8");
 		Services.scriptloader.loadSubScript('resource://meihuacc/dict/cn2tw_p.js', meihuacc, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/tw2cn_c.js', meihuacc, "UTF-8");
+		Services.scriptloader.loadSubScript('resource://meihuacc/dict/tw2cn_p.js', meihuacc, "UTF-8");
 		meihuacc.addTable(meihuacc.cn2tw_c);
 		meihuacc.addTable(meihuacc.cn2tw_p);
+		meihuacc.addTable(meihuacc.tw2cn_c);
+		meihuacc.addTable(meihuacc.tw2cn_p);
 		Cu.import('resource://meihuacc/lib/File.js');
 		let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
 		aUserDefinedTable.forEach(function(aItem){

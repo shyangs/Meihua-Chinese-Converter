@@ -10,7 +10,10 @@ let Core = function(win){
 			childList: true,
 			subtree:true
 		};
-	let addTable = function(table){
+	let getConfig = function(name){
+		return config[name];
+	},
+	addTable = function(table){
 		oTables[table.name] = table;
 	},
 	removeTable = function(table){
@@ -20,7 +23,7 @@ let Core = function(win){
 		let table = {aMappings:[], maxPhLen:0, id:''},
 			aTables = oURL.aTables;
 		if( 'undefined' === typeof aTables || !Array.isArray(aTables) || aTables.length === 0 ){
-			aTables = ['梅花通用單字(繁)', '梅花通用詞彙(繁)'];
+			aTables = config.aDefaultTables;
 		}
 
 		table.id = aTables.length.toString();
@@ -187,6 +190,7 @@ let Core = function(win){
 		removeTable: removeTable,
 		setTable: setTable,
 		onPageLoad: onPageLoad,
-		transPage: transPage
+		transPage: transPage,
+		getConfig: getConfig
 	};
 };

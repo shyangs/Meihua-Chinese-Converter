@@ -1,6 +1,6 @@
 'use strict';
 
-const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/Pref.js');
 Cu.import('resource://meihuacc/lib/File.js');
@@ -9,6 +9,7 @@ let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStrin
 
 let MeihuaCC = Application.windows[0]._window.MeihuaCC,
 	pref = Pref('extensions.MeihuaCC.'),
+	aDefaultTables = JSON.parse(pref.getString('aDefaultTables')),
 	aURLs = JSON.parse(pref.getString('aURLs')),
 	aHotkeys = JSON.parse(pref.getString('aHotkeys')),
 	oTBB = JSON.parse(pref.getString('oTBB')),
@@ -64,7 +65,7 @@ tableTreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let aTbls_L = oTBB.left.aTables,
+let aTbls_L = oTBB.left.aTables||aDefaultTables,
 tbbLeft_inUse_TreeView = {
 	rowCount: aTbls_L.length,
 	getCellText: function(row, column){
@@ -76,7 +77,7 @@ tbbLeft_inUse_TreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let aTbls_M = oTBB.middle.aTables,
+let aTbls_M = oTBB.middle.aTables||aDefaultTables,
 tbbMiddle_inUse_TreeView = {
 	rowCount: aTbls_M.length,
 	getCellText: function(row, column){
@@ -88,7 +89,7 @@ tbbMiddle_inUse_TreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let aTbls_R = oTBB.right.aTables,
+let aTbls_R = oTBB.right.aTables||aDefaultTables,
 tbbRight_inUse_TreeView = {
 	rowCount: aTbls_R.length,
 	getCellText: function(row, column){
@@ -100,7 +101,7 @@ tbbRight_inUse_TreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let availableList_L = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+let availableList_L = BUILTIN_TABLE
 	.concat(aUserDefinedTable.map(function(aItem){
 		return aItem.name;
     })).filter(function(x){
@@ -116,7 +117,7 @@ tbbLeft_available_TreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let availableList_M = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+let availableList_M = BUILTIN_TABLE
 	.concat(aUserDefinedTable.map(function(aItem){
 		return aItem.name;
     })).filter(function(x){
@@ -132,7 +133,7 @@ tbbMiddle_available_TreeView = {
 	setTree: function(treebox){ this.treebox = treebox; }
 };
 
-let availableList_R = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+let availableList_R = BUILTIN_TABLE
 	.concat(aUserDefinedTable.map(function(aItem){
 		return aItem.name;
     })).filter(function(x){
@@ -160,7 +161,7 @@ tbbRight_available_Tree.view = tbbRight_available_TreeView;
 
 let onChange = function(menulist){
 	let tabpanel = document.getElementsByClassName(menulist.getAttribute('preference'))[0];
-	if(menulist.getAttribute('value')==='cwt') {
+	if(menulist.getAttribute('value')===CONV_WEB_TEXT) {
 		let elmts = tabpanel.getElementsByClassName('visibility_hidden'),
 			ii = elmts.length;
 		while(ii--){

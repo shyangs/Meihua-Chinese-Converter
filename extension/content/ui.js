@@ -6,14 +6,7 @@ let toolbarButtons = {
 		let document = window.document;
 		let button = (function(){
 			let _fTooltiptext = function(name){
-				switch(meihuacc.config[name]){
-					case 'cwt':
-						return stringBundle.GetStringFromName('conv.webText');
-					case 'osw':
-						return stringBundle.GetStringFromName('open.settingWindow');
-					default:
-						return stringBundle.GetStringFromName('do.nothing');
-				}
+				return stringBundle.GetStringFromName(meihuacc.config[name]);
 			},
 			fTooltiptext = function(){
 				return ( stringBundle.GetStringFromName('toolbarButton.leftClick') +
@@ -38,10 +31,10 @@ let toolbarButtons = {
 			button.addEventListener('click', function(event){
 				let task = function(name, btn){
 					switch(meihuacc.config[name]){
-						case 'cwt':
+						case 'conv.webText':
 							window.MeihuaCC.transPage(window.content.document, true, window.MeihuaCC.setTable(meihuacc.config.oTBB[btn]));
 						break;
-						case 'osw':
+						case 'open.settingWindow':
 							window.openDialog('chrome://meihuacc/content/options.xul', '', 'chrome,titlebar,centerscreen,modal');
 						break;
 						default:
@@ -77,7 +70,7 @@ let toolbarButtons = {
 insertToolbarButton = function(window) {
 	let button = toolbarButtons.createInstance(window);
 	try {
-		meihuacc.ToolbarManager.addWidget(window, button, meihuacc.config.firstRun);
+		meihuacc.ToolbarManager.addWidget(window, button, meihuacc.config.bFirstRun);
 	} catch(error) {
 		meihuacc.trace(error);
 	}

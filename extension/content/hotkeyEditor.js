@@ -1,6 +1,6 @@
 'use strict';
 
-const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/File.js');
 
@@ -8,7 +8,8 @@ Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', 
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[],
+let aDefaultTables = Application.windows[0]._window.MeihuaCC.getConfig('aDefaultTables'),
+	aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[],
 	inUseListTree = document.getElementById('inUseListTree'),
 	availableListTree = document.getElementById('availableListTree'),
 	aTables;
@@ -25,7 +26,7 @@ if(window.arguments[0]['in']){
 	}
 }
 
-aTables = aTables||['梅花通用單字(繁)', '梅花通用詞彙(繁)'];
+aTables = aTables||aDefaultTables;
 let inUseListTreeView = {
 	rowCount: aTables.length,
 	getCellText: function(row, column){
@@ -38,7 +39,7 @@ let inUseListTreeView = {
 };
 inUseListTree.view = inUseListTreeView;
 
-let availableList = ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+let availableList = BUILTIN_TABLE
 	.concat(aUserDefinedTable.map(function(aItem){
 		return aItem.name;
     })).filter(function(x){
