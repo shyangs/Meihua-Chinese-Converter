@@ -1,5 +1,5 @@
 'use strict';
-/* MeihuaCC is licensed under GPLv3. See the LICENSE file. */
+/* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 (function(){
 	const {utils: Cu} = Components;
 	Cu.import('resource://gre/modules/Services.jsm');

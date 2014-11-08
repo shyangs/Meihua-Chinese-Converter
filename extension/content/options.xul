@@ -2,7 +2,7 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://meihuacc/skin/options.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://meihuacc/locale/options.dtd">
-
+<!-- MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. -->
 <prefwindow
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   id="meihuaccOptions"
@@ -106,6 +106,16 @@
 			</tabpanel>
 		</tabpanels>
 	</tabbox>
+	<popupset>
+	  <menupopup id="btn_pref_popup" position="before_start">
+		<menuitem label="&btn.pref.reset;" id="btn_pref_reset" oncommand="btn_pref_reset();"/>
+		<menuitem label="&btn.pref.cn;" id="btn_pref_cn" oncommand="btn_pref_cn();"/>
+		<menuitem label="&btn.pref.tw;" id="btn_pref_tw" oncommand="btn_pref_tw();"/>
+	  </menupopup>
+	</popupset>
+	<hbox>
+		<button label="&btn.resetPref;" popup="btn_pref_popup"/>
+	</hbox>
 </prefpane>
 <script src="chrome://meihuacc/content/optionsTmpl.js"/>
 <script src="chrome://meihuacc/content/options.js"/>

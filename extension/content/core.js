@@ -105,7 +105,7 @@ let Core = function(win){
 		}else{
 			setTimeout(function(){
 				walkStep(walker, type, Date.now(), table);
-			}, 1);
+			}, 0);
 		}
 	},
 	treeWalker = function(root, whatToShow, type, table){

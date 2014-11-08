@@ -1,6 +1,6 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
-let EXPORTED_SYMBOLS = ['config', 'prefObserver'];
+let EXPORTED_SYMBOLS = ['config', 'prefObserver', 'DEFAULT_TABLE', 'DEFAULT_PATTERN', 'DEFAULT_TABLE_TW', 'DEFAULT_PATTERN_TW', 'DEFAULT_TABLE_CN', 'DEFAULT_PATTERN_CN'];
 
 Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://meihuacc/lib/Pref.js');
@@ -179,10 +179,20 @@ let prefObserver = {
 		loadComplex('aHotkeys', JSON.parse);
 		loadComplex('oTBB', JSON.parse);
 	},
-	saveConfig: function() {
+	saveConfig: function(config) {
 		this.stop(); // avoid recursion
 
 		pref.setBool('bFirstRun', false);
+		pref.setBool('bConvAlt', config.bConvAlt);
+		pref.setBool('bConvTitle', config.bConvTitle);
+		pref.setBool('bConvFrame', config.bConvFrame);
+		pref.setString('sToolbarBtnLeftClick', config.sToolbarBtnLeftClick);
+		pref.setString('sToolbarBtnMiddleClick', config.sToolbarBtnMiddleClick);
+		pref.setString('sToolbarBtnRightClick', config.sToolbarBtnRightClick);
+		pref.setString('aDefaultTables', JSON.stringify(config.aDefaultTables));
+		pref.setString('aURLs', JSON.stringify(config.aURLs));
+		pref.setString('aHotkeys', JSON.stringify(config.aHotkeys));
+		pref.setString('oTBB', JSON.stringify(config.oTBB));
 
 		this.start();
 	}

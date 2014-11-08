@@ -36,7 +36,6 @@
 <!ENTITY convAlt.label "轉換替代文字(alt attribute)">
 <!ENTITY convPage.label "轉換網頁文字">
 <!ENTITY hotkey.nulltext "無">
-<!ENTITY resetButton.label "重設">
 
 <!ENTITY inputString.label "轉換前：">
 <!ENTITY outputString.label "轉換後：">
@@ -47,3 +46,8 @@
 <!ENTITY mappingTables.available.label "可用的映射表">
 <!ENTITY addTable.button.label "＜＜ 新增">
 <!ENTITY removeTable.button.label "移除 ＞＞">
+
+<!ENTITY btn.resetPref "重設">
+<!ENTITY btn.pref.reset "恢復預設值">
+<!ENTITY btn.pref.cn "慣用簡體">
+<!ENTITY btn.pref.tw "慣用繁體">

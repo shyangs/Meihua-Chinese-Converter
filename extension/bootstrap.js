@@ -70,7 +70,7 @@ let meihuacc = (function(){
 		meihuacc.StyleManager.load(meihuacc.STYLE_URI);
 	},
 	shutdown = function(){
-		meihuacc.prefObserver.saveConfig();
+		meihuacc.prefObserver.saveConfig(config);
 		meihuacc.BrowserManager.run(unloadSubScript);
 		meihuacc.BrowserManager.destory();
 		meihuacc.StyleManager.destory();

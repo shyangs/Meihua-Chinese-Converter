@@ -1,5 +1,5 @@
 'use strict';
-
+/* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 const {classes: Cc, interfaces: Ci} = Components;
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 

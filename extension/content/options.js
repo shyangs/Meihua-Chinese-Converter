@@ -1,18 +1,15 @@
 'use strict';
-
+/* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/Pref.js');
 Cu.import('resource://meihuacc/lib/File.js');
+Cu.import('resource://meihuacc/content/config.js');
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
 let MeihuaCC = Application.windows[0]._window.MeihuaCC,
 	pref = Pref('extensions.MeihuaCC.'),
-	aDefaultTables = JSON.parse(pref.getString('aDefaultTables')),
-	aURLs = JSON.parse(pref.getString('aURLs')),
-	aHotkeys = JSON.parse(pref.getString('aHotkeys')),
-	oTBB = JSON.parse(pref.getString('oTBB')),
 	groupTree = document.getElementById('listTree'),
 	hotkeyTree = document.getElementById('hotkeyTree'),
 	tableTree = document.getElementById('userTableTree'),
@@ -23,141 +20,150 @@ let MeihuaCC = Application.windows[0]._window.MeihuaCC,
 	tbbMiddle_available_Tree = document.getElementById('tbbMiddle_available_Tree'),
 	tbbRight_available_Tree = document.getElementById('tbbRight_available_Tree');
 
-let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
-
 let savePref = function(entryName, arr){
 	pref.setString(entryName, JSON.stringify(arr));
 };
 
-let groupTreeView = {
-	rowCount: aURLs.length,
-	getCellText: function(row, column){
-		let group = aURLs[row];
-		switch(column.element.getAttribute('name')){
-			case 'indexColumn': return row+1;
-			case 'nameColumn': return group.name||'';
-			case 'patternColumn': return group.pattern;
-			case 'convOrNotColumn': return group.rule==='exclude'?stringBundle.GetStringFromName('conv.exclude'):stringBundle.GetStringFromName('conv.include');
-		}
-	},
-	setTree: function(treebox){ this.treebox = treebox; }
-},
-hotkeyTreeView = {
-	rowCount: aHotkeys.length,
-	getCellText: function(row, column){
-		let group = aHotkeys[row];
-		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return group.name;
-			case 'hotkeyColumn': return group.hotkey;
-		}
-	},
-	setTree: function(treebox){ this.treebox = treebox; }
-},
-tableTreeView = {
-	rowCount: aUserDefinedTable.length,
-	getCellText: function(row, column){
-		let group = aUserDefinedTable[row];
-		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return group.name;
-			case 'countColumn': return group.count;
-		}
-	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
+let aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[];
 
-let aTbls_L = oTBB.left.aTables||aDefaultTables,
-tbbLeft_inUse_TreeView = {
-	rowCount: aTbls_L.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'indexColumn': return row+1;
-			case 'nameColumn': return aTbls_L[row];
-		}
-	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
+let aDefaultTables, aURLs, aHotkeys, oTBB, aTbls_L, aTbls_M, aTbls_R, availableList_L, availableList_M, availableList_R;
 
-let aTbls_M = oTBB.middle.aTables||aDefaultTables,
-tbbMiddle_inUse_TreeView = {
-	rowCount: aTbls_M.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'indexColumn': return row+1;
-			case 'nameColumn': return aTbls_M[row];
-		}
-	},
-	setTree: function(treebox){ this.treebox = treebox; }
+let _Val_init = function(){
+	aDefaultTables = JSON.parse(pref.getString('aDefaultTables'));
+	aURLs = JSON.parse(pref.getString('aURLs'));
+	aHotkeys = JSON.parse(pref.getString('aHotkeys'));
+	oTBB = JSON.parse(pref.getString('oTBB'));
+	aTbls_L = oTBB.left.aTables||aDefaultTables;
+	aTbls_M = oTBB.middle.aTables||aDefaultTables;
+	aTbls_R = oTBB.right.aTables||aDefaultTables;
+	availableList_L = BUILTIN_TABLE
+		.concat(aUserDefinedTable.map(function(aItem){
+			return aItem.name;
+		})).filter(function(x){
+			return (aTbls_L.indexOf(x)===-1);
+		});
+	availableList_M = BUILTIN_TABLE
+		.concat(aUserDefinedTable.map(function(aItem){
+			return aItem.name;
+		})).filter(function(x){
+			return (aTbls_M.indexOf(x)===-1);
+		});
+	availableList_R = BUILTIN_TABLE
+		.concat(aUserDefinedTable.map(function(aItem){
+			return aItem.name;
+		})).filter(function(x){
+			return (aTbls_R.indexOf(x)===-1);
+		});
 };
+_Val_init();
 
-let aTbls_R = oTBB.right.aTables||aDefaultTables,
-tbbRight_inUse_TreeView = {
-	rowCount: aTbls_R.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'indexColumn': return row+1;
-			case 'nameColumn': return aTbls_R[row];
-		}
+let _TreeView_init = function(){
+	let groupTreeView = {
+		rowCount: aURLs.length,
+		getCellText: function(row, column){
+			let group = aURLs[row];
+			switch(column.element.getAttribute('name')){
+				case 'indexColumn': return row+1;
+				case 'nameColumn': return group.name||'';
+				case 'patternColumn': return group.pattern;
+				case 'convOrNotColumn': return group.rule==='exclude'?stringBundle.GetStringFromName('conv.exclude'):stringBundle.GetStringFromName('conv.include');
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
 	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
-
-let availableList_L = BUILTIN_TABLE
-	.concat(aUserDefinedTable.map(function(aItem){
-		return aItem.name;
-    })).filter(function(x){
-		return (aTbls_L.indexOf(x)===-1);
-	}),
-tbbLeft_available_TreeView = {
-	rowCount: availableList_L.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return availableList_L[row];
-		}
+	hotkeyTreeView = {
+		rowCount: aHotkeys.length,
+		getCellText: function(row, column){
+			let group = aHotkeys[row];
+			switch(column.element.getAttribute('name')){
+				case 'nameColumn': return group.name;
+				case 'hotkeyColumn': return group.hotkey;
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
 	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
+	tableTreeView = {
+		rowCount: aUserDefinedTable.length,
+		getCellText: function(row, column){
+			let group = aUserDefinedTable[row];
+			switch(column.element.getAttribute('name')){
+				case 'nameColumn': return group.name;
+				case 'countColumn': return group.count;
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
+	};
 
-let availableList_M = BUILTIN_TABLE
-	.concat(aUserDefinedTable.map(function(aItem){
-		return aItem.name;
-    })).filter(function(x){
-		return (aTbls_M.indexOf(x)===-1);
-	}),
-tbbMiddle_available_TreeView = {
-	rowCount: availableList_M.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return availableList_M[row];
-		}
+	let tbbLeft_inUse_TreeView = {
+		rowCount: aTbls_L.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'indexColumn': return row+1;
+				case 'nameColumn': return aTbls_L[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
 	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
-
-let availableList_R = BUILTIN_TABLE
-	.concat(aUserDefinedTable.map(function(aItem){
-		return aItem.name;
-    })).filter(function(x){
-		return (aTbls_R.indexOf(x)===-1);
-	}),
-tbbRight_available_TreeView = {
-	rowCount: availableList_R.length,
-	getCellText: function(row, column){
-		switch(column.element.getAttribute('name')){
-			case 'nameColumn': return availableList_R[row];
-		}
+	tbbMiddle_inUse_TreeView = {
+		rowCount: aTbls_M.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'indexColumn': return row+1;
+				case 'nameColumn': return aTbls_M[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
 	},
-	setTree: function(treebox){ this.treebox = treebox; }
-};
+	tbbRight_inUse_TreeView = {
+		rowCount: aTbls_R.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'indexColumn': return row+1;
+				case 'nameColumn': return aTbls_R[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
+	};
 
-groupTree.view = groupTreeView;
-hotkeyTree.view = hotkeyTreeView;
-tableTree.view = tableTreeView;
-tbbLeft_inUse_Tree.view = tbbLeft_inUse_TreeView;
-tbbMiddle_inUse_Tree.view = tbbMiddle_inUse_TreeView;
-tbbRight_inUse_Tree.view = tbbRight_inUse_TreeView;
-tbbLeft_available_Tree.view = tbbLeft_available_TreeView;
-tbbMiddle_available_Tree.view = tbbMiddle_available_TreeView;
-tbbRight_available_Tree.view = tbbRight_available_TreeView;
+	let tbbLeft_available_TreeView = {
+		rowCount: availableList_L.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'nameColumn': return availableList_L[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
+	},
+	tbbMiddle_available_TreeView = {
+		rowCount: availableList_M.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'nameColumn': return availableList_M[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
+	},
+	tbbRight_available_TreeView = {
+		rowCount: availableList_R.length,
+		getCellText: function(row, column){
+			switch(column.element.getAttribute('name')){
+				case 'nameColumn': return availableList_R[row];
+			}
+		},
+		setTree: function(treebox){ this.treebox = treebox; }
+	};
+
+	groupTree.view = groupTreeView;
+	hotkeyTree.view = hotkeyTreeView;
+	tableTree.view = tableTreeView;
+	tbbLeft_inUse_Tree.view = tbbLeft_inUse_TreeView;
+	tbbMiddle_inUse_Tree.view = tbbMiddle_inUse_TreeView;
+	tbbRight_inUse_Tree.view = tbbRight_inUse_TreeView;
+	tbbLeft_available_Tree.view = tbbLeft_available_TreeView;
+	tbbMiddle_available_Tree.view = tbbMiddle_available_TreeView;
+	tbbRight_available_Tree.view = tbbRight_available_TreeView;
+};
+_TreeView_init();
 
 let onChange = function(menulist){
 	let tabpanel = document.getElementsByClassName(menulist.getAttribute('preference'))[0];
@@ -186,12 +192,15 @@ let onChange = function(menulist){
 			elmts[ii].disabled = true;
 		}
 	}
+},
+menulist_init = function(){
+	let tbbFn_menulist = document.getElementsByClassName('tbbFn_menulist'),
+		ii = tbbFn_menulist.length;
+	while(ii--){
+		onChange(tbbFn_menulist[ii]);
+	}
 };
-let tbbFn_menulist = document.getElementsByClassName('tbbFn_menulist'),
-	ii = tbbFn_menulist.length;
-while(ii--){
-	onChange(tbbFn_menulist[ii]);
-}
+menulist_init();
 
 Services.scriptloader.loadSubScript('resource://meihuacc/content/biTreeUtils.js');
 let L_onSelectInUseList = function(){
@@ -597,7 +606,84 @@ moveToGroup = function(){
 	selection.select(newIndex);
 };
 
+let _reset = function(config){
+	prefObserver.saveConfig(config);
+	prefObserver.reloadConfig();
+
+	menulist_init();
+	_Val_init();	
+	_TreeView_init();
+};
+let btn_pref_reset = function(){
+	_reset({
+		bFirstRun: true,
+		bConvAlt: true,
+		bConvTitle: true,
+		bConvFrame: true,
+		sToolbarBtnLeftClick: CONV_WEB_TEXT,
+		sToolbarBtnMiddleClick: DO_NOTHING,
+		sToolbarBtnRightClick: OPEN_SETTING_WINDOW,
+		aDefaultTables: DEFAULT_TABLE,
+		aURLs: DEFAULT_PATTERN,
+		aHotkeys: [],
+		oTBB: {
+			left:{},
+			middle:{},
+			right:{}
+		}
+	});
+},
+btn_pref_tw = function(){
+	_reset({
+		bFirstRun: true,
+		bConvAlt: true,
+		bConvTitle: true,
+		bConvFrame: true,
+		sToolbarBtnLeftClick: CONV_WEB_TEXT,
+		sToolbarBtnMiddleClick: DO_NOTHING,
+		sToolbarBtnRightClick: OPEN_SETTING_WINDOW,
+		aDefaultTables: DEFAULT_TABLE_TW,
+		aURLs: DEFAULT_PATTERN_TW,
+		aHotkeys: [],
+		oTBB: {
+			left:{},
+			middle:{},
+			right:{}
+		}
+	});
+},
+btn_pref_cn = function(){
+	_reset({
+		bFirstRun: true,
+		bConvAlt: true,
+		bConvTitle: true,
+		bConvFrame: true,
+		sToolbarBtnLeftClick: CONV_WEB_TEXT,
+		sToolbarBtnMiddleClick: DO_NOTHING,
+		sToolbarBtnRightClick: OPEN_SETTING_WINDOW,
+		aDefaultTables: DEFAULT_TABLE_CN,
+		aURLs: DEFAULT_PATTERN_CN,
+		aHotkeys: [],
+		oTBB: {
+			left:{},
+			middle:{},
+			right:{}
+		}
+	});
+};
+
 let onDialogAccept = function(){
+	oTBB = {
+		left:{
+			aTables: aTbls_L
+		},
+		middle:{
+			aTables: aTbls_M
+		},
+		right:{
+			aTables: aTbls_R
+		}
+	};
 	savePref('oTBB', oTBB);
 	return true;
 };
