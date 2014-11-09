@@ -111,6 +111,10 @@ document.getElementById('hotkeyTextbox').onkeydown = setHotkey;
 
 let onDialogAccept = function(){
 	let hotkey = document.getElementById('hotkeyTextbox').value;
+	if(''===hotkey){
+		alert(stringBundle.GetStringFromName('alert.hotkeyTextbox.isEmpty'));
+		return false;
+	}
 	if(aHotkeyList.indexOf(hotkey)!==-1){
 		alert(stringBundle.GetStringFromName('alert.hotkeyTextbox.isDuplicated'));
 		return false;

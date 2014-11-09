@@ -1,7 +1,7 @@
 #meihuaccOptions {
   height: auto !important;
   width: auto !important;
-  max-width: 1024px;
+  max-width: 800px;
   min-width: 600px;
   max-height: 768px;
   min-height: 500px;
@@ -9,11 +9,16 @@
 
 tree {
   min-height: 300px;
-  min-width: 200px;
+  min-width: 250px;
 }
 
 .label {
   padding: 4px 0px 0px 0px; min-width: 80px;
+}
+
+description
+ {
+  margin-bottom: 10px;
 }
 
 .checkbox {

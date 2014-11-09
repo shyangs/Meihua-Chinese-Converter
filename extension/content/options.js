@@ -55,9 +55,10 @@ let _Val_init = function(){
 			return (aTbls_R.indexOf(x)===-1);
 		});
 };
-_Val_init();
 
 let _TreeView_init = function(){
+	_Val_init();
+
 	let groupTreeView = {
 		rowCount: aURLs.length,
 		getCellText: function(row, column){
@@ -338,6 +339,7 @@ clearUMT = function(){
 		delete oURL.aTables;
 	});
 	savePref('aURLs', aURLs);
+	_TreeView_init();
 },
 
 deleteGroup = function(){
@@ -386,6 +388,7 @@ deleteUMT = function(){
 	savePref('aURLs', aURLs);
 
 	MeihuaCC.removeTable(aDel[0]);
+	_TreeView_init();
 },
 
 addGroup = function(index){
@@ -465,6 +468,7 @@ addUMT = function(index){
 		tableTree.view.selection.select(index+1);
 
 		MeihuaCC.addTable(params.out.group);
+		_TreeView_init();
 	}
 },
 
@@ -551,6 +555,7 @@ editUMT = function(index){
 			aTables.splice(ii, 1, newName);
 		});
 		savePref('aURLs', aURLs);
+		_TreeView_init();
 	}
 },
 
@@ -610,8 +615,7 @@ let _reset = function(config){
 	prefObserver.saveConfig(config);
 	prefObserver.reloadConfig();
 
-	menulist_init();
-	_Val_init();	
+	menulist_init();	
 	_TreeView_init();
 };
 let btn_pref_reset = function(){

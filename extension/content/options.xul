@@ -10,7 +10,7 @@
   title="&options.title;"
   ondialogaccept="return onDialogAccept();">
 
-<prefpane id="main" flex="1">
+<prefpane id="main">
   <preferences>
     <preference id="bConvTitle" type="bool" name="extensions.MeihuaCC.bConvTitle"/>
     <preference id="bConvAlt" type="bool" name="extensions.MeihuaCC.bConvAlt"/>
@@ -18,7 +18,7 @@
 	<preference id="sToolbarBtnMiddleClick" type="unichar" name="extensions.MeihuaCC.sToolbarBtnMiddleClick"/>
 	<preference id="sToolbarBtnRightClick" type="unichar" name="extensions.MeihuaCC.sToolbarBtnRightClick"/>
   </preferences>
-  <tabbox id="prefsTab" flex="1">
+  <tabbox id="prefsTab">
 		<tabs>
 			<tab label="&tab.groupsTitle;"/>
 			<tab label="&tab.hotkeyTitle;"/>
@@ -26,8 +26,10 @@
 			<tab label="&tab.toolbarIconTitle;"/>
 			<tab label="&tab.generalTitle;"/>
 		</tabs>
-		<tabpanels flex="1">
-			<tabpanel orient="horizontal" flex="1">
+		<tabpanels>
+			<tabpanel orient="vertical">
+			  <description>&template.description;</description>
+			  <hbox flex="1">
 				<tree id="listTree" seltype="single" editable="true" flex="1" onselect="onSelectGroup();">
 				<treecols>
 				  <treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
@@ -50,8 +52,9 @@
 				  <button id="moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="moveDownGroup();"/>
 				  <button id="moveToButton" disabled="true" label="&moveToButton.label;" oncommand="moveToGroup();"/>
 				</vbox>
+			  </hbox>
 			</tabpanel>
-			<tabpanel orient="horizontal" flex="1">
+			<tabpanel orient="horizontal">
 				<tree id="hotkeyTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
@@ -67,7 +70,9 @@
 				  <button class="clearButton" label="&clearButton.label;" oncommand="clearHotkey();"/>
 				</vbox>
 			</tabpanel>
-			<tabpanel orient="horizontal" flex="1">
+			<tabpanel orient="vertical">
+			  <description>&userTable.description;</description>
+			  <hbox flex="1">
 				<tree id="userTableTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
@@ -82,8 +87,10 @@
 				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteUMT();"/>
 				  <button class="clearButton" label="&clearButton.label;" oncommand="clearUMT();"/>
 				</vbox>
+			  </hbox>
 			</tabpanel>
-			<tabpanel orient="vertical" flex="1">
+			<tabpanel orient="vertical">
+			  <description>&tbbClick.description;</description>
 			  <tabbox flex="1">
 				<tabs>
 					<tab label="&tab.leftClickTitle;"/>

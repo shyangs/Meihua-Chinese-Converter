@@ -8,7 +8,7 @@ Cu.import('resource://meihuacc/lib/Pref.js');
 let pref = Pref('extensions.MeihuaCC.'),
 	locale = Cc['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch).getCharPref('general.useragent.locale');
 
-const DEFAULT_TABLE_TW = ['\u6885\u82B1\u901A\u7528\u55AE\u5B57(\u7E41)', '\u6885\u82B1\u901A\u7528\u8A5E\u5F59(\u7E41)']; // ['梅花通用單字(繁)', '梅花通用詞彙(繁)']
+const DEFAULT_TABLE_TW = ['\u6885\u82B1\u6A19\u9EDE\u7B26\u865F(\u7E41)', '\u6885\u82B1\u901A\u7528\u55AE\u5B57(\u7E41)', '\u6885\u82B1\u901A\u7528\u8A5E\u5F59(\u7E41)']; // ['梅花標點符號(繁)', '梅花通用單字(繁)', '梅花通用詞彙(繁)']
 const DEFAULT_TABLE_CN = ['\u6885\u82B1\u901A\u7528\u5355\u5B57(\u7B80)', '\u6885\u82B1\u901A\u7528\u8BCD\u6C47(\u7B80)']; // ['梅花通用单字(简)', '梅花通用词汇(简)']
 const DEFAULT_TABLE = ('zh-CN'===locale)?DEFAULT_TABLE_CN:DEFAULT_TABLE_TW;
 

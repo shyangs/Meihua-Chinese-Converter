@@ -9,4 +9,4 @@ const CONV_WEB_TEXT = 'conv.webText';
 const DO_NOTHING = 'do.nothing';
 const OPEN_SETTING_WINDOW = 'open.settingWindow';
 
-const BUILTIN_TABLE = ['\u6885\u82B1\u901A\u7528\u55AE\u5B57(\u7E41)', '\u6885\u82B1\u901A\u7528\u8A5E\u5F59(\u7E41)', '\u6885\u82B1\u901A\u7528\u5355\u5B57(\u7B80)', '\u6885\u82B1\u901A\u7528\u8BCD\u6C47(\u7B80)'];//['梅花通用單字(繁)', '梅花通用詞彙(繁)', '梅花通用单字(简)', '梅花通用词汇(简)'];
+const BUILTIN_TABLE = ['\u6885\u82B1\u6A19\u9EDE\u7B26\u865F(\u7E41)', '\u6885\u82B1\u901A\u7528\u55AE\u5B57(\u7E41)', '\u6885\u82B1\u901A\u7528\u8A5E\u5F59(\u7E41)', '\u6885\u82B1\u901A\u7528\u5355\u5B57(\u7B80)', '\u6885\u82B1\u901A\u7528\u8BCD\u6C47(\u7B80)'];//['梅花標點符號(繁)', '梅花通用單字(繁)', '梅花通用詞彙(繁)', '梅花通用单字(简)', '梅花通用词汇(简)'];

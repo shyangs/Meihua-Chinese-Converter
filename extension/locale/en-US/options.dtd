@@ -42,7 +42,7 @@
 <!ENTITY inputColumn.title "轉換前">
 <!ENTITY outputColumn.title "轉換後">
 
-<!ENTITY mappingTables.inUse.label "映射表">
+<!ENTITY mappingTables.inUse.label "套用的映射表">
 <!ENTITY mappingTables.available.label "可用的映射表">
 <!ENTITY addTable.button.label "＜＜ 新增">
 <!ENTITY removeTable.button.label "移除 ＞＞">
@@ -51,3 +51,7 @@
 <!ENTITY btn.pref.reset "恢復預設值">
 <!ENTITY btn.pref.cn "慣用簡體">
 <!ENTITY btn.pref.tw "慣用繁體">
+
+<!ENTITY template.description "網頁載入時，依編號順序比對網址樣式，執行模板符合者的設定。若載入的網址符合多個模板樣式，則只套用第一個符合的模板。">
+<!ENTITY userTable.description "針對不同類型的網頁內容，可設定多個映射表方便對應使用。">
+<!ENTITY tbbClick.description "設定滑鼠點擊本套件的工具列按鈕時，要執行的動作。">
