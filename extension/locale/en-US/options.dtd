@@ -1,57 +1,57 @@
-<!ENTITY options.title "Meihua Chinese Converter 設定">
-<!ENTITY tab.groupsTitle "模板">
-<!ENTITY tab.hotkeyTitle "熱鍵">
-<!ENTITY tab.userTableTitle "映射表">
-<!ENTITY tab.toolbarIconTitle "工具列圖示">
-<!ENTITY tab.generalTitle "一般">
-<!ENTITY tab.leftClickTitle "左鍵">
-<!ENTITY tab.middleClickTitle "中鍵">
-<!ENTITY tab.rightClickTitle "右鍵">
-<!ENTITY treeColumn.indexTitle "編號">
-<!ENTITY treeColumn.nameTitle "名稱">
-<!ENTITY treeColumn.patternTitle "網址樣式">
-<!ENTITY treeColumn.convOrNotTitle "行為">
-<!ENTITY treeColumn.countTitle "詞組數">
-<!ENTITY name.label "名稱：">
-<!ENTITY pattern.label "網址樣式：">
-<!ENTITY convOrNot.label "行為：">
-<!ENTITY hotkey.label "熱鍵：">
-<!ENTITY conv.checkbox "轉換文字">
-<!ENTITY conv.exclude "不轉換">
-<!ENTITY conv.include "轉換">
+<!ENTITY options.title "Meihua Chinese Converter Config">
+<!ENTITY tab.groupsTitle "Template">
+<!ENTITY tab.hotkeyTitle "Hotkey">
+<!ENTITY tab.userTableTitle "Mapping table">
+<!ENTITY tab.toolbarIconTitle "Toolbar icon">
+<!ENTITY tab.generalTitle "General">
+<!ENTITY tab.leftClickTitle "Left click">
+<!ENTITY tab.middleClickTitle "Mid-click">
+<!ENTITY tab.rightClickTitle "Right click">
+<!ENTITY treeColumn.indexTitle "Index">
+<!ENTITY treeColumn.nameTitle "Name">
+<!ENTITY treeColumn.patternTitle "URL patten">
+<!ENTITY treeColumn.convOrNotTitle "Behaviour">
+<!ENTITY treeColumn.countTitle "Phrase count">
+<!ENTITY name.label "Name:">
+<!ENTITY pattern.label "URL Patten:">
+<!ENTITY convOrNot.label "Behaviour:">
+<!ENTITY hotkey.label "Hotkey:">
+<!ENTITY conv.checkbox "Convert text">
+<!ENTITY conv.exclude "Don't convert">
+<!ENTITY conv.include "Convert">
 
-<!ENTITY function.label "功能：">
-<!ENTITY do.nothing "無">
-<!ENTITY conv.webText "轉換目前瀏覽的網頁文字">
-<!ENTITY open.settingWindow "開啟設定視窗">
+<!ENTITY function.label "Function:">
+<!ENTITY do.nothing "None">
+<!ENTITY conv.webText "Convert current page">
+<!ENTITY open.settingWindow "Configuration...">
 
-<!ENTITY addButton.label "新增">
-<!ENTITY editButton.label "編輯">
-<!ENTITY deleteButton.label "刪除">
-<!ENTITY clearButton.label "全部刪除">
-<!ENTITY moveUpButton.label "向上移">
-<!ENTITY moveDownButton.label "向下移">
-<!ENTITY moveToButton.label "移動到">
-<!ENTITY convTitle.label "轉換工具提示文字(title attribute)">
-<!ENTITY convAlt.label "轉換替代文字(alt attribute)">
-<!ENTITY convPage.label "轉換網頁文字">
-<!ENTITY hotkey.nulltext "無">
+<!ENTITY addButton.label "Add">
+<!ENTITY editButton.label "Edit">
+<!ENTITY deleteButton.label "Remove">
+<!ENTITY clearButton.label "Remove all">
+<!ENTITY moveUpButton.label "Move up">
+<!ENTITY moveDownButton.label "Move down">
+<!ENTITY moveToButton.label "Move to ...">
+<!ENTITY convTitle.label "Converter tool-tip (title attribute)">
+<!ENTITY convAlt.label "Converter alternative text (alt attribute)">
+<!ENTITY convPage.label "Convert page">
+<!ENTITY hotkey.nulltext "None">
 
-<!ENTITY inputString.label "轉換前：">
-<!ENTITY outputString.label "轉換後：">
-<!ENTITY inputColumn.title "轉換前">
-<!ENTITY outputColumn.title "轉換後">
+<!ENTITY inputString.label "Before:">
+<!ENTITY outputString.label "After:">
+<!ENTITY inputColumn.title "Before">
+<!ENTITY outputColumn.title "After">
 
-<!ENTITY mappingTables.inUse.label "套用的映射表">
-<!ENTITY mappingTables.available.label "可用的映射表">
-<!ENTITY addTable.button.label "＜＜ 新增">
-<!ENTITY removeTable.button.label "移除 ＞＞">
+<!ENTITY mappingTables.inUse.label "Mapping table applied">
+<!ENTITY mappingTables.available.label "Mapping table available">
+<!ENTITY addTable.button.label "&lt;&lt; Add">
+<!ENTITY removeTable.button.label "Remove &gt;&gt;">
 
-<!ENTITY btn.resetPref "重設">
-<!ENTITY btn.pref.reset "恢復預設值">
-<!ENTITY btn.pref.cn "慣用簡體">
-<!ENTITY btn.pref.tw "慣用繁體">
+<!ENTITY btn.resetPref "Reset">
+<!ENTITY btn.pref.reset "Reset to default value">
+<!ENTITY btn.pref.cn "Prefer Simplified Chinese">
+<!ENTITY btn.pref.tw "Prefer Traditional Chinese">
 
-<!ENTITY template.description "網頁載入時，依編號順序比對網址樣式，執行模板符合者的設定。若載入的網址符合多個模板樣式，則只套用第一個符合的模板。">
-<!ENTITY userTable.description "針對不同類型的網頁內容，可設定多個映射表方便對應使用。">
-<!ENTITY tbbClick.description "設定滑鼠點擊本套件的工具列按鈕時，要執行的動作。">
+<!ENTITY template.description "When webpage loaded, this add-on will apply the template from first matched rule.">
+<!ENTITY userTable.description "You can configure different mapping table for different type of websites.">
+<!ENTITY tbbClick.description "Configure the action to perform when clicked on toolbar buttons.">

@@ -1,0 +1,57 @@
+<!ENTITY options.title "Meihua Chinese Converter 设置">
+<!ENTITY tab.groupsTitle "模板">
+<!ENTITY tab.hotkeyTitle "快键键">
+<!ENTITY tab.userTableTitle "映射表">
+<!ENTITY tab.toolbarIconTitle "工具栏图标">
+<!ENTITY tab.generalTitle "一般">
+<!ENTITY tab.leftClickTitle "左键">
+<!ENTITY tab.middleClickTitle "中键">
+<!ENTITY tab.rightClickTitle "右键">
+<!ENTITY treeColumn.indexTitle "编号">
+<!ENTITY treeColumn.nameTitle "名称">
+<!ENTITY treeColumn.patternTitle "网址匹配">
+<!ENTITY treeColumn.convOrNotTitle "行为">
+<!ENTITY treeColumn.countTitle "词组数">
+<!ENTITY name.label "名称：">
+<!ENTITY pattern.label "网址匹配：">
+<!ENTITY convOrNot.label "行为：">
+<!ENTITY hotkey.label "快捷键：">
+<!ENTITY conv.checkbox "转换文本">
+<!ENTITY conv.exclude "不转换">
+<!ENTITY conv.include "转换">
+ 
+<!ENTITY function.label "功能：">
+<!ENTITY do.nothing "无">
+<!ENTITY conv.webText "转换目前浏览的网页文本">
+<!ENTITY open.settingWindow "打开设置窗口">
+ 
+<!ENTITY addButton.label "新增">
+<!ENTITY editButton.label "编辑">
+<!ENTITY deleteButton.label "删除">
+<!ENTITY clearButton.label "全部删除">
+<!ENTITY moveUpButton.label "向上移">
+<!ENTITY moveDownButton.label "向下移">
+<!ENTITY moveToButton.label "移动到">
+<!ENTITY convTitle.label "转换工具提示文本(title attribute)">
+<!ENTITY convAlt.label "转换替代文本(alt attribute)">
+<!ENTITY convPage.label "转换网页文本">
+<!ENTITY hotkey.nulltext "无">
+ 
+<!ENTITY inputString.label "转换前：">
+<!ENTITY outputString.label "转换后：">
+<!ENTITY inputColumn.title "转换前">
+<!ENTITY outputColumn.title "转换后">
+ 
+<!ENTITY mappingTables.inUse.label "应用的映射表">
+<!ENTITY mappingTables.available.label "可用的映射表">
+<!ENTITY addTable.button.label "＜＜ 新增">
+<!ENTITY removeTable.button.label "移除 ＞＞">
+ 
+<!ENTITY btn.resetPref "重置">
+<!ENTITY btn.pref.reset "恢复默认值">
+<!ENTITY btn.pref.cn "常用简体">
+<!ENTITY btn.pref.tw "常用繁体">
+ 
+<!ENTITY template.description "网页加载时，依编号顺序对比网址样式，执行模板符合者的设置。若加载的网址符合多个模板匹配，则只应用第一个符合的模板。">
+<!ENTITY userTable.description "针对不同类型的网页内容，可设置多个映射表方便对应使用。">
+<!ENTITY tbbClick.description "设置鼠标点击本扩展的工具栏按钮时，要执行的动作。">
