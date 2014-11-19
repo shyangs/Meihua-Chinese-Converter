@@ -82,6 +82,7 @@ let config = {
 	bConvAlt: true,
 	bConvTitle: true,
 	bConvFrame: true,
+	bLogEnable: false,
 	sToolbarBtnLeftClick: CONV_WEB_TEXT,
 	sToolbarBtnMiddleClick: DO_NOTHING,
 	sToolbarBtnRightClick: OPEN_SETTING_WINDOW,
@@ -157,6 +158,7 @@ let prefObserver = {
 		initBool('bConvAlt');
 		initBool('bConvTitle');
 		initBool('bConvFrame');
+		initBool('bLogEnable');
 		initString('sToolbarBtnLeftClick');
 		initString('sToolbarBtnMiddleClick');
 		initString('sToolbarBtnRightClick');
@@ -171,6 +173,7 @@ let prefObserver = {
 		loadBool('bConvAlt');
 		loadBool('bConvTitle');
 		loadBool('bConvFrame');
+		loadBool('bLogEnable');
 		loadString('sToolbarBtnLeftClick');
 		loadString('sToolbarBtnMiddleClick');
 		loadString('sToolbarBtnRightClick');
@@ -186,6 +189,7 @@ let prefObserver = {
 		pref.setBool('bConvAlt', config.bConvAlt);
 		pref.setBool('bConvTitle', config.bConvTitle);
 		pref.setBool('bConvFrame', config.bConvFrame);
+		pref.setBool('bLogEnable', config.bLogEnable);
 		pref.setString('sToolbarBtnLeftClick', config.sToolbarBtnLeftClick);
 		pref.setString('sToolbarBtnMiddleClick', config.sToolbarBtnMiddleClick);
 		pref.setString('sToolbarBtnRightClick', config.sToolbarBtnRightClick);

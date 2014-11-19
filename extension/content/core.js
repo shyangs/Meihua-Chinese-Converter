@@ -164,14 +164,14 @@ let Core = function(win){
 				regexp = new RegExp(pattern, 'i');
 			if( !regexp.test(href) ) continue;
 			if(rule !== 'exclude'){
-				console.log('MeihuaCC: 網址「 ' + href + ' 」符合包含規則「 ' + pattern + ' 」，繁簡轉換開始...');
+				config.bLogEnable && console.log('MeihuaCC: 網址「 ' + href + ' 」符合包含規則「 ' + pattern + ' 」，繁簡轉換開始...');
 				return oURL;
 			}else{
-				console.log('MeihuaCC: 網址「 ' + href + ' 」符合排除規則「 ' + pattern + ' 」，不進行繁簡轉換。');
+				config.bLogEnable && console.log('MeihuaCC: 網址「 ' + href + ' 」符合排除規則「 ' + pattern + ' 」，不進行繁簡轉換。');
 				return false;
 			}
 		}
-		console.log('MeihuaCC: 網址「 ' + href + ' 」不符合所有規則，不進行繁簡轉換。');
+		config.bLogEnable && console.log('MeihuaCC: 網址「 ' + href + ' 」不符合所有規則，不進行繁簡轉換。');
 		return false;
 	},
 	onPageLoad = function(aEvent){
@@ -182,7 +182,7 @@ let Core = function(win){
 		let table = setTable(oURL);
 		let startTime = Date.now();
 		win.MeihuaCC.transPage(doc, true, table);
-		console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
+		config.bLogEnable && console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
 	};
 
 	return {
