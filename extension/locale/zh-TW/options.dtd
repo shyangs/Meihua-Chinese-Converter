@@ -2,7 +2,7 @@
 <!ENTITY tab.groupsTitle "模板">
 <!ENTITY tab.hotkeyTitle "熱鍵">
 <!ENTITY tab.userTableTitle "映射表">
-<!ENTITY tab.toolbarIconTitle "工具列圖示">
+<!ENTITY tab.toolbarIconTitle "工具列按鈕">
 <!ENTITY tab.generalTitle "一般">
 <!ENTITY tab.leftClickTitle "左鍵">
 <!ENTITY tab.middleClickTitle "中鍵">
@@ -53,5 +53,6 @@
 <!ENTITY btn.pref.tw "慣用繁體">
 
 <!ENTITY template.description "網頁載入時，依編號順序比對網址樣式，執行模板符合者的設定。若載入的網址符合多個模板樣式，則只套用第一個符合的模板。">
+<!ENTITY hotkey.description "設定熱鍵，用以轉換網頁文字。">
 <!ENTITY userTable.description "針對不同類型的網頁內容，可設定多個映射表方便對應使用。">
 <!ENTITY tbbClick.description "設定滑鼠點擊本套件的工具列按鈕時，要執行的動作。">

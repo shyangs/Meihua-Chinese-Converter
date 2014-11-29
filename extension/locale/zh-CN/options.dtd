@@ -1,8 +1,8 @@
 <!ENTITY options.title "Meihua Chinese Converter 设置">
 <!ENTITY tab.groupsTitle "模板">
-<!ENTITY tab.hotkeyTitle "快键键">
+<!ENTITY tab.hotkeyTitle "快捷键">
 <!ENTITY tab.userTableTitle "映射表">
-<!ENTITY tab.toolbarIconTitle "工具栏图标">
+<!ENTITY tab.toolbarIconTitle "工具栏按钮">
 <!ENTITY tab.generalTitle "一般">
 <!ENTITY tab.leftClickTitle "左键">
 <!ENTITY tab.middleClickTitle "中键">
@@ -52,6 +52,7 @@
 <!ENTITY btn.pref.cn "常用简体">
 <!ENTITY btn.pref.tw "常用繁体">
  
-<!ENTITY template.description "网页加载时，依编号顺序对比网址样式，执行模板符合者的设置。若加载的网址符合多个模板匹配，则只应用第一个符合的模板。">
+<!ENTITY template.description "网页加载时，依编号顺序对比网址匹配，执行模板符合者的设置。若加载的网址符合多个模板匹配，则只应用第一个符合的模板。">
+<!ENTITY hotkey.description "设置快捷键，用以转换网页文本。">
 <!ENTITY userTable.description "针对不同类型的网页内容，可设置多个映射表方便对应使用。">
 <!ENTITY tbbClick.description "设置鼠标点击本扩展的工具栏按钮时，要执行的动作。">

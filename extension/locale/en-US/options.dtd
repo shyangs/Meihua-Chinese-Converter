@@ -2,7 +2,7 @@
 <!ENTITY tab.groupsTitle "Template">
 <!ENTITY tab.hotkeyTitle "Hotkey">
 <!ENTITY tab.userTableTitle "Mapping table">
-<!ENTITY tab.toolbarIconTitle "Toolbar icon">
+<!ENTITY tab.toolbarIconTitle "Toolbar button">
 <!ENTITY tab.generalTitle "General">
 <!ENTITY tab.leftClickTitle "Left click">
 <!ENTITY tab.middleClickTitle "Mid-click">
@@ -53,5 +53,6 @@
 <!ENTITY btn.pref.tw "Prefer Traditional Chinese">
 
 <!ENTITY template.description "When webpage loaded, this add-on will apply the template from first matched rule.">
+<!ENTITY hotkey.description "You can assign hotkeys to convert page.">
 <!ENTITY userTable.description "You can configure different mapping table for different type of websites.">
 <!ENTITY tbbClick.description "Configure the action to perform when clicked on toolbar buttons.">

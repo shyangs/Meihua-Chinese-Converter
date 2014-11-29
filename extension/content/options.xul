@@ -8,6 +8,7 @@
   id="meihuaccOptions"
   windowtype="MeihuaCC:Preferences"
   title="&options.title;"
+  buttons="accept"
   ondialogaccept="return onDialogAccept();">
 
 <prefpane id="main">
@@ -54,7 +55,9 @@
 				</vbox>
 			  </hbox>
 			</tabpanel>
-			<tabpanel orient="horizontal">
+			<tabpanel orient="vertical">
+			  <description>&hotkey.description;</description>
+			  <hbox flex="1">
 				<tree id="hotkeyTree" seltype="single" editable="true" flex="1" onselect="onSelectTable(this);">
 				<treecols>
                   <treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
@@ -69,6 +72,7 @@
 				  <button class="deleteButton" disabled="true" label="&deleteButton.label;" oncommand="deleteHotkey();"/>
 				  <button class="clearButton" label="&clearButton.label;" oncommand="clearHotkey();"/>
 				</vbox>
+			  </hbox>
 			</tabpanel>
 			<tabpanel orient="vertical">
 			  <description>&userTable.description;</description>
@@ -122,6 +126,8 @@
 	</popupset>
 	<hbox>
 		<button label="&btn.resetPref;" popup="btn_pref_popup"/>
+		<spacer flex="1"/>
+		<button dlgtype="accept" style="display:inline!important;"/>
 	</hbox>
 </prefpane>
 <script src="chrome://meihuacc/content/optionsTmpl.js"/>
