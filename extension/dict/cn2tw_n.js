@@ -3,7 +3,7 @@
  This file is modified from New Tong Wen Tang.
  You may find the license in the LICENSE file.
  */
-let cn2tw_n={
+var cn2tw_n={
 name:'梅花標點符號(繁)',
 maxPhLen:1,
 count:29,

@@ -1,6 +1,6 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
-let toolbarButtons = {
+var toolbarButtons = {
 	createInstance: function(window) {
 		let stringBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 		let document = window.document;

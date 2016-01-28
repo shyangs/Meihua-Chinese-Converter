@@ -3,7 +3,7 @@
  This file is modified from User Agent Overrider.
  You may find the license in the LICENSE file.
  */
-const Utils = (function() {
+var Utils = (function() {
     const {classes: Cc, interfaces: Ci} = Components;
     const sbService = Cc['@mozilla.org/intl/stringbundle;1']
                          .getService(Ci.nsIStringBundleService);

@@ -2,7 +2,7 @@
 /*
 https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent.keyCode
  */
-let keyCodeMapper = [];
+var keyCodeMapper = [];
 
 keyCodeMapper[3]='CANCEL';
 keyCodeMapper[6]='HELP';

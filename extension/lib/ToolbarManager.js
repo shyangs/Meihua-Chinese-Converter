@@ -3,7 +3,7 @@
  This file is modified from User Agent Overrider.
  You may find the license in the LICENSE file.
  */
-const ToolbarManager = (function() {
+var ToolbarManager = (function() {
 	const log = function() { dump(Array.slice(arguments).join(' ') + '\n'); };
 	const trace = function(error) { log(error); log(error.stack); };
     /**

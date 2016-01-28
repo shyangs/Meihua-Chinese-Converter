@@ -3,7 +3,7 @@
  This file is modified from New Tong Wen Tang.
  You may find the license in the LICENSE file.
  */
-let onkeyDown = function(event){
+var onkeyDown = function(event){
 	if (meihuacc.config.aHotkeys.length === 0) return;
 
 	let win = this;

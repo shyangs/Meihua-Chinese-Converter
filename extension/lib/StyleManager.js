@@ -3,7 +3,7 @@
  This file is modified from User Agent Overrider.
  You may find the license in the LICENSE file.
  */
-const StyleManager = (function() {
+var StyleManager = (function() {
 	const {classes: Cc, interfaces: Ci} = Components;
     const styleService = Cc['@mozilla.org/content/style-sheet-service;1']
                             .getService(Ci.nsIStyleSheetService);

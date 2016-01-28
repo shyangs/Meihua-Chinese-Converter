@@ -1,6 +1,6 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
-let Core = function(win){
+var Core = function(win){
 	let {document: document, MutationObserver: MutationObserver, NodeFilter: NodeFilter, setTimeout: setTimeout, console: console} = win,
 		doc = document,
 		oTables = meihuacc.oTables,

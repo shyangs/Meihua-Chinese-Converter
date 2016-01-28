@@ -1,7 +1,7 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
 //let EXPORTED_SYMBOLS = ['onSelectInUseList', 'onSelectAvailableList', 'addTable', 'removeTable', 'moveUpTable', 'moveDownTable', 'moveToTable'];
-let _onSelectItem = function(tree, ...aButtons){
+var _onSelectItem = function(tree, ...aButtons){
 	if(tree.currentIndex >= 0){
 		aButtons.forEach(function(btn){
 			btn.disabled = false;

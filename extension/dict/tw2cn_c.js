@@ -1,6 +1,6 @@
 'use strict';
 /* MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. */
-let tw2cn_c={
+var tw2cn_c={
 name:'梅花通用单字(简)',
 maxPhLen:1,
 count:2942,
