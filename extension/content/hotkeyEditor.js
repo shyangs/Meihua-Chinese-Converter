@@ -3,12 +3,12 @@
 Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/File.js');
-
+Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js');
 Services.scriptloader.loadSubScript('resource://meihuacc/lib/keyCodeMapper.js', this, 'UTF-8');
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let aDefaultTables = Application.windows[0]._window.MeihuaCC.getConfig('aDefaultTables'),
+let aDefaultTables = Utils.getMostRecentWindow('navigator:browser').MeihuaCC.getConfig('aDefaultTables'),
 	aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[],
 	inUseListTree = document.getElementById('inUseListTree'),
 	availableListTree = document.getElementById('availableListTree'),
@@ -109,7 +109,7 @@ let setHotkey = function(event){
 };
 document.getElementById('hotkeyTextbox').onkeydown = setHotkey;
 
-let onDialogAccept = function(){
+var onDialogAccept = function(){
 	let hotkey = document.getElementById('hotkeyTextbox').value;
 	if(''===hotkey){
 		alert(stringBundle.GetStringFromName('alert.hotkeyTextbox.isEmpty'));

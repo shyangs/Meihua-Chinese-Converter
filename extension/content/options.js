@@ -5,10 +5,11 @@ Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/Pref.js');
 Cu.import('resource://meihuacc/lib/File.js');
 Cu.import('resource://meihuacc/content/config.js');
+Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js');
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let MeihuaCC = Application.windows[0]._window.MeihuaCC,
+let MeihuaCC = Utils.getMostRecentWindow('navigator:browser').MeihuaCC,
 	pref = Pref('extensions.MeihuaCC.'),
 	groupTree = document.getElementById('listTree'),
 	hotkeyTree = document.getElementById('hotkeyTree'),
@@ -676,7 +677,7 @@ btn_pref_cn = function(){
 	});
 };
 
-let onDialogAccept = function(){
+var onDialogAccept = function(){
 	oTBB = {
 		left:{
 			aTables: aTbls_L

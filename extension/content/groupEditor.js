@@ -3,10 +3,11 @@
 Components.utils.import('resource://meihuacc/lib/constants.js');
 Cu.import('resource://gre/modules/Services.jsm');
 Cu.import('resource://meihuacc/lib/File.js');
+Services.scriptloader.loadSubScript('resource://meihuacc/lib/Utils.js');
 
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let aDefaultTables = Application.windows[0]._window.MeihuaCC.getConfig('aDefaultTables'),
+let aDefaultTables = Utils.getMostRecentWindow('navigator:browser').MeihuaCC.getConfig('aDefaultTables'),
 	aUserDefinedTable = File.read(File.open('userDefinedTable', 'MeihuaCC'))||[],
 	inUseListTree = document.getElementById('inUseListTree'),
 	availableListTree = document.getElementById('availableListTree'),
@@ -102,7 +103,7 @@ moveToTable = function(){
 };
 
 
-let onDialogAccept = function(){
+var onDialogAccept = function(){
 	let pattern = document.getElementById('patternTextbox').value;
 	if(''===pattern){
 		alert(stringBundle.GetStringFromName('alert.patternTextbox.isEmpty'));

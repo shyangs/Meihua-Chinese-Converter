@@ -98,7 +98,7 @@ let onSelectGroup = function(el){
 	}
 };
 
-let onDialogAccept = function(){
+var onDialogAccept = function(){
 	let name = document.getElementById('nameTextbox').value;
 	if(name===''){
 		alert(stringBundle.GetStringFromName('alert.nameTextbox.isEmpty'));
