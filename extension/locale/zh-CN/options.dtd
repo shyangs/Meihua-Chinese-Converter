@@ -9,7 +9,7 @@
 <!ENTITY tab.rightClickTitle "右键">
 <!ENTITY treeColumn.indexTitle "编号">
 <!ENTITY treeColumn.nameTitle "名称">
-<!ENTITY treeColumn.patternTitle "网址匹配">
+<!ENTITY treeColumn.patternTitle "网址匹配 (regex)">
 <!ENTITY treeColumn.convOrNotTitle "行为">
 <!ENTITY treeColumn.countTitle "词组数">
 <!ENTITY name.label "名称：">

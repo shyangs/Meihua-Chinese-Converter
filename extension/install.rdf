@@ -6,7 +6,7 @@
 
         <em:id>MeihuaCC@shyangs</em:id>
         <em:name>Meihua Chinese Converter</em:name>
-        <em:version>2.0a40</em:version>
+        <em:version>2.0</em:version>
         <em:iconURL>chrome://meihuacc/skin/icon32.png</em:iconURL>
         <em:optionsURL>chrome://meihuacc/content/options.xul</em:optionsURL>
         <em:type>2</em:type>
@@ -16,7 +16,7 @@
             <Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>22.0</em:minVersion>
-                <em:maxVersion>45.*</em:maxVersion>
+                <em:maxVersion>48.*</em:maxVersion>
             </Description>
         </em:targetApplication>
 
@@ -26,11 +26,11 @@
             <Description>
                 <em:locale>en-US</em:locale>
                 <em:name>Meihua Chinese Converter</em:name>
-                <em:description>Meihua Chinese Converter, convert page between Simplified and Traditional Chinese.</em:description>
+                <em:description>This addon converts page between Simplified and Traditional Chinese.</em:description>
                 <em:creator>shyangs</em:creator>
                 <em:homepageURL>https://github.com/shyangs/Meihua-Chinese-Converter</em:homepageURL>
                 <em:developer>shyangs</em:developer>
-                <em:translator>Yellow Yoshi</em:translator>
+                <em:translator>Jixun Wu</em:translator>
             </Description>
         </em:localized>
 

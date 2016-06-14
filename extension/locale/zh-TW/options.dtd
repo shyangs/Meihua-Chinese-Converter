@@ -9,7 +9,7 @@
 <!ENTITY tab.rightClickTitle "右鍵">
 <!ENTITY treeColumn.indexTitle "編號">
 <!ENTITY treeColumn.nameTitle "名稱">
-<!ENTITY treeColumn.patternTitle "網址樣式">
+<!ENTITY treeColumn.patternTitle "網址樣式 (regex)">
 <!ENTITY treeColumn.convOrNotTitle "行為">
 <!ENTITY treeColumn.countTitle "詞組數">
 <!ENTITY name.label "名稱：">

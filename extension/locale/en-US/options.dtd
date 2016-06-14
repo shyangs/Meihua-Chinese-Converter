@@ -9,7 +9,7 @@
 <!ENTITY tab.rightClickTitle "Right click">
 <!ENTITY treeColumn.indexTitle "Index">
 <!ENTITY treeColumn.nameTitle "Name">
-<!ENTITY treeColumn.patternTitle "URL patten">
+<!ENTITY treeColumn.patternTitle "URL patten (regex)">
 <!ENTITY treeColumn.convOrNotTitle "Behaviour">
 <!ENTITY treeColumn.countTitle "Phrase count">
 <!ENTITY name.label "Name:">

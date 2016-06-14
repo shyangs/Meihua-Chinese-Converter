@@ -3,9 +3,10 @@
 var tw2cn_c={
 name:'梅花通用单字(简)',
 maxPhLen:1,
-count:2942,
-version:141129,
+count:2943,
+version:150905,
 aMappings:[
+["著","着"],
 ["乾","干"],
 ["儘","尽"],
 ["劃","划"],
