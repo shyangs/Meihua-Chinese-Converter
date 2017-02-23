@@ -3,7 +3,7 @@
 const {classes: Cc, interfaces: Ci} = Components;
 let stringBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService).createBundle('chrome://meihuacc/locale/meihuacc.properties');
 
-let tableTree = document.getElementById('phraseTree')
+let tableTree = document.getElementById('phraseTree');
 
 if(window.arguments[0]['in']){
 	var group = window.arguments[0]['in'].group,
@@ -26,6 +26,16 @@ if(window.arguments[0]['in']){
 
 	tableTree.view = tableTreeView;
 }
+
+// 新增或編輯映射表時, 點擊既存之轉換詞組, 自動在`轉換前`、`轉換後`欄位分別填入既存之轉換詞組, 以方便編輯. 
+document.getElementById('phraseTreeChildren').addEventListener('click', function(){
+	let selection = tableTree.view.selection;
+	if(selection.count === 0) return;
+	let index = selection.currentIndex;
+
+	document.getElementById('inputStringTextbox').value = aMappings[index][0];
+	document.getElementById('outputStringTextbox').value = aMappings[index][1];
+});
 
 let clearPhrase = function(){
 	let ii = aMappings.length;
