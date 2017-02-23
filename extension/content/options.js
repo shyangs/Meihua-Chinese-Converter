@@ -677,6 +677,130 @@ btn_pref_cn = function(){
 	});
 };
 
+let isJsonValid = function(aData){
+  try {
+		JSON.parse(aData);
+  } catch(e){
+		return false;
+  }
+  return true;
+};
+
+let btn_pref_export = function(){
+	try {
+		let fileType = "json";
+		let nsIFilePicker = Ci.nsIFilePicker;
+		let fp = Cc["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+		let stream = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
+
+		fp.init(window, null, nsIFilePicker.modeSave);
+		fp.defaultExtension = fileType;
+		fp.defaultString = "MeihuaCC_Preferences." + fileType;
+
+		fp.appendFilters(nsIFilePicker.filterAll);
+		
+		if (fp.show() != nsIFilePicker.returnCancel){
+			let file = fp.file;
+
+			if (!/\.json$/.test(file.leafName.toLowerCase())) file.leafName += ".json";
+
+			if (file.exists()) file.remove(true);
+			file.create(file.NORMAL_FILE_TYPE, parseInt("0666", 8));
+			stream.init(file, 0x02, 0x200, null);
+
+
+			var patternItems = JSON.stringify(
+				(function(arr){
+					let obj = Object.create(null);
+					obj["preferences"] = Object.create(null);
+					arr.forEach(function(elmt){
+							obj["preferences"][elmt] = pref.getPrefValue(elmt);
+					});
+
+					obj["userDefinedTable"] = aUserDefinedTable;
+
+					return obj;
+				})( pref.getChildList() )
+			);
+
+			let converter = Cc["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Ci.nsIScriptableUnicodeConverter);
+			converter.charset = "UTF-8";
+			let json_str = converter.ConvertFromUnicode(patternItems);
+			stream.write(json_str, json_str.length);
+
+			stream.close();
+		}
+
+		return true;
+
+	} catch (e) {
+		Cu.reportError(e);
+	}
+};
+
+let loadFromFile = function(){
+  try{
+		let aType = "json";
+		
+		let nsIFilePicker = Ci.nsIFilePicker;
+		let fp = Cc["@mozilla.org/filepicker;1"].createInstance(nsIFilePicker);
+		let stream = Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);
+		let streamIO = Cc["@mozilla.org/scriptableinputstream;1"].createInstance(Ci.nsIScriptableInputStream);
+
+		fp.defaultExtension = aType;
+		fp.defaultString = "MeihuaCC_Preferences." + aType;
+		fp.init(window, null, nsIFilePicker.modeOpen);
+
+		fp.appendFilters(nsIFilePicker.filterAll);
+
+		if (fp.show() != nsIFilePicker.returnCancel) {
+		  stream.init(fp.file, 0x01, parseInt("0444", 8), null);
+		  streamIO.init(stream);
+		  let input = streamIO.read(stream.available());
+
+			let converter = Cc["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Ci.nsIScriptableUnicodeConverter);
+			converter.charset = "UTF-8";
+		  input = converter.ConvertToUnicode(input);
+
+		  streamIO.close();
+		  stream.close();
+
+		  let text = input;
+		  if (!isJsonValid(text)) {
+				alert(stringBundle.GetStringFromName("import.error"));
+				return false;
+		  } else {
+				return JSON.parse(input);
+		  }
+
+		}
+		return null;
+  } catch(e) {
+		Cu.reportError(e);
+  }
+};
+
+let btn_pref_import = function(){
+		let jsonObj = loadFromFile();
+		
+		if (!jsonObj) return false;
+			  try {
+			  	// 1. save preferences 
+			  	Object.keys(jsonObj["preferences"]).forEach(function(prefKey){
+			  			pref.setPrefValue(prefKey, jsonObj["preferences"][prefKey]);
+					});
+			  	// 2. update `aUserDefinedTable` ,and save `userDefinedTable.json` 
+			  	aUserDefinedTable = jsonObj["userDefinedTable"];
+			  	File.write(File.create('userDefinedTable', 'MeihuaCC'), aUserDefinedTable);
+			  } catch(e) {
+				// Report errors to console
+				Cu.reportError(e);
+			  }
+
+		alert(stringBundle.GetStringFromName("import.finish"));
+		return true;
+};
+
 var onDialogAccept = function(){
 	oTBB = {
 		left:{

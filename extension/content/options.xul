@@ -122,10 +122,13 @@
 		<menuitem label="&btn.pref.reset;" id="btn_pref_reset" oncommand="btn_pref_reset();"/>
 		<menuitem label="&btn.pref.cn;" id="btn_pref_cn" oncommand="btn_pref_cn();"/>
 		<menuitem label="&btn.pref.tw;" id="btn_pref_tw" oncommand="btn_pref_tw();"/>
+		<menuseparator/>
+		<menuitem label="&btn.pref.export;" id="btn_pref_export" oncommand="btn_pref_export();"/>
+		<menuitem label="&btn.pref.import;" id="btn_pref_import" oncommand="btn_pref_import();"/>
 	  </menupopup>
 	</popupset>
 	<hbox>
-		<button label="&btn.resetPref;" popup="btn_pref_popup"/>
+		<button label="&btn.prefPopup;" popup="btn_pref_popup"/>
 		<spacer flex="1"/>
 		<button dlgtype="accept" style="display:inline!important;"/>
 	</hbox>

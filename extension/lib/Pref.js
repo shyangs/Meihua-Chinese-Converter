@@ -75,6 +75,29 @@ const Pref = function(branchRoot) {
         return value;
     };
 
+    let getPrefType = function(key) {
+        return branch.getPrefType(key);
+    };
+
+    let setPrefValue = function(key, value){
+        switch(getPrefType(key)){
+            case 32: return setString(key, value);
+            case 64: return setInt(key, value);
+            case 128: return setBool(key, value);
+        }
+    };
+    let getPrefValue = function(key) {
+        switch(getPrefType(key)){
+            case 32: return getString(key);
+            case 64: return getInt(key);
+            case 128: return getBool(key);
+        }
+    };
+
+    let getChildList = function() {
+        return branch.getChildList("", {});
+    };
+
     let reset = function(key) {
         branch.clearUserPref(key);
     };
@@ -101,6 +124,10 @@ const Pref = function(branchRoot) {
         getInt: getInt,
         setString: setString,
         getString: getString,
+        getPrefType: getPrefType,
+        setPrefValue: setPrefValue,
+        getPrefValue: getPrefValue,
+        getChildList: getChildList,
         reset: reset,
         addObserver: addObserver,
         removeObserver: removeObserver

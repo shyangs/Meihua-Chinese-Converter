@@ -182,6 +182,7 @@ var Core = function(win){
 		let table = setTable(oURL);
 		let startTime = Date.now();
 		win.MeihuaCC.transPage(doc, true, table);
+		config.bLogEnable && console.log('MeihuaCC: 目前用的快取映射表, 最長詞彙字數為: ' + table.maxPhLen + '  .');
 		config.bLogEnable && console.log('MeihuaCC: 轉換耗時 ' + (Date.now() - startTime) + ' ms.');
 	};
 

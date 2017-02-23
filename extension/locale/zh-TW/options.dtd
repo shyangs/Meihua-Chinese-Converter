@@ -48,9 +48,12 @@
 <!ENTITY removeTable.button.label "移除 ＞＞">
 
 <!ENTITY btn.resetPref "重設">
+<!ENTITY btn.prefPopup "設定值">
 <!ENTITY btn.pref.reset "恢復預設值">
-<!ENTITY btn.pref.cn "慣用簡體">
-<!ENTITY btn.pref.tw "慣用繁體">
+<!ENTITY btn.pref.cn "重設：慣用簡體">
+<!ENTITY btn.pref.tw "重設：慣用繁體">
+<!ENTITY btn.pref.export "匯出設定值">
+<!ENTITY btn.pref.import "匯入設定值">
 
 <!ENTITY template.description "網頁載入時，依編號順序比對網址樣式，執行模板符合者的設定。若載入的網址符合多個模板樣式，則只套用第一個符合的模板。">
 <!ENTITY hotkey.description "設定熱鍵，用以轉換網頁文字。">

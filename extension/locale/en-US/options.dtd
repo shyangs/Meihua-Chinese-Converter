@@ -48,9 +48,12 @@
 <!ENTITY removeTable.button.label "Remove &gt;&gt;">
 
 <!ENTITY btn.resetPref "Reset">
+<!ENTITY btn.prefPopup "Settings">
 <!ENTITY btn.pref.reset "Reset to default value">
-<!ENTITY btn.pref.cn "Prefer Simplified Chinese">
-<!ENTITY btn.pref.tw "Prefer Traditional Chinese">
+<!ENTITY btn.pref.cn "Reset: Prefer Simplified Chinese">
+<!ENTITY btn.pref.tw "Reset: Prefer Traditional Chinese">
+<!ENTITY btn.pref.export "Export preferences">
+<!ENTITY btn.pref.import "Import preferences">
 
 <!ENTITY template.description "When webpage loaded, this add-on will apply the template from first matched rule.">
 <!ENTITY hotkey.description "You can assign hotkeys to convert page.">
