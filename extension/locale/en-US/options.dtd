@@ -32,8 +32,8 @@
 <!ENTITY moveUpButton.label "Move up">
 <!ENTITY moveDownButton.label "Move down">
 <!ENTITY moveToButton.label "Move to ...">
-<!ENTITY convTitle.label "Converter tool-tip (title attribute)">
-<!ENTITY convAlt.label "Converter alternative text (alt attribute)">
+<!ENTITY convTitle.label "Convert tooltip text (title attribute)">
+<!ENTITY convAlt.label "Convert alternative text (alt attribute)">
 <!ENTITY convPage.label "Convert page">
 <!ENTITY hotkey.nulltext "None">
 
