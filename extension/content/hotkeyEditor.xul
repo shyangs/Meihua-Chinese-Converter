@@ -4,6 +4,55 @@
 <!DOCTYPE dialog SYSTEM "chrome://meihuacc/locale/options.dtd">
 <!-- MeihuaCC is licensed under GPLv2 or later versions. See the LICENSE file. -->
 <dialog id="dialogGroupEditor" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&options.title;" ondialogaccept="return onDialogAccept();">
-<script src="chrome://meihuacc/content/hotkeyEditorTmpl.js"/>
+
+
+<hbox>
+<vbox>
+
+	<hbox>
+		<label value="&name.label;" control="nameTextbox" class="label"/>
+		<textbox id="nameTextbox" flex="1"/>
+	</hbox>
+	<hbox>
+		<label value="&hotkey.label;" control="hotkeyTextbox" class="label"/>
+		<textbox id="hotkeyTextbox" readonly="true" flex="1" placeholder="&hotkey.nulltext;"/>
+	</hbox>
+
+	<separator/>
+	<groupbox class="mapping_table_form">
+		<caption label="&mappingTables.inUse.label;"/>
+		<tree id="inUseListTree" seltype="single" disabled="true" editable="true" flex="1" onselect="onSelectInUseList();">
+		<treecols>
+			<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+			<splitter class="tree-splitter"/>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren/>
+		</tree>
+	</groupbox>
+</vbox>
+<vbox class="mapping_table_form">
+	<spacer flex="1"/>
+	<button id="addButton" label="&addTable.button.label;" disabled="true" oncommand="addTable();"/>
+	<button id="removeButton" label="&removeTable.button.label;" disabled="true" oncommand="removeTable();"/>
+	<separator/>
+	<button id="moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="moveUpTable();"/>
+	<button id="moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="moveDownTable();"/>
+	<button id="moveToButton" disabled="true" label="&moveToButton.label;" oncommand="moveToTable();"/>
+	<spacer flex="1"/>
+</vbox>
+<vbox flex="1">
+	<groupbox flex="1" class="mapping_table_form">
+		<caption label="&mappingTables.available.label;"/>
+		<tree id="availableListTree" seltype="single" disabled="false" editable="true" flex="1" onselect="onSelectAvailableList();">
+		<treecols>
+			<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+		</treecols>
+		<treechildren/>
+		</tree>
+	</groupbox>
+</vbox>
+</hbox>
+
 <script src="chrome://meihuacc/content/hotkeyEditor.js"/>
 </dialog>

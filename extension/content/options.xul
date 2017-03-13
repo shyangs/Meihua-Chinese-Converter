@@ -103,10 +103,151 @@
 				</tabs>
 				<tabpanels>
 					<tabpanel class="tabpanelTBB sToolbarBtnLeftClick">
+
+						<hbox>
+							<vbox>
+								<label value="&function.label;" class="label"/>
+								<menulist class="tbbFn_menulist" preference="sToolbarBtnLeftClick" oncommand="onChange(this);">
+									<menupopup>
+										<menuitem label="&do.nothing;" value="do.nothing"/>
+										<menuitem label="&open.settingWindow;" value="open.settingWindow"/>
+										<menuitem label="&conv.webText;" value="conv.webText"/>
+									</menupopup>
+								</menulist>
+								<separator/>
+								<groupbox class="mapping_table_form">
+									<caption label="&mappingTables.inUse.label;"/>
+									<tree id="tbbLeft_inUse_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="L_onSelectInUseList();">
+										<treecols>
+											<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+											<splitter class="tree-splitter"/>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+							<vbox class="mapping_table_form">
+								<spacer flex="1"/>
+								<button id="L_addButton" label="&addTable.button.label;" disabled="true" oncommand="L_addTable();"/>
+								<button id="L_removeButton" label="&removeTable.button.label;" disabled="true" oncommand="L_removeTable();"/>
+								<separator/>
+								<button id="L_moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="L_moveUpTable();"/>
+								<button id="L_moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="L_moveDownTable();"/>
+								<button id="L_moveToButton" disabled="true" label="&moveToButton.label;" oncommand="L_moveToTable();"/>
+								<spacer flex="1"/>
+							</vbox>
+							<vbox flex="1">
+								<groupbox flex="1" class="mapping_table_form">
+									<caption label="&mappingTables.available.label;"/>
+									<tree id="tbbLeft_available_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="L_onSelectAvailableList();">
+										<treecols>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+						</hbox>
+
 					</tabpanel>
 					<tabpanel class="tabpanelTBB sToolbarBtnMiddleClick">
+					
+						<hbox>
+							<vbox>
+								<label value="&function.label;" class="label"/>
+								<menulist class="tbbFn_menulist" preference="sToolbarBtnMiddleClick" oncommand="onChange(this);">
+									<menupopup>
+										<menuitem label="&do.nothing;" value="do.nothing"/>
+										<menuitem label="&open.settingWindow;" value="open.settingWindow"/>
+										<menuitem label="&conv.webText;" value="conv.webText"/>
+									</menupopup>
+								</menulist>
+								<separator/>
+								<groupbox class="mapping_table_form">
+									<caption label="&mappingTables.inUse.label;"/>
+									<tree id="tbbMiddle_inUse_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="M_onSelectInUseList();">
+										<treecols>
+											<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+											<splitter class="tree-splitter"/>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+							<vbox class="mapping_table_form">
+								<spacer flex="1"/>
+								<button id="M_addButton" label="&addTable.button.label;" disabled="true" oncommand="M_addTable();"/>
+								<button id="M_removeButton" label="&removeTable.button.label;" disabled="true" oncommand="M_removeTable();"/>
+								<separator/>
+								<button id="M_moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="M_moveUpTable();"/>
+								<button id="M_moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="M_moveDownTable();"/>
+								<button id="M_moveToButton" disabled="true" label="&moveToButton.label;" oncommand="M_moveToTable();"/>
+								<spacer flex="1"/>
+							</vbox>
+							<vbox flex="1">
+								<groupbox flex="1" class="mapping_table_form">
+									<caption label="&mappingTables.available.label;"/>
+									<tree id="tbbMiddle_available_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="M_onSelectAvailableList();">
+										<treecols>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+						</hbox>
+					
 					</tabpanel>
 					<tabpanel class="tabpanelTBB sToolbarBtnRightClick">
+					
+						<hbox>
+							<vbox>
+								<label value="&function.label;" class="label"/>
+								<menulist class="tbbFn_menulist" preference="sToolbarBtnRightClick" oncommand="onChange(this);">
+									<menupopup>
+										<menuitem label="&do.nothing;" value="do.nothing"/>
+										<menuitem label="&open.settingWindow;" value="open.settingWindow"/>
+										<menuitem label="&conv.webText;" value="conv.webText"/>
+									</menupopup>
+								</menulist>
+								<separator/>
+								<groupbox class="mapping_table_form">
+									<caption label="&mappingTables.inUse.label;"/>
+									<tree id="tbbRight_inUse_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="R_onSelectInUseList();">
+										<treecols>
+											<treecol name="indexColumn" label="&treeColumn.indexTitle;" persist="width hidden"/>
+											<splitter class="tree-splitter"/>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+							<vbox class="mapping_table_form">
+								<spacer flex="1"/>
+								<button id="R_addButton" label="&addTable.button.label;" disabled="true" oncommand="R_addTable();"/>
+								<button id="R_removeButton" label="&removeTable.button.label;" disabled="true" oncommand="R_removeTable();"/>
+								<separator/>
+								<button id="R_moveUpButton" disabled="true" label="&moveUpButton.label;" oncommand="R_moveUpTable();"/>
+								<button id="R_moveDownButton" disabled="true" label="&moveDownButton.label;" oncommand="R_moveDownTable();"/>
+								<button id="R_moveToButton" disabled="true" label="&moveToButton.label;" oncommand="R_moveToTable();"/>
+								<spacer flex="1"/>
+							</vbox>
+							<vbox flex="1">
+								<groupbox flex="1" class="mapping_table_form">
+									<caption label="&mappingTables.available.label;"/>
+									<tree id="tbbRight_available_Tree" seltype="single" disabled="" editable="true" flex="1" onselect="R_onSelectAvailableList();">
+										<treecols>
+											<treecol name="nameColumn" label="&treeColumn.nameTitle;" flex="1" persist="width hidden"/>
+										</treecols>
+										<treechildren/>
+									</tree>
+								</groupbox>
+							</vbox>
+						</hbox>
+					
 					</tabpanel>
 				</tabpanels>
 			  </tabbox>
@@ -133,6 +274,6 @@
 		<button dlgtype="accept" style="display:inline!important;"/>
 	</hbox>
 </prefpane>
-<script src="chrome://meihuacc/content/optionsTmpl.js"/>
+
 <script src="chrome://meihuacc/content/options.js"/>
 </prefwindow>
