@@ -9,7 +9,8 @@ var toolbarButtons = {
 				return stringBundle.GetStringFromName(meihuacc.config[name]);
 			},
 			fTooltiptext = function(){
-				return ( stringBundle.GetStringFromName('toolbarButton.leftClick') +
+				return ( meihuacc.EXTENSION_NAME + '\n' +
+					stringBundle.GetStringFromName('toolbarButton.leftClick') +
 					_fTooltiptext('sToolbarBtnLeftClick') + '\n' +
 					stringBundle.GetStringFromName('toolbarButton.middleClick') +
 					_fTooltiptext('sToolbarBtnMiddleClick') + '\n' +

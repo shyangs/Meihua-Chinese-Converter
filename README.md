@@ -7,11 +7,11 @@ Meihua-Chinese-Converter
 ![screenshot01](https://addons.cdn.mozilla.net/user-media/previews/full/173/173949.png)
 
 ## Main features (on MeihuaCC preferences window)
- - Template:
+ - **Template**:
 When webpage loaded, MeihuaCC will apply the template from first matched rule. `URL Patten` field: using Regular Expressions (RegEx)
- - Hotkey:
+ - **Hotkey**:
 You can assign hotkeys to convert page.
- - Mapping Table:
+ - **Mapping Table**:
 You can configure different mapping table for different type of websites.
- - Toolbar Button:
+ - **Toolbar Button**:
 You can configure the action to perform when clicked on the toolbar button.
