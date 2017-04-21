@@ -55,7 +55,11 @@ var toolbarButtons = {
 					break;
 				}
 			});
-			
+			//not popup context menu // for Fx53+
+			button.addEventListener('contextmenu', function (event) {
+				event.preventDefault();
+			}, false);
+
 			button.addEventListener('mouseover', function(){
 				let tooltiptext = fTooltiptext();
 				if( tooltiptext === button.getAttribute('tooltiptext') ) return;
