@@ -1,0 +1,18 @@
+{
+	"extName": {
+		"message": "Meihua Chinese Converter",
+		"description": ""
+	},
+	"extShortName": {
+		"message": "MeihuaCC",
+		"description": ""
+	},
+	"extDescription": {
+		"message": "Meihua Chinese Converter, convert page between Simplified and Traditional Chinese.",
+		"description": ""
+	},
+	"extTitle": {
+		"message": "Meihua Chinese Converter",
+		"description": ""
+	}
+}

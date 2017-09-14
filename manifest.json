@@ -1,0 +1,52 @@
+{
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "description": "__MSG_extDescription__",
+  "version": "3.0.0a1",
+  "manifest_version": 2,
+  "homepage_url": "https://github.com/shyangs/Meihua-Chinese-Converter",
+
+  "applications": {
+    "gecko": {
+      "id": "MeihuaCC@shyangs",
+      "strict_min_version": "52.0"
+    }
+  },
+
+  "developer": {
+    "name": "shyangs",
+    "url": "https://github.com/shyangs"
+  },
+
+  "icons": {
+    "16": "icon/icon-16.png",
+    "24": "icon/icon-24.png",
+    "32": "icon/icon-32.png",
+    "64": "icon/icon-64.png"
+    // "48": "icon/icon-48.png",
+    // "128": "icon/icon-128.png"
+  },
+
+  // "background": {
+  //   "scripts": ["background_scripts/background.js"]
+  // },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "file:///*"],
+      "js": [
+        "dict/cn2tw_n.js",
+        "dict/cn2tw_c.js",
+        "dict/cn2tw_p.js",
+        "dict/tw2cn_c.js",
+        "dict/tw2cn_p.js",
+        // "content_scripts/core.js",
+        "content_scripts/meihuacc.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+
+  "default_locale": "en"
+}
